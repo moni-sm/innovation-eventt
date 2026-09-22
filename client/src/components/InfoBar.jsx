@@ -5,8 +5,8 @@ export default function InfoBar({ info }) {
   const {
     dates = "November 13, 2026",
     time = "09:00 AM – 02:00 PM",
-    venueName = "Novotel Kochi Infopark",
-    venueAddress = "Kakkanad, Kochi, Kerala 682030",
+    venueName = "Hablis Hotel Chennai",
+    venueAddress = " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
     mode = "In-Person Event"
   } = info || {};
 

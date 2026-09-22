@@ -3,10 +3,10 @@ import { MapPin, ArrowRight, ExternalLink } from 'lucide-react';
 
 export default function VenueSection({ venue }) {
   const {
-    name = "Novotel Kochi Infopark",
-    address = "Kakkanad, Kochi, Kerala 682030",
-    directionsUrl = "https://www.google.com/maps/search/?api=1&query=Novotel+Kochi+Infopark+Kakkanad",
-    imageUrl = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800"
+    name = " Hablis Hotel Chennai ",
+    address = " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
+    directionsUrl = "https://maps.app.goo.gl/mUu2i567Ca8FwLG78",
+    imageUrl = "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkD101tjl_C92FsvKQf1xGDk3z-pEuVeaHyRDq3sSq8mj1Zcj3b0GNv8_ImN3gHut2Hu5h_0bUT0HaGaMjRcfY_poaG8blSWDtG1Teinh9c8Jdqm7NFD-8rSyNSt_U_-i4jAa4qSA=s1360-w1360-h1020-rw"
   } = venue || {};
 
   return (
@@ -64,7 +64,7 @@ export default function VenueSection({ venue }) {
         {/* Location Badge */}
         <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-lg text-xs font-bold text-slate-800 shadow-md flex items-center gap-1.5">
           <span className="w-2 h-2 rounded-full bg-brand-red"></span>
-          Kakkanad IT Corridor
+          Hablis - A Business Hotel
         </div>
       </div>
     </div>

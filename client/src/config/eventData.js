@@ -15,8 +15,8 @@ export const defaultEventConfig = {
   info: {
     dates: "November 13, 2026",
     time: "09:00 AM – 02:00 PM",
-    venueName: "Novotel Kochi Infopark",
-    venueAddress: "Kakkanad, Kochi, Kerala 682030",
+    venueName: "Hablis Hotel Chennai",
+    venueAddress: " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
     mode: "In-Person Event"
   },
   registrationForm: {
@@ -68,28 +68,40 @@ export const defaultEventConfig = {
   speakers: [
     {
       id: "sp-1",
-      name: "Priya Sharma",
-      designation: "VP, Digital Engineering Solutions",
-      photoUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400"
+      name: "Vijay Karthik Dhanapal",
+      designation: "Partner Sales Manager, Dassault Systemes",
+      photoUrl: "/uploads/Vijay-Karthik-Dhanapal.png"
     },
     {
       id: "sp-2",
-      name: "Alexander Reed",
+      name: "Ramesh Aravind",
       designation: "Principal 3D Design Architect",
-      photoUrl: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400"
+      photoUrl: "/uploads/ramesh-aravind.jpg"
     },
     {
       id: "sp-3",
-      name: "Karthik Nair",
+      name: "Mohamed Riswan M",
+      designation: "Lead SOLIDWORKS Evangelist & Specialist",
+      photoUrl: "/uploads/Mohamed Riswan M.png"
+    },
+    {
+      id: "sp-4",
+      name: "Mahendra H",
+      designation: "Product Manager,Simulation Solutions",
+      photoUrl: "/uploads/Mahendra H.png"
+    },
+    {
+      id: "sp-5",
+      name: "sathish",
       designation: "Lead SOLIDWORKS Evangelist & Specialist",
       photoUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400"
     }
   ],
   venue: {
-    name: "Novotel Kochi Infopark",
-    address: "Kakkanad, Kochi, Kerala 682030",
-    directionsUrl: "https://www.google.com/maps/search/?api=1&query=Novotel+Kochi+Infopark+Kakkanad",
-    imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800"
+    name: "Hablis Hotel Chennai",
+    address: " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
+    directionsUrl: "https://maps.app.goo.gl/mUu2i567Ca8FwLG78",
+    imageUrl: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkD101tjl_C92FsvKQf1xGDk3z-pEuVeaHyRDq3sSq8mj1Zcj3b0GNv8_ImN3gHut2Hu5h_0bUT0HaGaMjRcfY_poaG8blSWDtG1Teinh9c8Jdqm7NFD-8rSyNSt_U_-i4jAa4qSA=s1360-w1360-h1020-rw"
   },
   highlights: [
     {
