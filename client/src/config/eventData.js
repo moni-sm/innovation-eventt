@@ -14,7 +14,7 @@ export const defaultEventConfig = {
   },
   info: {
     dates: "October 23, 2026",
-    time: "09:00 AM – 05:00 PM",
+    time: "09:00 AM – 02:00 PM",
     venueName: "Hablis Hotel Chennai",
     venueAddress: " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
     mode: "In-Person Event"
@@ -48,27 +48,21 @@ export const defaultEventConfig = {
     },
     {
       id: "ag-3",
-      time: "11:30 AM – 01:00 PM",
-      title: "AI Virtual Companions & Industry Applications",
+      time: "11:15 AM – 12:15 PM",
+      title: "AI Virtual Companions & Simulation Applications",
       icon: "settings"
     },
     {
       id: "ag-4",
-      time: "01:00 PM – 02:00 PM",
-      title: "Lunch & Networking",
-      icon: "utensils"
+      time: "12:15 PM – 01:00 PM",
+      title: "Interactive CAD, Q&A & Customer Success Stories",
+      icon: "users"
     },
     {
       id: "ag-5",
-      time: "02:00 PM – 03:30 PM",
-      title: "Interactive CAD, Simulation & Customer Success Stories",
-      icon: "settings"
-    },
-    {
-      id: "ag-6",
-      time: "03:30 PM – 05:00 PM",
-      title: "Expert Panel Discussion, Q&A & Wrap-Up",
-      icon: "users"
+      time: "01:00 PM – 02:00 PM",
+      title: "Networking Lunch & Wrap-Up",
+      icon: "utensils"
     }
   ],
   speakers: [

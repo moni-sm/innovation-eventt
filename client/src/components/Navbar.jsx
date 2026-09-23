@@ -12,7 +12,7 @@ export default function Navbar() {
             <img
               src="/Logos/conceptia-konnect-white-logo.png"
               alt="Conceptia KONNECT - Your Trusted Digital Solutions Partner"
-              className="h-11 sm:h-13 w-auto object-contain"
+              className="h-18 sm:h-20 w-auto object-contain"
               onError={(e) => handleImageFallback(e, '/Logos/conceptia-konnect-logo.png')}
             />
           </a>
@@ -32,7 +32,7 @@ export default function Navbar() {
             <img
               src="/Logos/solidworks-white-logo.png"
               alt="3DS SOLIDWORKS"
-              className="h-8 sm:h-9 w-auto object-contain"
+              className="h-24 sm:h-20 w-auto object-contain"
               onError={(e) => handleImageFallback(e, '/Logos/solidworks-logo.png')}
             />
           </div>
