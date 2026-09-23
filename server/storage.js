@@ -153,11 +153,13 @@ export const defaultEventData = {
     },
     ecosystemBrands: [
       { name: "SOLIDWORKS", logo: "/uploads/solidworks-logo.png" },
-      { name: "3DEXPERIENCE", logo: "/uploads/3DEXPERIENCE Logo 1.png" },
-      { name: "BOM Creator", logo: "/uploads/BOM-Creator.png" },
-      { name: "DriveWorks", logo: "/uploads/DriveWorks Logo-02.png" },
+      { name: "3DEXPERIENCE", logo: "/uploads/3DEXPERIENCE Logo.png" },
       { name: "SIMULIA", logo: "/uploads/Simulia Abaqus logo.png" },
-      { name: "SOLIDWORKS PDM", logo: "/uploads/SOLIDWORKS PDM Logo.png" }
+      { name: "CST Studio Suite", logo: "/uploads/JB_CST-Studio_LOGO.png" },
+      { name: "SOLIDWORKS PDM", logo: "/uploads/SOLIDWORKS PDM Logo.png" },
+      { name: "SOLIDWORKS Plastics", logo: "/uploads/SOLIDWORKS Plastics.png" },
+      { name: "DriveWorks", logo: "/uploads/DriveWorks Logo-02.png" },
+      { name: "BOM Creator", logo: "/uploads/BOM-Creator.png" }
     ]
   },
   branding: {

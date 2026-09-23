@@ -132,8 +132,19 @@ export const defaultEventConfig = {
   partners: {
     eventPartner: {
       name: "SolidCAM",
-      tagline: "The Leaders in Integrated CAM"
-    }
+      tagline: "The Leaders in Integrated CAM",
+      logo: "/uploads/SOLIDCAM White Logo-01.png"
+    },
+    ecosystemBrands: [
+      { name: "SOLIDWORKS", logo: "/uploads/solidworks-logo.png" },
+      { name: "3DEXPERIENCE", logo: "/uploads/3DEXPERIENCE Logo.png" },
+      { name: "SIMULIA", logo: "/uploads/Simulia Abaqus logo.png" },
+      { name: "CST Studio Suite", logo: "/uploads/JB_CST-Studio_LOGO.png" },
+      { name: "SOLIDWORKS PDM", logo: "/uploads/SOLIDWORKS PDM Logo.png" },
+      { name: "SOLIDWORKS Plastics", logo: "/uploads/SOLIDWORKS Plastics.png" },
+      { name: "DriveWorks", logo: "/uploads/DriveWorks Logo-02.png" },
+      { name: "BOM Creator", logo: "/uploads/BOM-Creator.png" }
+    ]
   },
   branding: {
     companyName: "Conceptia KONNECT",

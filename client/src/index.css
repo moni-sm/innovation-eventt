@@ -42,3 +42,25 @@
 .hero-glow {
   background: radial-gradient(circle at 60% 50%, rgba(220, 38, 38, 0.25) 0%, rgba(15, 23, 42, 0) 70%);
 }
+
+/* Infinite Marquee Animation for Partner Logos */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
