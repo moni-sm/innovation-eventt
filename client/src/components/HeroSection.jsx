@@ -203,7 +203,7 @@ export default function HeroSection({ hero, onRegisterClick }) {
 
                   {/* 3D Model Image */}
                   <img
-                    src="../public/assets/robotic-arm.png"
+                    src="/assets/robotic-arm.png"
                     alt="SOLIDWORKS 2027 AI Robotic Workcell"
                     className="relative z-10 w-full h-full object-contain filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.85)] group-hover:scale-105 transition-transform duration-500"
                   />

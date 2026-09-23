@@ -24,15 +24,19 @@ export default function Navbar() {
             <a href="#speakers" className="hover:text-brand-red transition-colors">Speakers</a>
           </nav>
 
-          {/* Right Brand: Dassault Systèmes & 3DS SOLIDWORKS Logo from Logos folder */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            <div className="flex flex-col justify-center">
-              <img
-                src="/Logos/solidworks-logo.png"
-                alt="3DS SOLIDWORKS"
-                className="h-18 sm:h-14 w-auto object-contain"
-              />
-            </div>
+          {/* Right Brand: Dassault Systèmes 3DEXPERIENCE & SOLIDWORKS */}
+          <div className="flex items-center gap-2.5 sm:gap-3.5">
+            <img
+              src="/Logos/3DEXPERIENCE circle logo.png"
+              alt="3DEXPERIENCE Compass"
+              className="h-9 sm:h-11 w-auto object-contain"
+            />
+            <div className="h-7 w-px bg-slate-200 hidden sm:block"></div>
+            <img
+              src="/Logos/solidworks-logo.png"
+              alt="3DS SOLIDWORKS"
+              className="h-12 sm:h-13 w-auto object-contain"
+            />
           </div>
 
         </div>
