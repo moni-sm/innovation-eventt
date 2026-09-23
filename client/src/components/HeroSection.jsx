@@ -43,6 +43,38 @@ export default function HeroSection({ hero, onRegisterClick }) {
 
   return (
     <section id="overview" className="relative bg-white text-slate-900 overflow-hidden pt-12 pb-20 lg:pt-16 lg:pb-28 border-b border-slate-100">
+      
+      {/* Background Architectural Elements: Engineering CAD Grid & Slanted Light Red Band */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none" aria-hidden="true">
+        {/* Engineering CAD Blueprint Crosshairs Grid */}
+        <div className="absolute inset-0 opacity-[0.24]">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="hero-cad-grid" width="48" height="48" patternUnits="userSpaceOnUse">
+                <path d="M 24 20 L 24 28 M 20 24 L 28 24" stroke="#ef2722" strokeWidth="1" strokeOpacity="0.4" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#hero-cad-grid)" />
+          </svg>
+        </div>
+
+        {/* Ambient Warm Red Radial Glow */}
+        <div className="absolute top-1/4 right-[12%] w-[520px] h-[520px] rounded-full bg-red-500/[0.04] blur-3xl" />
+
+        {/* Premium Slanted Light Red Band (Angled ~-12deg matching reference flyer) */}
+        <div className="absolute -top-20 -bottom-20 left-[42%] md:left-[48%] lg:left-[52%] xl:left-[55%] w-[260px] sm:w-[340px] lg:w-[440px] xl:w-[490px] -skew-x-12">
+          {/* Main light red band body with subtle gradient and borders */}
+          <div className="w-full h-full bg-gradient-to-b from-[#ef2722]/[0.12] via-[#ef2722]/[0.07] to-[#ef2722]/[0.02] border-l-2 border-[#ef2722]/30 border-r border-[#ef2722]/20 shadow-[0_0_60px_rgba(239,39,34,0.06)] relative overflow-hidden">
+            {/* Subtle vertical hairline inside the band */}
+            <div className="absolute top-0 bottom-0 left-6 sm:left-10 w-px bg-gradient-to-b from-transparent via-[#ef2722]/25 to-transparent" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500/[0.06] via-transparent to-transparent" />
+          </div>
+
+          {/* Secondary parallel slim accent pinstripe */}
+          <div className="absolute top-0 bottom-0 -left-5 sm:-left-7 w-1 sm:w-1.5 bg-gradient-to-b from-[#ef2722]/35 via-[#ef2722]/20 to-[#ef2722]/5 rounded-full" />
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center">
           
