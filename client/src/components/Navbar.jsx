@@ -3,37 +3,37 @@ import { handleImageFallback } from '../utils/assetHelper';
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all">
+    <header className="sticky top-0 z-50 bg-[#090d16] text-white backdrop-blur-md border-b border-slate-800 shadow-md transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
-          {/* Left Brand: Conceptia KONNECT Logo from Logos folder */}
+          {/* Left Brand: Conceptia KONNECT White Logo for Black Navbar */}
           <a href="#overview" className="flex items-center gap-3 transition-opacity hover:opacity-90">
             <img
-              src="/Logos/conceptia-konnect-logo.png"
+              src="/Logos/conceptia-konnect-white-logo.png"
               alt="Conceptia KONNECT - Your Trusted Digital Solutions Partner"
-              className="h-28 sm:h-24 w-auto object-contain"
-              onError={(e) => handleImageFallback(e)}
+              className="h-11 sm:h-13 w-auto object-contain"
+              onError={(e) => handleImageFallback(e, '/Logos/conceptia-konnect-logo.png')}
             />
           </a>
 
           {/* Navigation Links for Public View */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600">
-            <a href="#overview" className="hover:text-brand-red transition-colors">Overview</a>
-            <a href="#what-to-expect" className="hover:text-brand-red transition-colors">What to Expect</a>
-            <a href="#agenda" className="hover:text-brand-red transition-colors">Agenda</a>
-            <a href="#venue" className="hover:text-brand-red transition-colors">Venue</a>
-            <a href="#speakers" className="hover:text-brand-red transition-colors">Speakers</a>
+          <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-300">
+            <a href="#overview" className="hover:text-[#ef2722] transition-colors">Overview</a>
+            <a href="#what-to-expect" className="hover:text-[#ef2722] transition-colors">What to Expect</a>
+            <a href="#agenda" className="hover:text-[#ef2722] transition-colors">Agenda</a>
+            <a href="#venue" className="hover:text-[#ef2722] transition-colors">Venue</a>
+            <a href="#speakers" className="hover:text-[#ef2722] transition-colors">Speakers</a>
           </nav>
 
-          {/* Right Brand: Dassault Systèmes 3DEXPERIENCE & SOLIDWORKS */}
+          {/* Right Brand: Dassault Systèmes SOLIDWORKS White Logo */}
           <div className="flex items-center gap-2.5 sm:gap-3.5">
-            <div className="h-7 w-px bg-slate-200 hidden sm:block"></div>
+            <div className="h-7 w-px bg-slate-800 hidden sm:block"></div>
             <img
-              src="/Logos/solidworks-logo.png"
+              src="/Logos/solidworks-white-logo.png"
               alt="3DS SOLIDWORKS"
-              className="h-12 sm:h-13 w-auto object-contain"
-              onError={(e) => handleImageFallback(e)}
+              className="h-8 sm:h-9 w-auto object-contain"
+              onError={(e) => handleImageFallback(e, '/Logos/solidworks-logo.png')}
             />
           </div>
 
