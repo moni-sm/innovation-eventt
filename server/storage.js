@@ -1,0 +1,248 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const DATA_DIR = path.join(__dirname, 'data');
+if (!fs.existsSync(DATA_DIR)) {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+}
+
+const REGISTRATIONS_FILE = path.join(DATA_DIR, 'registrations.json');
+const EVENT_FILE = path.join(DATA_DIR, 'event.json');
+
+export const defaultEventData = {
+  hero: {
+    invitationTag: "YOU'RE INVITED TO",
+    titlePrefix: "EXPLORE SOLIDWORKS 2027",
+    titleHighlight: "at SOLIDWORKS Innovation Day 2026",
+    tagline: "AI is transforming engineering. Are you ready?",
+    description: "Discover the latest AI-powered SOLIDWORKS innovations across design, manufacturing, data management, and simulation. Learn how SOLIDWORKS AI and Virtual Companions are transforming the way engineers design, validate, collaborate, and innovate.",
+    ctaText: "SAVE YOUR SPOT",
+    heroImage: "/assets/robotic-arm.png"
+  },
+  info: {
+    dates: "October 23, 2026",
+    time: "09:00 AM – 02:00 PM",
+    venueName: "Hablis Hotel Chennai",
+    venueAddress: " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
+    mode: "In-Person Event"
+  },
+  registrationForm: {
+    title: "Save Your Spot",
+    subtitle: "Secure your spot for this exclusive event.",
+    buttonText: "Save Your Spot",
+    roles: [
+      "Design Engineer",
+      "CAD / Mechanical Engineer",
+      "R&D Manager / Lead",
+      "Engineering Director",
+      "Manufacturing Specialist",
+      "Academic / Student",
+      "Other"
+    ]
+  },
+  agenda: [
+    {
+      id: "ag-1",
+      time: "09:00 AM – 10:00 AM",
+      title: "Registration & Networking",
+      icon: "user",
+      badgeColor: "bg-red-500"
+    },
+    {
+      id: "ag-2",
+      time: "10:00 AM – 10:45 AM",
+      title: "Test-Drive SOLIDWORKS 2027 & AI Features",
+      icon: "monitor",
+      badgeColor: "bg-red-500"
+    },
+    {
+      id: "ag-3",
+      time: "11:00 AM – 12:00 PM",
+      title: "AI Virtual Companions & Industry Applications",
+      icon: "settings",
+      badgeColor: "bg-red-500"
+    },
+    {
+      id: "ag-4",
+      time: "12:00 PM – 01:00 PM",
+      title: "Expert Panel Discussion & Best Practices",
+      icon: "users",
+      badgeColor: "bg-red-500"
+    },
+    {
+      id: "ag-5",
+      time: "01:00 PM – 02:00 PM",
+      title: "Lunch & Peer Networking",
+      icon: "utensils",
+      badgeColor: "bg-red-500"
+    }
+  ],
+  speakers: [
+    {
+      id: "sp-1",
+      name: "Vijay Karthik Dhanapal",
+      designation: "Partner Sales Manager, Dassault Systemes",
+         photoUrl: "/Logos/Vijay-Karthik-Dhanapal.png"
+    },
+    {
+      id: "sp-2",
+      name: "Ramesh Aravind",
+      designation: "Principal 3D Design Architect",
+         photoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400"
+    },
+    {
+      id: "sp-3",
+      name: "Mohamed Riswan M",
+      designation: "Solution Associate",
+         photoUrl: "/Logos/Mohamed Riswan M.png"
+    },
+    {
+      id: "sp-4",
+      name: "Mahendra H",
+      designation: "Product Manager,Simulation Solutions",
+         photoUrl: "/Logos/Mahendra H.png"
+    },
+    {
+      id: "sp-5",
+      name: "sathish",
+      designation: "Lead SOLIDWORKS Evangelist & Specialist",
+      photoUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400"
+    }
+  ],
+  venue: {
+    name: "Hablis Hotel Chennai",
+    address: " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
+    directionsUrl: "https://maps.app.goo.gl/mUu2i567Ca8FwLG78",
+    imageUrl: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkD101tjl_C92FsvKQf1xGDk3z-pEuVeaHyRDq3sSq8mj1Zcj3b0GNv8_ImN3gHut2Hu5h_0bUT0HaGaMjRcfY_poaG8blSWDtG1Teinh9c8Jdqm7NFD-8rSyNSt_U_-i4jAa4qSA=s1360-w1360-h1020-rw"
+  },
+  highlights: [
+    {
+      id: "hl-1",
+      title: "AI-powered design tools",
+      icon: "sparkles",
+      description: "Enhance your everyday workflow with intelligent AI assistance."
+    },
+    {
+      id: "hl-2",
+      title: "Latest SOLIDWORKS 2027 features",
+      icon: "presentation",
+      description: "Test-drive the newest tools and capabilities."
+    },
+    {
+      id: "hl-3",
+      title: "Best practices & expert tips",
+      icon: "award",
+      description: "Learn from SOLIDWORKS professionals."
+    },
+    {
+      id: "hl-4",
+      title: "Connect with peers",
+      icon: "users",
+      description: "Network with engineers and professionals in your area."
+    },
+    {
+      id: "hl-5",
+      title: "AI Virtual Companions",
+      icon: "bot",
+      description: "Get intelligent assistance throughout your work."
+    },
+    {
+      id: "hl-6",
+      title: "Work smarter & faster",
+      icon: "zap",
+      description: "Discover how AI can accelerate your design process."
+    }
+  ],
+  partners: {
+    eventPartner: {
+      name: "SolidCAM",
+      tagline: "The Leaders in Integrated CAM",
+      logo: "/uploads/SOLIDCAM White Logo-01.png"
+    },
+    ecosystemBrands: [
+      { name: "SOLIDWORKS", logo: "/uploads/solidworks-logo.png" },
+      { name: "3DEXPERIENCE", logo: "/uploads/3DEXPERIENCE Logo.png" },
+      { name: "SIMULIA", logo: "/uploads/Simulia Abaqus logo.png" },
+      { name: "CST Studio Suite", logo: "/uploads/JB_CST-Studio_LOGO.png" },
+      { name: "SOLIDWORKS PDM", logo: "/uploads/SOLIDWORKS PDM Logo.png" },
+      { name: "SOLIDWORKS Plastics", logo: "/uploads/SOLIDWORKS Plastics.png" },
+      { name: "DriveWorks", logo: "/uploads/DriveWorks Logo-02.png" },
+      { name: "BOM Creator", logo: "/uploads/BOM-Creator.png" }
+    ]
+  },
+  branding: {
+    companyName: "Conceptia KONNECT",
+    companyTagline: "Your Trusted Digital Solutions Partner",
+    primaryColor: "#dc2626",
+    secondaryColor: "#111827"
+  }
+};
+
+// Helpers for file persistence
+function readJSON(file, fallback) {
+  try {
+    if (fs.existsSync(file)) {
+      const raw = fs.readFileSync(file, 'utf-8');
+      return JSON.parse(raw);
+    }
+  } catch (err) {
+    console.error(`Error reading ${file}:`, err);
+  }
+  return fallback;
+}
+
+function writeJSON(file, data) {
+  try {
+    fs.writeFileSync(file, JSON.stringify(data, null, 2), 'utf-8');
+  } catch (err) {
+    console.error(`Error writing to ${file}:`, err);
+  }
+}
+
+// In-file store
+export const localStore = {
+  getEventData() {
+    return readJSON(EVENT_FILE, defaultEventData);
+  },
+  saveEventData(data) {
+    writeJSON(EVENT_FILE, data);
+    return data;
+  },
+  getRegistrations() {
+    const list = readJSON(REGISTRATIONS_FILE, []);
+    return list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  },
+  addRegistration(record) {
+    const list = readJSON(REGISTRATIONS_FILE, []);
+    const newRecord = {
+      _id: 'reg_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7),
+      ...record,
+      status: record.status || 'Confirmed',
+      createdAt: new Date().toISOString()
+    };
+    list.unshift(newRecord);
+    writeJSON(REGISTRATIONS_FILE, list);
+    return newRecord;
+  },
+  updateRegistrationStatus(id, status) {
+    const list = readJSON(REGISTRATIONS_FILE, []);
+    const index = list.findIndex(r => r._id === id || r.id === id);
+    if (index !== -1) {
+      list[index].status = status;
+      writeJSON(REGISTRATIONS_FILE, list);
+      return list[index];
+    }
+    return null;
+  },
+  deleteRegistration(id) {
+    let list = readJSON(REGISTRATIONS_FILE, []);
+    const initialLen = list.length;
+    list = list.filter(r => r._id !== id && r.id !== id);
+    writeJSON(REGISTRATIONS_FILE, list);
+    return list.length < initialLen;
+  }
+};

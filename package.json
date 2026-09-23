@@ -1,0 +1,14 @@
+{
+  "name": "solidworks-innovation-day-mern",
+  "version": "1.0.0",
+  "description": "MERN app with 3 separate folders: client, admin, server",
+  "scripts": {
+    "server": "npm --prefix server run start",
+    "server:dev": "npm --prefix server run dev",
+    "client": "npm --prefix client run dev",
+    "admin": "npm --prefix admin run dev",
+    "build:all": "npm --prefix client run build && npm --prefix admin run build"
+  },
+  "keywords": ["mern", "react", "solidworks", "admin", "client"],
+  "license": "ISC"
+}
