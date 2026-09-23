@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import LandingPage from './pages/LandingPage';
+import { defaultEventConfig } from './config/eventData';
 import { api } from './services/api';
 
 export default function App() {
@@ -9,8 +10,17 @@ export default function App() {
 
   useEffect(() => {
     api.getEventContent()
-      .then(res => { if (res.success) setEventData(res.data); })
-      .catch(err => console.error('Failed to load event data:', err))
+      .then(res => {
+        if (res && res.success && res.data) {
+          setEventData(res.data);
+        } else {
+          setEventData(defaultEventConfig);
+        }
+      })
+      .catch(err => {
+        console.warn('Failed to load event data from API, using default:', err);
+        setEventData(defaultEventConfig);
+      })
       .finally(() => setLoading(false));
   }, []);
 
