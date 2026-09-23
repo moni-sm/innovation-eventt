@@ -86,25 +86,25 @@ export const defaultEventData = {
       id: "sp-1",
       name: "Vijay Karthik Dhanapal",
       designation: "Partner Sales Manager, Dassault Systemes",
-      photoUrl: "/uploads/Vijay-Karthik-Dhanapal.png"
+         photoUrl: "/Logos/Vijay-Karthik-Dhanapal.png"
     },
     {
       id: "sp-2",
       name: "Ramesh Aravind",
       designation: "Principal 3D Design Architect",
-      photoUrl: "/uploads/ramesh-aravind.jpg"
+         photoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400"
     },
     {
       id: "sp-3",
       name: "Mohamed Riswan M",
       designation: "Solution Associate",
-      photoUrl: "/uploads/Mohamed Riswan M.png"
+         photoUrl: "/Logos/Mohamed Riswan M.png"
     },
     {
       id: "sp-4",
       name: "Mahendra H",
       designation: "Product Manager,Simulation Solutions",
-      photoUrl:"/uploads/Mahendra H.png"
+         photoUrl: "/Logos/Mahendra H.png"
     },
     {
       id: "sp-5",

@@ -2,6 +2,10 @@ import React from 'react';
 import FadeIn from './FadeIn';
 
 export default function SpeakersSection({ speakers }) {
+  const visibleSpeakers = Array.isArray(speakers)
+    ? speakers.filter((speaker) => speaker && (speaker.name || speaker.designation || speaker.photoUrl))
+    : [];
+
   return (
     <div id="speakers" className="space-y-6">
       {/* Section Header */}
@@ -23,17 +27,19 @@ export default function SpeakersSection({ speakers }) {
       </FadeIn>
 
       {/* Speaker Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-2">
-        {speakers && speakers.map((speaker, idx) => (
+      {visibleSpeakers.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2">
+          {visibleSpeakers.map((speaker, idx) => (
           <FadeIn key={speaker.id || idx} direction="up" delay={idx * 100}>
             <div
-              className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-slate-100 hover:border-slate-300 shadow-sm hover:shadow-xl transition-all duration-300"
+              className="group h-full flex flex-col bg-white rounded-2xl overflow-hidden border border-slate-100 hover:border-slate-300 shadow-sm hover:shadow-xl transition-all duration-300"
             >
               {/* Speaker Image Container */}
               <div className="relative aspect-[4/4.5] overflow-hidden bg-slate-100">
                 <img
                   src={speaker.photoUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400'}
-                  alt={speaker.name}
+                  alt={speaker.name || 'Event speaker'}
+                  loading="lazy"
                   className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   onError={(e) => {
                     e.target.onerror = null;
@@ -47,10 +53,10 @@ export default function SpeakersSection({ speakers }) {
               <div className="p-4 flex flex-col items-center text-center flex-1 justify-between">
                 <div>
                   <h4 className="font-extrabold text-base text-slate-900 tracking-tight group-hover:text-brand-red transition-colors">
-                    {speaker.name}
+                    {speaker.name || 'Event speaker'}
                   </h4>
                   <p className="text-xs font-medium text-slate-500 mt-1 line-clamp-2">
-                    {speaker.designation}
+                    {speaker.designation || 'Industry expert'}
                   </p>
                 </div>
 
@@ -59,8 +65,13 @@ export default function SpeakersSection({ speakers }) {
               </div>
             </div>
           </FadeIn>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-8 text-center text-sm text-slate-500">
+          Speaker details will be announced soon.
+        </div>
+      )}
     </div>
   );
 }
