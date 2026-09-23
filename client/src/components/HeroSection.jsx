@@ -159,12 +159,12 @@ export default function HeroSection({ hero, onRegisterClick }) {
 
           </div>
 
-          {/* Right Column: Clean Large Robotic Arm Image matching Hero Section */}
-          <div className="lg:col-span-6 relative flex justify-center lg:justify-end items-center animate-fade-in-left [animation-delay:300ms]">
+          {/* Right Column: Clean Large Robotic Arm Image shifted bit left */}
+          <div className="lg:col-span-6 relative flex justify-center lg:justify-start items-center animate-fade-in-left [animation-delay:300ms]">
             <img
               src="/assets/robotic-arm.png"
               alt="SOLIDWORKS 2027 AI Robotic Workcell"
-              className="w-full max-w-[640px] lg:max-w-none lg:w-[110%] xl:w-[118%] h-auto object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.13)] transition-transform duration-500 hover:scale-105"
+              className="w-full max-w-[650px] lg:max-w-none lg:w-[115%] xl:w-[122%] lg:-translate-x-10 xl:-translate-x-16 h-auto object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.13)] transition-transform duration-500 hover:scale-105"
               onError={(e) => handleImageFallback(e)}
             />
           </div>
