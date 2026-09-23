@@ -24,7 +24,7 @@ export default function AdminNavbar({ loading, onRefresh }) {
         {/* Actions */}
         <div className="flex items-center gap-3">
           <a
-            href="http://localhost:5000/email-invite.html"
+            href={api.getEmailInviteUrl()}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-semibold tracking-wide border border-slate-700 transition-all"

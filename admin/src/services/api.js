@@ -1,4 +1,6 @@
-const BASE = import.meta.env.VITE_API_URL || '/api';
+const RAW_URL = import.meta.env.VITE_API_URL || 'https://innovation-event.onrender.com/api';
+const CLEAN_URL = RAW_URL.replace(/\/+$/, '');
+const BASE = CLEAN_URL.endsWith('/api') ? CLEAN_URL : `${CLEAN_URL}/api`;
 
 export const api = {
   async getRegistrations({ search = '', status = '', role = '' } = {}) {
@@ -35,5 +37,10 @@ export const api = {
 
   getExportCsvUrl() {
     return `${BASE}/registrations/export/csv`;
+  },
+
+  getEmailInviteUrl() {
+    const root = BASE.replace(/\/api\/?$/, '');
+    return `${root}/email-invite.html`;
   }
 };
