@@ -28,14 +28,14 @@ export default function SpeakersSection({ speakers }) {
 
       {/* Speaker Cards Grid */}
       {visibleSpeakers.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2">
+        <div className="grid grid-cols-3 gap-2.5 sm:gap-3.5 pt-2">
           {visibleSpeakers.map((speaker, idx) => (
-          <FadeIn key={speaker.id || idx} direction="up" delay={idx * 100}>
+          <FadeIn key={speaker.id || idx} direction="up" delay={idx * 60}>
             <div
-              className="group h-full flex flex-col bg-white rounded-2xl overflow-hidden border border-slate-100 hover:border-slate-300 shadow-sm hover:shadow-xl transition-all duration-300"
+              className="group h-full flex flex-col bg-white rounded-2xl overflow-hidden border border-slate-100 hover:border-slate-300 shadow-sm hover:shadow-md transition-all duration-300"
             >
               {/* Speaker Image Container */}
-              <div className="relative aspect-[4/4.5] overflow-hidden bg-slate-100">
+              <div className="relative aspect-[4/4.2] overflow-hidden bg-slate-100">
                 <img
                   src={speaker.photoUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400'}
                   alt={speaker.name || 'Event speaker'}
@@ -46,22 +46,21 @@ export default function SpeakersSection({ speakers }) {
                     e.target.src = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400';
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </div>
 
               {/* Info & Red Accent */}
-              <div className="p-4 flex flex-col items-center text-center flex-1 justify-between">
+              <div className="p-2.5 pb-3 flex flex-col items-center text-center flex-1 justify-between min-h-[86px]">
                 <div>
-                  <h4 className="font-extrabold text-base text-slate-900 tracking-tight group-hover:text-brand-red transition-colors">
+                  <h4 className="font-extrabold text-xs sm:text-[13px] text-slate-900 tracking-tight leading-snug group-hover:text-brand-red transition-colors line-clamp-2">
                     {speaker.name || 'Event speaker'}
                   </h4>
-                  <p className="text-xs font-medium text-slate-500 mt-1 line-clamp-2">
+                  <p className="text-[10px] sm:text-[11px] font-medium text-slate-500 mt-1 line-clamp-2 leading-tight">
                     {speaker.designation || 'Industry expert'}
                   </p>
                 </div>
 
                 {/* Red Accent Dash under designation */}
-                <div className="w-8 h-1 bg-brand-red rounded-full mt-3 mx-auto"></div>
+                <div className="w-6 h-1 bg-brand-red rounded-full mt-2.5 mx-auto"></div>
               </div>
             </div>
           </FadeIn>

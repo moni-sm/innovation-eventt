@@ -70,31 +70,31 @@ export const defaultEventConfig = {
       id: "sp-1",
       name: "Vijay Karthik Dhanapal",
       designation: "Partner Sales Manager, Dassault Systemes",
-         photoUrl: "/Logos/Vijay-Karthik-Dhanapal.png"
+      photoUrl: "/people/Vijay Karthik Dhanapal.png"
     },
     {
       id: "sp-2",
       name: "Ramesh Aravind",
-      designation: "Principal 3D Design Architect",
-         photoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400"
+      designation: "Customer Success Specialist",
+      photoUrl: "/people/Ramesh Aravind.jfif"
     },
     {
       id: "sp-3",
       name: "Mohamed Riswan M",
-      designation: "Lead SOLIDWORKS Evangelist & Specialist",
-         photoUrl: "/Logos/Mohamed Riswan M.png"
+      designation: "Solution Associate",
+      photoUrl: "/people/Mohamed Riswan M.png"
     },
     {
       id: "sp-4",
       name: "Mahendra H",
-      designation: "Product Manager,Simulation Solutions",
-         photoUrl: "/Logos/Mahendra H.png"
+      designation: "Product Manager, Simulation Solutions",
+      photoUrl: "/people/Mahendra H.jfif"
     },
     {
       id: "sp-5",
-      name: "sathish",
-      designation: "Lead SOLIDWORKS Evangelist & Specialist",
-      photoUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400"
+      name: "Satish Varadharaj",
+      designation: "Team Lead - Enterprise Products",
+      photoUrl: "/people/Satish Photo 1.jpg"
     }
   ],
   venue: {
