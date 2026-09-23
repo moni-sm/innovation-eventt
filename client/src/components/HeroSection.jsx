@@ -44,10 +44,10 @@ export default function HeroSection({ hero, onRegisterClick }) {
   return (
     <section id="overview" className="relative bg-white text-slate-900 overflow-hidden pt-12 pb-20 lg:pt-16 lg:pb-28 border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center">
           
           {/* Left Column: Headlines & Call to Action */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-6 space-y-6">
             
             {/* Invitation Tag */}
             <div className="inline-flex items-center gap-2 text-xs md:text-sm font-black tracking-widest text-[#ef2722] uppercase animate-fade-in-down">
@@ -159,12 +159,12 @@ export default function HeroSection({ hero, onRegisterClick }) {
 
           </div>
 
-          {/* Right Column: Clean Robotic Arm Image with no background or extra elements */}
-          <div className="lg:col-span-5 relative flex justify-center items-center animate-fade-in-left [animation-delay:300ms]">
+          {/* Right Column: Clean Large Robotic Arm Image matching Hero Section */}
+          <div className="lg:col-span-6 relative flex justify-center lg:justify-end items-center animate-fade-in-left [animation-delay:300ms]">
             <img
               src="/assets/robotic-arm.png"
               alt="SOLIDWORKS 2027 AI Robotic Workcell"
-              className="w-full max-w-[500px] h-auto object-contain filter drop-shadow-xl transition-transform duration-500 hover:scale-105"
+              className="w-full max-w-[640px] lg:max-w-none lg:w-[110%] xl:w-[118%] h-auto object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.13)] transition-transform duration-500 hover:scale-105"
               onError={(e) => handleImageFallback(e)}
             />
           </div>
