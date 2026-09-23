@@ -25,7 +25,7 @@ export const defaultEventData = {
   },
   info: {
     dates: "October 23, 2026",
-    time: "09:00 AM – 02:00 PM",
+    time: "09:00 AM – 05:00 PM",
     venueName: "Hablis Hotel Chennai",
     venueAddress: " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
     mode: "In-Person Event"
@@ -54,30 +54,37 @@ export const defaultEventData = {
     },
     {
       id: "ag-2",
-      time: "10:00 AM – 10:45 AM",
+      time: "10:00 AM – 11:15 AM",
       title: "Test-Drive SOLIDWORKS 2027 & AI Features",
       icon: "monitor",
       badgeColor: "bg-red-500"
     },
     {
       id: "ag-3",
-      time: "11:00 AM – 12:00 PM",
+      time: "11:30 AM – 01:00 PM",
       title: "AI Virtual Companions & Industry Applications",
       icon: "settings",
       badgeColor: "bg-red-500"
     },
     {
       id: "ag-4",
-      time: "12:00 PM – 01:00 PM",
-      title: "Expert Panel Discussion & Best Practices",
-      icon: "users",
+      time: "01:00 PM – 02:00 PM",
+      title: "Lunch & Peer Networking",
+      icon: "utensils",
       badgeColor: "bg-red-500"
     },
     {
       id: "ag-5",
-      time: "01:00 PM – 02:00 PM",
-      title: "Lunch & Peer Networking",
-      icon: "utensils",
+      time: "02:00 PM – 03:30 PM",
+      title: "Interactive CAD, Simulation & Customer Success Stories",
+      icon: "settings",
+      badgeColor: "bg-red-500"
+    },
+    {
+      id: "ag-6",
+      time: "03:30 PM – 05:00 PM",
+      title: "Expert Panel Discussion, Q&A & Wrap-Up",
+      icon: "users",
       badgeColor: "bg-red-500"
     }
   ],

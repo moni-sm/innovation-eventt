@@ -13,8 +13,8 @@ export const defaultEventConfig = {
     heroImage: "/assets/turbine.png" // Replace with any image URL or path
   },
   info: {
-    dates: "November 13, 2026",
-    time: "09:00 AM – 02:00 PM",
+    dates: "October 23, 2026",
+    time: "09:00 AM – 05:00 PM",
     venueName: "Hablis Hotel Chennai",
     venueAddress: " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
     mode: "In-Person Event"
@@ -42,27 +42,33 @@ export const defaultEventConfig = {
     },
     {
       id: "ag-2",
-      time: "10:00 AM – 10:45 AM",
-      title: "SOLIDWORKS 2026 – What's New",
+      time: "10:00 AM – 11:15 AM",
+      title: "SOLIDWORKS 2027 & AI Innovations – What's New",
       icon: "monitor"
     },
     {
       id: "ag-3",
-      time: "11:00 AM – 12:00 PM",
-      title: "Industry Applications & Customer Success Stories",
+      time: "11:30 AM – 01:00 PM",
+      title: "AI Virtual Companions & Industry Applications",
       icon: "settings"
     },
     {
       id: "ag-4",
-      time: "12:00 PM – 01:00 PM",
-      title: "Expert Panel Discussion",
-      icon: "users"
-    },
-    {
-      id: "ag-5",
       time: "01:00 PM – 02:00 PM",
       title: "Lunch & Networking",
       icon: "utensils"
+    },
+    {
+      id: "ag-5",
+      time: "02:00 PM – 03:30 PM",
+      title: "Interactive CAD, Simulation & Customer Success Stories",
+      icon: "settings"
+    },
+    {
+      id: "ag-6",
+      time: "03:30 PM – 05:00 PM",
+      title: "Expert Panel Discussion, Q&A & Wrap-Up",
+      icon: "users"
     }
   ],
   speakers: [

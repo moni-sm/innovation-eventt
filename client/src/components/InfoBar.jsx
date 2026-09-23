@@ -5,7 +5,7 @@ import FadeIn from './FadeIn';
 export default function InfoBar({ info }) {
   const {
     dates = "October 23, 2026",
-    time = "09:00 AM – 02:00 PM",
+    time = "09:00 AM – 05:00 PM",
     venueName = "Hablis Hotel Chennai",
     venueAddress = " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
     mode = "In-Person Event"
