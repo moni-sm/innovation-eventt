@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Bot, Calendar, Clock } from 'lucide-react';
+import { handleImageFallback } from '../utils/assetHelper';
 
 function calculateTimeLeft() {
   // Target: October 23, 2026, 09:00:00 IST (+05:30)
@@ -206,6 +207,7 @@ export default function HeroSection({ hero, onRegisterClick }) {
                     src="/assets/robotic-arm.png"
                     alt="SOLIDWORKS 2027 AI Robotic Workcell"
                     className="relative z-10 w-full h-full object-contain filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.85)] group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => handleImageFallback(e)}
                   />
 
                   {/* Corner Accent Badge */}

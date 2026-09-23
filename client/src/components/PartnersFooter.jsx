@@ -1,5 +1,18 @@
 import React from 'react';
 import FadeIn from './FadeIn';
+import { handleImageFallback } from '../utils/assetHelper';
+
+function LogoImg({ src, alt, className }) {
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      onError={(e) => handleImageFallback(e)}
+      loading="lazy"
+    />
+  );
+}
 
 export default function PartnersFooter({ partners, branding }) {
   return (
@@ -24,7 +37,7 @@ export default function PartnersFooter({ partners, branding }) {
             {/* Prominent Sized-up SolidCAM Logo with Red Badge styling matching the flyer */}
             <div className="flex items-center group transition-transform duration-200 hover:scale-[1.02]">
               <div className="relative flex items-center bg-[#e51924] hover:bg-[#d61722] transition-colors rounded-md pl-2 pr-3 sm:pr-4 py-1.5 sm:py-2 shadow-lg shadow-red-950/40">
-                <img
+                <LogoImg
                   src="/Logos/SOLIDCAM White Logo-01.png"
                   alt="SolidCAM - The Leaders in Integrated CAM"
                   className="h-12 sm:h-14 md:h-16 w-auto max-w-[240px] sm:max-w-[280px] object-contain drop-shadow"
@@ -50,7 +63,7 @@ export default function PartnersFooter({ partners, branding }) {
               <div className="flex items-center gap-8 sm:gap-12 lg:gap-14 flex-shrink-0">
                 {/* 1. 3DS SOLIDWORKS */}
                 <div className="flex items-center hover:text-white transition-all duration-200 hover:scale-105 flex-shrink-0">
-                  <img
+                  <LogoImg
                     src="/Logos/solidworks-logo.png"
                     alt="3DS SOLIDWORKS"
                     className="h-8 sm:h-9 md:h-10 w-auto object-contain"
@@ -59,12 +72,12 @@ export default function PartnersFooter({ partners, branding }) {
 
                 {/* 2. 3DEXPERIENCE */}
                 <div className="flex items-center gap-2 hover:text-white transition-all duration-200 hover:scale-105 flex-shrink-0">
-                  <img
+                  <LogoImg
                     src="/Logos/3DEXPERIENCE circle logo.png"
                     alt="3DEXPERIENCE Compass"
                     className="h-9 sm:h-10 md:h-11 w-auto object-contain flex-shrink-0"
                   />
-                  <img
+                  <LogoImg
                     src="/Logos/3DEXPERIENCE Logo.png"
                     alt="3DEXPERIENCE"
                     className="h-4 sm:h-5 md:h-5.5 w-auto object-contain"
@@ -73,7 +86,7 @@ export default function PartnersFooter({ partners, branding }) {
 
                 {/* 3. SIMULIA Abaqus */}
                 <div className="flex items-center hover:text-white transition-all duration-200 hover:scale-105 flex-shrink-0">
-                  <img
+                  <LogoImg
                     src="/Logos/Simulia Abaqus logo.png"
                     alt="3DS SIMULIA"
                     className="h-8 sm:h-9 md:h-10 w-auto object-contain"
@@ -82,7 +95,7 @@ export default function PartnersFooter({ partners, branding }) {
 
                 {/* 5. SOLIDWORKS PDM */}
                 <div className="flex items-center hover:text-white transition-all duration-200 hover:scale-105 flex-shrink-0">
-                  <img
+                  <LogoImg
                     src="/Logos/SOLIDWORKS PDM Logo.png"
                     alt="SOLIDWORKS PDM"
                     className="h-7 sm:h-8 md:h-9 w-auto object-contain"
@@ -91,7 +104,7 @@ export default function PartnersFooter({ partners, branding }) {
 
                 {/* 4. CST Studio Suite */}
                 <div className="flex items-center ">
-                  <img
+                  <LogoImg
                     src="/Logos/JB_CST-Studio_LOGO.png"
                     alt="CST STUDIO SUITE"
                     className="h-9 sm:h-8 md:h-9 w-auto  "
@@ -102,7 +115,7 @@ export default function PartnersFooter({ partners, branding }) {
 
                 {/* 6. SOLIDWORKS Plastics */}
                 <div className="flex items-center hover:text-white transition-all duration-200 hover:scale-105 flex-shrink-0">
-                  <img
+                  <LogoImg
                     src="/Logos/SOLIDWORKS Plastics.png"
                     alt="SOLIDWORKS Plastics"
                     className="h-7 sm:h-8 md:h-9 w-auto object-contain"
@@ -111,7 +124,7 @@ export default function PartnersFooter({ partners, branding }) {
 
                 {/* 7. DriveWorks */}
                 <div className="flex items-center hover:text-white transition-all duration-200 hover:scale-105 flex-shrink-0">
-                  <img
+                  <LogoImg
                     src="/Logos/DriveWorks Logo-02.png"
                     alt="DriveWorks"
                     className="h-7 sm:h-8 md:h-9 w-auto object-contain"
@@ -120,7 +133,7 @@ export default function PartnersFooter({ partners, branding }) {
 
                 {/* 8. BOM Creator */}
                 <div className="flex items-center hover:text-white transition-all duration-200 hover:scale-105 flex-shrink-0">
-                  <img
+                  <LogoImg
                     src="/Logos/BOM-Creator.png"
                     alt="BOM Creator"
                     className="h-8 sm:h-9 md:h-10 w-auto object-contain"
@@ -132,7 +145,7 @@ export default function PartnersFooter({ partners, branding }) {
               <div className="flex items-center gap-8 sm:gap-12 lg:gap-14 flex-shrink-0" aria-hidden="true">
                 {/* 1. 3DS SOLIDWORKS */}
                 <div className="flex items-center hover:text-white transition-all duration-200 hover:scale-105 flex-shrink-0">
-                  <img
+                  <LogoImg
                     src="/Logos/solidworks-logo.png"
                     alt="3DS SOLIDWORKS"
                     className="h-8 sm:h-9 md:h-10 w-auto object-contain"
@@ -141,12 +154,12 @@ export default function PartnersFooter({ partners, branding }) {
 
                 {/* 2. 3DEXPERIENCE */}
                 <div className="flex items-center gap-2 hover:text-white transition-all duration-200 hover:scale-105 flex-shrink-0">
-                  <img
+                  <LogoImg
                     src="/Logos/3DEXPERIENCE circle logo.png"
                     alt="3DEXPERIENCE Compass"
                     className="h-9 sm:h-10 md:h-11 w-auto object-contain flex-shrink-0"
                   />
-                  <img
+                  <LogoImg
                     src="/Logos/3DEXPERIENCE Logo.png"
                     alt="3DEXPERIENCE"
                     className="h-4 sm:h-5 md:h-5.5 w-auto object-contain"
@@ -155,7 +168,7 @@ export default function PartnersFooter({ partners, branding }) {
 
                 {/* 3. SIMULIA Abaqus */}
                 <div className="flex items-center hover:text-white transition-all duration-200 hover:scale-105 flex-shrink-0">
-                  <img
+                  <LogoImg
                     src="/Logos/Simulia Abaqus logo.png"
                     alt="3DS SIMULIA"
                     className="h-8 sm:h-9 md:h-10 w-auto object-contain"
@@ -164,7 +177,7 @@ export default function PartnersFooter({ partners, branding }) {
 
                 {/* 4. CST Studio Suite */}
                 <div className="flex items-center transition-all duration-200 hover:scale-105 flex-shrink-0">
-                  <img
+                  <LogoImg
                     src="/Logos/JB_CST-Studio_LOGO.png"
                     alt="CST STUDIO SUITE"
                     className="h-7 sm:h-8 md:h-9 w-auto object-contain brightness-0 invert opacity-95 hover:opacity-100"
@@ -173,7 +186,7 @@ export default function PartnersFooter({ partners, branding }) {
 
                 {/* 5. SOLIDWORKS PDM */}
                 <div className="flex items-center hover:text-white transition-all duration-200 hover:scale-105 flex-shrink-0">
-                  <img
+                  <LogoImg
                     src="/Logos/SOLIDWORKS PDM Logo.png"
                     alt="SOLIDWORKS PDM"
                     className="h-7 sm:h-8 md:h-9 w-auto object-contain"
@@ -182,7 +195,7 @@ export default function PartnersFooter({ partners, branding }) {
 
                 {/* 6. SOLIDWORKS Plastics */}
                 <div className="flex items-center hover:text-white transition-all duration-200 hover:scale-105 flex-shrink-0">
-                  <img
+                  <LogoImg
                     src="/Logos/SOLIDWORKS Plastics.png"
                     alt="SOLIDWORKS Plastics"
                     className="h-7 sm:h-8 md:h-9 w-auto object-contain"
@@ -191,7 +204,7 @@ export default function PartnersFooter({ partners, branding }) {
 
                 {/* 7. DriveWorks */}
                 <div className="flex items-center hover:text-white transition-all duration-200 hover:scale-105 flex-shrink-0">
-                  <img
+                  <LogoImg
                     src="/Logos/DriveWorks Logo-02.png"
                     alt="DriveWorks"
                     className="h-7 sm:h-8 md:h-9 w-auto object-contain"
@@ -200,7 +213,7 @@ export default function PartnersFooter({ partners, branding }) {
 
                 {/* 8. BOM Creator */}
                 <div className="flex items-center hover:text-white transition-all duration-200 hover:scale-105 flex-shrink-0">
-                  <img
+                  <LogoImg
                     src="/Logos/BOM-Creator.png"
                     alt="BOM Creator"
                     className="h-8 sm:h-9 md:h-10 w-auto object-contain"

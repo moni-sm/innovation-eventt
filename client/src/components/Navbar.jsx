@@ -1,4 +1,5 @@
 import React from 'react';
+import { handleImageFallback } from '../utils/assetHelper';
 
 export default function Navbar() {
   return (
@@ -12,6 +13,7 @@ export default function Navbar() {
               src="/Logos/conceptia-konnect-logo.png"
               alt="Conceptia KONNECT - Your Trusted Digital Solutions Partner"
               className="h-28 sm:h-24 w-auto object-contain"
+              onError={(e) => handleImageFallback(e)}
             />
           </a>
 
@@ -26,16 +28,12 @@ export default function Navbar() {
 
           {/* Right Brand: Dassault Systèmes 3DEXPERIENCE & SOLIDWORKS */}
           <div className="flex items-center gap-2.5 sm:gap-3.5">
-            <img
-              src="/Logos/3DEXPERIENCE circle logo.png"
-              alt="3DEXPERIENCE Compass"
-              className="h-9 sm:h-11 w-auto object-contain"
-            />
             <div className="h-7 w-px bg-slate-200 hidden sm:block"></div>
             <img
               src="/Logos/solidworks-logo.png"
               alt="3DS SOLIDWORKS"
               className="h-12 sm:h-13 w-auto object-contain"
+              onError={(e) => handleImageFallback(e)}
             />
           </div>
 

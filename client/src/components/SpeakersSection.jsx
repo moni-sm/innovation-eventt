@@ -1,5 +1,6 @@
 import React from 'react';
 import FadeIn from './FadeIn';
+import { getAssetUrl, handleImageFallback } from '../utils/assetHelper';
 
 export default function SpeakersSection({ speakers }) {
   const visibleSpeakers = Array.isArray(speakers)
@@ -37,14 +38,11 @@ export default function SpeakersSection({ speakers }) {
               {/* Speaker Image Container */}
               <div className="relative aspect-[4/4.2] overflow-hidden bg-slate-100">
                 <img
-                  src={speaker.photoUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400'}
+                  src={getAssetUrl(speaker.photoUrl) || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400'}
                   alt={speaker.name || 'Event speaker'}
                   loading="lazy"
                   className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400';
-                  }}
+                  onError={(e) => handleImageFallback(e, 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400')}
                 />
               </div>
 

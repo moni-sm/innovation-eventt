@@ -76,31 +76,31 @@ export const defaultEventConfig = {
       id: "sp-1",
       name: "Vijay Karthik Dhanapal",
       designation: "Partner Sales Manager, Dassault Systemes",
-      photoUrl: "/people/Vijay Karthik Dhanapal.png"
+      photoUrl: "/people/vijay-karthik-dhanapal.png"
     },
     {
       id: "sp-2",
       name: "Ramesh Aravind",
       designation: "Customer Success Specialist",
-      photoUrl: "/people/Ramesh Aravind.jfif"
+      photoUrl: "/people/ramesh-aravind.jpg"
     },
     {
       id: "sp-3",
       name: "Mohamed Riswan M",
       designation: "Solution Associate",
-      photoUrl: "/people/Mohamed Riswan M.png"
+      photoUrl: "/people/mohamed-riswan-m.png"
     },
     {
       id: "sp-4",
       name: "Mahendra H",
       designation: "Product Manager, Simulation Solutions",
-      photoUrl: "/people/Mahendra H.jfif"
+      photoUrl: "/people/mahendra-h.jpg"
     },
     {
       id: "sp-5",
       name: "Satish Varadharaj",
       designation: "Team Lead - Enterprise Products",
-      photoUrl: "/people/Satish Photo 1.jpg"
+      photoUrl: "/people/satish-varadharaj.jpg"
     }
   ],
   venue: {
