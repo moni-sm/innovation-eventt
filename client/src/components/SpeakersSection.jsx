@@ -29,12 +29,19 @@ export default function SpeakersSection({ speakers }) {
 
       {/* Speaker Cards Grid */}
       {visibleSpeakers.length > 0 ? (
-        <div className="grid grid-cols-3 gap-2.5 sm:gap-3.5 pt-2">
-          {visibleSpeakers.map((speaker, idx) => (
-          <FadeIn key={speaker.id || idx} direction="up" delay={idx * 60}>
-            <div
-              className="group h-full flex flex-col bg-white rounded-2xl overflow-hidden border border-slate-100 hover:border-slate-300 shadow-sm hover:shadow-md transition-all duration-300"
-            >
+        <div className="grid grid-cols-6 gap-2.5 sm:gap-3.5 pt-2">
+          {visibleSpeakers.map((speaker, idx) => {
+            const isFourthOfFive = visibleSpeakers.length === 5 && idx === 3;
+            return (
+              <FadeIn
+                key={speaker.id || idx}
+                direction="up"
+                delay={idx * 60}
+                className={`col-span-2 ${isFourthOfFive ? 'col-start-2' : ''}`}
+              >
+                <div
+                  className="group h-full flex flex-col bg-white rounded-2xl overflow-hidden border border-slate-100 hover:border-slate-300 shadow-sm hover:shadow-md transition-all duration-300"
+                >
               {/* Speaker Image Container */}
               <div className="relative aspect-[4/4.2] overflow-hidden bg-slate-100">
                 <img
@@ -62,7 +69,8 @@ export default function SpeakersSection({ speakers }) {
               </div>
             </div>
           </FadeIn>
-          ))}
+        );
+      })}
         </div>
       ) : (
         <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-8 text-center text-sm text-slate-500">
