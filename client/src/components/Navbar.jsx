@@ -32,7 +32,7 @@ export default function Navbar() {
             <img
               src="/Logos/solidworks-white-logo.png"
               alt="3DS SOLIDWORKS"
-              className="h-24 sm:h-20 w-auto object-contain"
+              className="h-28 sm:h-20 w-auto object-contain"
               onError={(e) => handleImageFallback(e, '/Logos/solidworks-logo.png')}
             />
           </div>
