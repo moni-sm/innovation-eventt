@@ -12,7 +12,7 @@ export default function RegistrationSuccessModal({ registration, eventInfo, onCl
       'BEGIN:VEVENT',
       `SUMMARY:SOLIDWORKS Innovation Day 2026`,
       `DESCRIPTION:Join Conceptia KONNECT and Dassault Systèmes for SOLIDWORKS Innovation Day 2026. Smarter Design. Faster Innovation.`,
-      `LOCATION:${eventInfo?.venueName || 'Novotel Kochi Infopark'}, ${eventInfo?.venueAddress || 'Kochi'}`,
+      `LOCATION:${eventInfo?.venueName || 'Hablis Hotel Chennai'}, ${eventInfo?.venueAddress || 'Kochi'}`,
       'DTSTART:20261113T033000Z',
       'DTEND:20261113T083000Z',
       'STATUS:CONFIRMED',
@@ -75,7 +75,7 @@ export default function RegistrationSuccessModal({ registration, eventInfo, onCl
           </div>
           <div className="flex items-start gap-2 text-slate-600">
             <MapPin className="w-4 h-4 text-brand-red flex-shrink-0 mt-0.5" />
-            <span>{eventInfo?.venueName || 'Novotel Kochi Infopark'}, {eventInfo?.venueAddress || 'Kochi'}</span>
+            <span>{eventInfo?.venueName || 'Hablis Hotel Chennai'}, {eventInfo?.venueAddress || ' 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032'}</span>
           </div>
         </div>
 

@@ -6,8 +6,9 @@ export default function InfoBar({ info }) {
   const {
     dates = "October 23, 2026",
     time = "09:00 AM – 02:00 PM",
-    venueName = "Hablis - A Business Hotel In Chennai",
-    venueAddress = "19, GST Road, Guindy, Chennai, Tamil Nadu 600032"
+    venueName = "Hablis Hotel Chennai",
+    venueAddress = " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
+    mode = "In-Person Event"
   } = info || {};
 
   return (
