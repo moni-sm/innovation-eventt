@@ -1,32 +1,50 @@
 import React from 'react';
-import { Sparkles, MonitorPlay, Users2, Award, CheckCircle2 } from 'lucide-react';
+import { Sparkles, MonitorPlay, Users2, Award, Bot, Zap } from 'lucide-react';
 
 export default function HighlightsSection({ highlights }) {
   const getHighlightIcon = (index, iconType) => {
-    switch (index) {
+    switch (iconType || index) {
+      case 'sparkles':
       case 0:
         return (
-          <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-brand-red to-red-500 text-white flex items-center justify-center shadow-lg shadow-red-500/25 group-hover:scale-110 transition-transform">
-            <Sparkles className="w-8 h-8" />
+          <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-brand-red to-red-500 text-white flex items-center justify-center shadow-lg shadow-red-500/25 group-hover:scale-110 transition-transform">
+            <Sparkles className="w-7 h-7" />
           </div>
         );
+      case 'presentation':
       case 1:
         return (
-          <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#0b1b3d] to-[#1e3a8a] text-white flex items-center justify-center shadow-lg shadow-blue-900/20 group-hover:scale-110 transition-transform">
-            <MonitorPlay className="w-8 h-8" />
+          <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#0b1b3d] to-[#1e3a8a] text-white flex items-center justify-center shadow-lg shadow-blue-900/20 group-hover:scale-110 transition-transform">
+            <MonitorPlay className="w-7 h-7" />
           </div>
         );
+      case 'award':
       case 2:
         return (
-          <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-brand-red to-red-500 text-white flex items-center justify-center shadow-lg shadow-red-500/25 group-hover:scale-110 transition-transform">
-            <Users2 className="w-8 h-8" />
+          <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-brand-red to-red-500 text-white flex items-center justify-center shadow-lg shadow-red-500/25 group-hover:scale-110 transition-transform">
+            <Award className="w-7 h-7" />
           </div>
         );
+      case 'users':
       case 3:
+        return (
+          <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#0b1b3d] to-[#1e3a8a] text-white flex items-center justify-center shadow-lg shadow-blue-900/20 group-hover:scale-110 transition-transform">
+            <Users2 className="w-7 h-7" />
+          </div>
+        );
+      case 'bot':
+      case 4:
+        return (
+          <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-brand-red to-red-500 text-white flex items-center justify-center shadow-lg shadow-red-500/25 group-hover:scale-110 transition-transform">
+            <Bot className="w-7 h-7" />
+          </div>
+        );
+      case 'zap':
+      case 5:
       default:
         return (
-          <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#0b1b3d] to-[#1e3a8a] text-white flex items-center justify-center shadow-lg shadow-blue-900/20 group-hover:scale-110 transition-transform">
-            <Award className="w-8 h-8" />
+          <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#0b1b3d] to-[#1e3a8a] text-white flex items-center justify-center shadow-lg shadow-blue-900/20 group-hover:scale-110 transition-transform">
+            <Zap className="w-7 h-7" />
           </div>
         );
     }
@@ -47,8 +65,8 @@ export default function HighlightsSection({ highlights }) {
         </h2>
       </div>
 
-      {/* 4 Highlights Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 pt-4">
+      {/* Highlights Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4">
         {highlights && highlights.map((hl, idx) => (
           <div
             key={hl.id || idx}
@@ -60,7 +78,7 @@ export default function HighlightsSection({ highlights }) {
               {hl.title}
             </h4>
             {hl.description && (
-              <p className="text-[11px] text-slate-400 mt-1 line-clamp-2">
+              <p className="text-[11px] text-slate-400 mt-1 line-clamp-3">
                 {hl.description}
               </p>
             )}

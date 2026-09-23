@@ -29,7 +29,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col font-sans">
+    <div className="min-h-screen flex flex-col font-sans animate-fade-in">
       <Navbar eventData={eventData} />
       <LandingPage eventData={eventData} />
     </div>

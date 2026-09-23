@@ -33,6 +33,7 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
+app.use(express.static(publicDir));
 app.use('/assets', express.static(publicDir));
 app.use('/uploads', express.static(uploadsDir));
 

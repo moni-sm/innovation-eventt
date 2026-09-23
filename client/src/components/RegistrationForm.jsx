@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { api } from '../services/api';
+import FadeIn from './FadeIn';
 
 export default function RegistrationForm({ registrationForm, onRegistrationSuccess }) {
   const {
@@ -67,7 +68,8 @@ export default function RegistrationForm({ registrationForm, onRegistrationSucce
   };
 
   return (
-    <div id="register-card" className="bg-white rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-200/80 p-6 md:p-8 transition-all hover:shadow-2xl">
+    <FadeIn direction="up" delay={100}>
+      <div id="register-card" className="bg-white rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-200/80 p-6 md:p-8 transition-all hover:shadow-2xl">
       <div className="mb-6">
         <h3 className="text-2xl font-black text-slate-900 tracking-tight">
           {title}
@@ -194,5 +196,6 @@ export default function RegistrationForm({ registrationForm, onRegistrationSucce
         </p>
       </form>
     </div>
+    </FadeIn>
   );
 }

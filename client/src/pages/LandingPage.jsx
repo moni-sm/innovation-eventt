@@ -5,9 +5,10 @@ import RegistrationForm from '../components/RegistrationForm';
 import AgendaSection from '../components/AgendaSection';
 import SpeakersSection from '../components/SpeakersSection';
 import VenueSection from '../components/VenueSection';
-import HighlightsSection from '../components/HighlightsSection';
+import WhatToExpectSection from '../components/WhatToExpectSection';
 import PartnersFooter from '../components/PartnersFooter';
 import RegistrationSuccessModal from '../components/RegistrationSuccessModal';
+import FadeIn from '../components/FadeIn';
 
 export default function LandingPage({ eventData, onRegistrationSuccess }) {
   const [confirmedAttendee, setConfirmedAttendee] = useState(null);
@@ -38,8 +39,12 @@ export default function LandingPage({ eventData, onRegistrationSuccess }) {
       {/* 2. Floating Info Bar (Dates, Venue, Mode) */}
       <InfoBar info={eventData?.info} />
 
-      {/* 3. Main Content Grid - Faithfully structured matching the flyer */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 flex-1">
+      {/* 3. Main Content Grid */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 flex-1 space-y-20">
+        
+        {/* Independent What to Expect Section with 6 Bulletpoints */}
+        <WhatToExpectSection />
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           
           {/* Left Column (lg: 7 cols): Agenda & Venue */}
@@ -71,8 +76,7 @@ export default function LandingPage({ eventData, onRegistrationSuccess }) {
             {/* Separator */}
             <div className="h-px bg-slate-200"></div>
 
-            {/* Why Attend & Key Highlights */}
-            <HighlightsSection highlights={eventData?.highlights} />
+          
 
           </div>
 

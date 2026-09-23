@@ -16,24 +16,24 @@ const EVENT_FILE = path.join(DATA_DIR, 'event.json');
 export const defaultEventData = {
   hero: {
     invitationTag: "YOU'RE INVITED TO",
-    titlePrefix: "SOLIDWORKS",
-    titleHighlight: "Innovation Day 2026",
-    tagline: "Smarter Design. Faster Innovation.",
-    description: "Discover the latest in SOLIDWORKS and 3DEXPERIENCE and how it can power your next big idea.",
-    ctaText: "REGISTER NOW",
-    heroImage: "/assets/turbine.png"
+    titlePrefix: "EXPLORE SOLIDWORKS 2027",
+    titleHighlight: "at SOLIDWORKS Innovation Day 2026",
+    tagline: "AI is transforming engineering. Are you ready?",
+    description: "Discover the latest AI-powered SOLIDWORKS innovations across design, manufacturing, data management, and simulation. Learn how SOLIDWORKS AI and Virtual Companions are transforming the way engineers design, validate, collaborate, and innovate.",
+    ctaText: "SAVE YOUR SPOT",
+    heroImage: "/assets/robotic-arm.png"
   },
   info: {
-    dates: "November 13, 2026",
+    dates: "October 23, 2026",
     time: "09:00 AM – 02:00 PM",
-    venueName: "Novotel Kochi Infopark",
-    venueAddress: "Kakkanad, Kochi, Kerala 682030",
+    venueName: "Hablis - A Business Hotel In Chennai",
+    venueAddress: "19, GST Road, Guindy, Chennai, Tamil Nadu 600032",
     mode: "In-Person Event"
   },
   registrationForm: {
-    title: "Register Now",
+    title: "Save Your Spot",
     subtitle: "Secure your spot for this exclusive event.",
-    buttonText: "Register Now",
+    buttonText: "Save Your Spot",
     roles: [
       "Design Engineer",
       "CAD / Mechanical Engineer",
@@ -55,28 +55,28 @@ export const defaultEventData = {
     {
       id: "ag-2",
       time: "10:00 AM – 10:45 AM",
-      title: "SOLIDWORKS 2026 – What's New",
+      title: "Test-Drive SOLIDWORKS 2027 & AI Features",
       icon: "monitor",
       badgeColor: "bg-red-500"
     },
     {
       id: "ag-3",
       time: "11:00 AM – 12:00 PM",
-      title: "Industry Applications & Customer Success Stories",
+      title: "AI Virtual Companions & Industry Applications",
       icon: "settings",
       badgeColor: "bg-red-500"
     },
     {
       id: "ag-4",
       time: "12:00 PM – 01:00 PM",
-      title: "Expert Panel Discussion",
+      title: "Expert Panel Discussion & Best Practices",
       icon: "users",
       badgeColor: "bg-red-500"
     },
     {
       id: "ag-5",
       time: "01:00 PM – 02:00 PM",
-      title: "Lunch & Networking",
+      title: "Lunch & Peer Networking",
       icon: "utensils",
       badgeColor: "bg-red-500"
     }
@@ -102,35 +102,47 @@ export const defaultEventData = {
     }
   ],
   venue: {
-    name: "Novotel Kochi Infopark",
-    address: "Kakkanad, Kochi, Kerala 682030",
-    directionsUrl: "https://www.google.com/maps/search/?api=1&query=Novotel+Kochi+Infopark+Kakkanad",
-    imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800"
+    name: "Hablis - A Business Hotel In Chennai",
+    address: "19, GST Road, Guindy, Chennai, Tamil Nadu 600032",
+    directionsUrl: "https://www.google.com/maps/search/?api=1&query=Hablis+Hotel+Chennai+GST+Road+Guindy",
+    imageUrl: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=800"
   },
   highlights: [
     {
       id: "hl-1",
-      title: "Latest Product Updates",
-      icon: "calendar",
-      description: "Get first-hand look at SOLIDWORKS 2026 features."
+      title: "AI-powered design tools",
+      icon: "sparkles",
+      description: "Enhance your everyday workflow with intelligent AI assistance."
     },
     {
       id: "hl-2",
-      title: "Live Demos & Real-World Use Cases",
+      title: "Latest SOLIDWORKS 2027 features",
       icon: "presentation",
-      description: "Deep dive into real-world simulation and modeling."
+      description: "Test-drive the newest tools and capabilities."
     },
     {
       id: "hl-3",
-      title: "Expert Networking",
-      icon: "users",
-      description: "Connect with 250+ top engineering professionals."
+      title: "Best practices & expert tips",
+      icon: "award",
+      description: "Learn from SOLIDWORKS professionals."
     },
     {
       id: "hl-4",
-      title: "Exclusive Customer Stories",
-      icon: "award",
-      description: "Inspiring transformations from premier companies."
+      title: "Connect with peers",
+      icon: "users",
+      description: "Network with engineers and professionals in your area."
+    },
+    {
+      id: "hl-5",
+      title: "AI Virtual Companions",
+      icon: "bot",
+      description: "Get intelligent assistance throughout your work."
+    },
+    {
+      id: "hl-6",
+      title: "Work smarter & faster",
+      icon: "zap",
+      description: "Discover how AI can accelerate your design process."
     }
   ],
   partners: {
