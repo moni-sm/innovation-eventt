@@ -217,23 +217,45 @@ export const localStore = {
     const list = readJSON(REGISTRATIONS_FILE, []);
     return list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   },
+  getRegistrationById(id) {
+    const list = readJSON(REGISTRATIONS_FILE, []);
+    return list.find(r => r._id === id || r.id === id || r.qrCodeToken === id) || null;
+  },
   addRegistration(record) {
     const list = readJSON(REGISTRATIONS_FILE, []);
+    const id = 'reg_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
     const newRecord = {
-      _id: 'reg_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7),
+      _id: id,
       ...record,
       status: record.status || 'Confirmed',
+      emailSent: record.emailSent || false,
+      emailSentAt: record.emailSentAt || null,
+      attendedAt: record.attendedAt || null,
+      qrCodeToken: record.qrCodeToken || id,
       createdAt: new Date().toISOString()
     };
     list.unshift(newRecord);
     writeJSON(REGISTRATIONS_FILE, list);
     return newRecord;
   },
+  updateRegistration(id, updateData) {
+    const list = readJSON(REGISTRATIONS_FILE, []);
+    const index = list.findIndex(r => r._id === id || r.id === id || r.qrCodeToken === id);
+    if (index !== -1) {
+      list[index] = { ...list[index], ...updateData };
+      writeJSON(REGISTRATIONS_FILE, list);
+      return list[index];
+    }
+    return null;
+  },
   updateRegistrationStatus(id, status) {
     const list = readJSON(REGISTRATIONS_FILE, []);
-    const index = list.findIndex(r => r._id === id || r.id === id);
+    const index = list.findIndex(r => r._id === id || r.id === id || r.qrCodeToken === id);
     if (index !== -1) {
       list[index].status = status;
+      if (status === 'Attended' && !list[index].attendedAt) {
+        list[index].attendedAt = new Date().toISOString();
+      }
       writeJSON(REGISTRATIONS_FILE, list);
       return list[index];
     }
@@ -242,7 +264,7 @@ export const localStore = {
   deleteRegistration(id) {
     let list = readJSON(REGISTRATIONS_FILE, []);
     const initialLen = list.length;
-    list = list.filter(r => r._id !== id && r.id !== id);
+    list = list.filter(r => r._id !== id && r.id !== id && r.qrCodeToken !== id);
     writeJSON(REGISTRATIONS_FILE, list);
     return list.length < initialLen;
   }

@@ -38,6 +38,22 @@ const RegistrationSchema = new mongoose.Schema(
       enum: ['Confirmed', 'Pending', 'Attended', 'Cancelled'],
       default: 'Confirmed'
     },
+    emailSent: {
+      type: Boolean,
+      default: false
+    },
+    emailSentAt: {
+      type: Date,
+      default: null
+    },
+    attendedAt: {
+      type: Date,
+      default: null
+    },
+    qrCodeToken: {
+      type: String,
+      default: ''
+    },
     notes: {
       type: String,
       default: ''

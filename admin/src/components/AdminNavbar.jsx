@@ -2,7 +2,7 @@ import React from 'react';
 import { Download, RefreshCw, Mail } from 'lucide-react';
 import { api } from '../services/api';
 
-export default function AdminNavbar({ loading, onRefresh }) {
+export default function AdminNavbar({ loading, onRefresh, onOpenBulkEmail }) {
   return (
     <header className="bg-slate-900 text-white sticky top-0 z-40 border-b border-slate-800 shadow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
@@ -22,7 +22,15 @@ export default function AdminNavbar({ loading, onRefresh }) {
         </div>
 
         {/* Actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
+          <button
+            onClick={onOpenBulkEmail}
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold tracking-wide shadow-md transition-all hover:scale-[1.02]"
+          >
+            <Mail className="w-3.5 h-3.5" />
+            <span>Send QR Passes</span>
+          </button>
+
           <a
             href={api.getEmailInviteUrl()}
             target="_blank"

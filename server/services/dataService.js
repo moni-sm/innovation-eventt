@@ -71,10 +71,66 @@ export const dataService = {
     return localStore.updateRegistrationStatus(id, status);
   },
 
+  async getRegistrationById(id) {
+    if (isMongoActive()) {
+      try {
+        let record = null;
+        if (id.match(/^[0-9a-fA-F]{24}$/)) {
+          record = await Registration.findById(id).lean();
+        }
+        if (!record) {
+          record = await Registration.findOne({ qrCodeToken: id }).lean();
+        }
+        if (record) return record;
+      } catch (err) {
+        console.error('MongoDB getRegistrationById error, falling back:', err.message);
+      }
+    }
+    return localStore.getRegistrationById(id);
+  },
+
+  async updateRegistration(id, updateData) {
+    if (isMongoActive()) {
+      try {
+        let record = null;
+        if (id.match(/^[0-9a-fA-F]{24}$/)) {
+          record = await Registration.findByIdAndUpdate(id, updateData, { new: true }).lean();
+        } else {
+          record = await Registration.findOneAndUpdate({ qrCodeToken: id }, updateData, { new: true }).lean();
+        }
+        if (record) return record;
+      } catch (err) {
+        console.error('MongoDB updateRegistration error, falling back:', err.message);
+      }
+    }
+    return localStore.updateRegistration(id, updateData);
+  },
+
+  async markAttended(id) {
+    const now = new Date().toISOString();
+    return this.updateRegistration(id, {
+      status: 'Attended',
+      attendedAt: now
+    });
+  },
+
+  async markEmailSent(id) {
+    const now = new Date().toISOString();
+    return this.updateRegistration(id, {
+      emailSent: true,
+      emailSentAt: now
+    });
+  },
+
   async deleteRegistration(id) {
     if (isMongoActive()) {
       try {
-        const res = await Registration.findByIdAndDelete(id);
+        let res = null;
+        if (id.match(/^[0-9a-fA-F]{24}$/)) {
+          res = await Registration.findByIdAndDelete(id);
+        } else {
+          res = await Registration.findOneAndDelete({ qrCodeToken: id });
+        }
         return !!res;
       } catch (err) {
         console.error('MongoDB deleteRegistration error, falling back:', err.message);
