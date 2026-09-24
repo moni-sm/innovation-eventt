@@ -21,13 +21,24 @@ function calculateTimeLeft() {
   };
 }
 
+function renderWithBold(text) {
+  if (!text) return null;
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={i} className="font-bold text-slate-900">{part.slice(2, -2)}</strong>;
+    }
+    return part;
+  });
+}
+
 export default function HeroSection({ hero, onRegisterClick }) {
   const {
     invitationTag = "YOU'RE INVITED TO",
     titlePrefix = "EXPLORE SOLIDWORKS 2027",
     titleHighlight = "at SOLIDWORKS INNOVATION DAY 2026",
     tagline = "AI is transforming engineering. Are you ready?",
-    description = "Discover the latest AI-powered SOLIDWORKS innovations across design, manufacturing, data management, and simulation.",
+    description = "Discover the latest **AI-powered SOLIDWORKS innovations** across design, manufacturing, simulation, and data management.",
     ctaText = "SAVE YOUR SPOT",
     heroImage = "/assets/robotic-arm.png"
   } = hero || {};
@@ -42,7 +53,7 @@ export default function HeroSection({ hero, onRegisterClick }) {
   }, []);
 
   return (
-    <section id="overview" className="relative bg-white text-slate-900 overflow-hidden pt-12 pb-20 lg:pt-16 lg:pb-28 border-b border-slate-100">
+    <section id="overview" className="relative bg-[#fdeae9] text-slate-900 overflow-hidden pt-10 pb-24 lg:pt-14 lg:pb-32 border-b border-red-200/60">
       
       {/* Background Architectural Elements: Engineering CAD Grid & Slanted Light Red Band */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden select-none" aria-hidden="true">
@@ -79,7 +90,7 @@ export default function HeroSection({ hero, onRegisterClick }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center">
           
           {/* Left Column: Headlines & Call to Action */}
-          <div className="lg:col-span-6 space-y-6">
+          <div className="lg:col-span-6 space-y-3.5 sm:space-y-4">
             
             {/* Invitation Tag */}
             <div className="inline-flex items-center gap-2 text-xs md:text-sm font-black tracking-widest text-[#ef2722] uppercase animate-fade-in-down">
@@ -100,23 +111,27 @@ export default function HeroSection({ hero, onRegisterClick }) {
             </div>
 
             {/* Primary Subtext */}
-            <p className="text-base sm:text-lg text-slate-600 max-w-xl font-normal leading-relaxed animate-fade-in-up [animation-delay:200ms]">
-              {description}
+            <p className="text-sm sm:text-base text-slate-700 max-w-xl font-normal leading-relaxed animate-fade-in-up [animation-delay:200ms]">
+              {renderWithBold(
+                (description || "")
+                  .replace(/Learn how SOLIDWORKS AI and Virtual Companions are transforming the way engineers design, validate, collaborate, and innovate\.?/gi, "")
+                  .trim() || "Discover the latest **AI-powered SOLIDWORKS innovations** across design, manufacturing, simulation, and data management."
+              )}
             </p>
 
             {/* AI Narrative Highlight Card */}
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 shadow-sm max-w-xl animate-fade-in-up [animation-delay:300ms]">
-              <div className="flex items-center gap-2 text-[#ef2722] font-bold text-sm sm:text-base">
-                <Bot className="w-5 h-5 text-[#ef2722] flex-shrink-0" />
+            <div className="p-3 sm:p-3.5 rounded-xl bg-white border border-red-200/80 shadow-sm max-w-xl animate-fade-in-up [animation-delay:300ms]">
+              <div className="flex items-center gap-2 text-[#ef2722] font-black text-xs sm:text-sm">
+                <Bot className="w-4 h-4 text-[#ef2722] flex-shrink-0" />
                 <span>AI is transforming engineering. Are you ready?</span>
               </div>
-              <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
-                Experience how AI is becoming an integral part of your workflow—helping engineers work smarter, simplify everyday tasks, and bring ideas to life faster.
+              <p className="text-xs sm:text-[13px] text-slate-700 mt-1 leading-relaxed">
+                See how <strong className="font-bold text-slate-900">SOLIDWORKS AI and Virtual Companions</strong> help engineers work smarter and innovate faster.
               </p>
             </div>
 
             {/* CTA Register Button */}
-            <div className="pt-2 animate-fade-in-up [animation-delay:400ms]">
+            <div className="animate-fade-in-up [animation-delay:400ms]">
               <button
                 onClick={onRegisterClick}
                 className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#ef2722] text-white font-bold text-base shadow-xl shadow-red-600/30 hover:bg-red-700 hover:shadow-red-600/50 active:scale-95 transition-all duration-200"
@@ -127,9 +142,9 @@ export default function HeroSection({ hero, onRegisterClick }) {
             </div>
 
             {/* Event Countdown Timer (October 23 - Chennai) */}
-            <div className="pt-2 max-w-xl animate-fade-in-up [animation-delay:500ms]">
-              <div className="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-lg shadow-slate-200/50">
-                <div className="flex flex-wrap items-center justify-between gap-2 mb-3.5 pb-2.5 border-b border-slate-100">
+            <div className="max-w-xl animate-fade-in-up [animation-delay:500ms]">
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-white border border-red-200/80 shadow-lg shadow-red-950/5">
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-3 pb-2 border-b border-slate-100">
                   <div className="flex items-center gap-2">
                     <span className="relative flex h-2.5 w-2.5">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ef2722] opacity-75"></span>
@@ -147,7 +162,7 @@ export default function HeroSection({ hero, onRegisterClick }) {
 
                 <div className="grid grid-cols-4 gap-2 sm:gap-3 text-center">
                   {/* Days */}
-                  <div className="bg-slate-50 border border-slate-200/90 rounded-xl py-2.5 px-1 shadow-inner">
+                  <div className="bg-slate-50 border border-slate-200/90 rounded-xl py-2 sm:py-2.5 px-1 shadow-inner">
                     <div className="text-2xl sm:text-3xl font-black text-[#004771] font-mono tracking-tight leading-none">
                       {String(timeLeft.days).padStart(2, '0')}
                     </div>
@@ -157,7 +172,7 @@ export default function HeroSection({ hero, onRegisterClick }) {
                   </div>
 
                   {/* Hours */}
-                  <div className="bg-slate-50 border border-slate-200/90 rounded-xl py-2.5 px-1 shadow-inner">
+                  <div className="bg-slate-50 border border-slate-200/90 rounded-xl py-2 sm:py-2.5 px-1 shadow-inner">
                     <div className="text-2xl sm:text-3xl font-black text-[#004771] font-mono tracking-tight leading-none">
                       {String(timeLeft.hours).padStart(2, '0')}
                     </div>
@@ -167,7 +182,7 @@ export default function HeroSection({ hero, onRegisterClick }) {
                   </div>
 
                   {/* Minutes */}
-                  <div className="bg-slate-50 border border-slate-200/90 rounded-xl py-2.5 px-1 shadow-inner">
+                  <div className="bg-slate-50 border border-slate-200/90 rounded-xl py-2 sm:py-2.5 px-1 shadow-inner">
                     <div className="text-2xl sm:text-3xl font-black text-[#004771] font-mono tracking-tight leading-none">
                       {String(timeLeft.minutes).padStart(2, '0')}
                     </div>
@@ -177,7 +192,7 @@ export default function HeroSection({ hero, onRegisterClick }) {
                   </div>
 
                   {/* Seconds */}
-                  <div className="bg-red-50/70 border border-[#ef2722]/40 rounded-xl py-2.5 px-1 shadow-inner relative overflow-hidden">
+                  <div className="bg-red-50/70 border border-[#ef2722]/40 rounded-xl py-2 sm:py-2.5 px-1 shadow-inner relative overflow-hidden">
                     <div className="text-2xl sm:text-3xl font-black text-[#ef2722] font-mono tracking-tight leading-none">
                       {String(timeLeft.seconds).padStart(2, '0')}
                     </div>

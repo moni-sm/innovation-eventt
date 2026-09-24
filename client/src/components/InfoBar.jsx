@@ -12,7 +12,7 @@ export default function InfoBar({ info }) {
   } = info || {};
 
   return (
-    <FadeIn direction="up" delay={200} className="relative -mt-8 lg:-mt-10 max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-20">
+    <FadeIn direction="none" delay={200} className="relative -mt-14 sm:-mt-16 lg:-mt-16 max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-20">
       {/* Branded Red Pill Bar matching flyer with wider & sleeker proportions */}
       <div className="bg-[#ef2722] text-white rounded-[24px] sm:rounded-[28px] shadow-2xl shadow-red-600/35 border-2 border-red-500/80 px-6 py-4 sm:px-10 sm:py-5">
         

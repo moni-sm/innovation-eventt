@@ -8,7 +8,7 @@ export const defaultEventConfig = {
     titlePrefix: "SOLIDWORKS",
     titleHighlight: "Innovation Day 2026",
     tagline: "Smarter Design. Faster Innovation.",
-    description: "Discover the latest in SOLIDWORKS and 3DEXPERIENCE and how it can power your next big idea.",
+    description: "Discover the latest **AI-powered SOLIDWORKS innovations** across design, manufacturing, simulation, and data management.",
     ctaText: "REGISTER NOW",
     heroImage: "/assets/robotic-arm.png"
   },

@@ -19,7 +19,7 @@ export const defaultEventData = {
     titlePrefix: "EXPLORE SOLIDWORKS 2027",
     titleHighlight: "at SOLIDWORKS Innovation Day 2026",
     tagline: "AI is transforming engineering. Are you ready?",
-    description: "Discover the latest AI-powered SOLIDWORKS innovations across design, manufacturing, data management, and simulation. Learn how SOLIDWORKS AI and Virtual Companions are transforming the way engineers design, validate, collaborate, and innovate.",
+    description: "Discover the latest **AI-powered SOLIDWORKS innovations** across design, manufacturing, simulation, and data management.",
     ctaText: "SAVE YOUR SPOT",
     heroImage: "/assets/robotic-arm.png"
   },
