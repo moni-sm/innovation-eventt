@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Bot, Calendar, Clock } from 'lucide-react';
-import { handleImageFallback } from '../utils/assetHelper';
+import { getAssetUrl, handleImageFallback } from '../utils/assetHelper';
 
 function calculateTimeLeft() {
   // Target: October 23, 2026, 09:00:00 IST (+05:30)
@@ -194,10 +194,10 @@ export default function HeroSection({ hero, onRegisterClick }) {
           {/* Right Column: Clean Large Robotic Arm Image shifted more right */}
           <div className="lg:col-span-6 relative flex justify-center lg:justify-end items-center animate-fade-in-left [animation-delay:300ms]">
             <img
-              src="../public/assets/robotic-arm.png"
+              src={getAssetUrl(heroImage || '/assets/robotic-arm.png')}
               alt="SOLIDWORKS 2027 AI Robotic Workcell"
               className="w-full max-w-[650px] lg:max-w-none lg:w-[115%] xl:w-[122%] lg:translate-x-16 xl:translate-x-24 h-auto object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.13)] transition-transform duration-500 hover:scale-105"
-              onError={(e) => handleImageFallback(e)}
+              onError={(e) => handleImageFallback(e, 'https://innovation-event.onrender.com/assets/robotic-arm.png')}
             />
           </div>
 

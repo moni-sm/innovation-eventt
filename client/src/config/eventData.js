@@ -10,7 +10,7 @@ export const defaultEventConfig = {
     tagline: "Smarter Design. Faster Innovation.",
     description: "Discover the latest in SOLIDWORKS and 3DEXPERIENCE and how it can power your next big idea.",
     ctaText: "REGISTER NOW",
-    heroImage: "/assets/turbine.png" // Replace with any image URL or path
+    heroImage: "/assets/robotic-arm.png"
   },
   info: {
     dates: "October 23, 2026",
