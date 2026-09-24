@@ -9,12 +9,13 @@ export default function RegistrationForm({ registrationForm, onRegistrationSucce
     subtitle = "Secure your spot for this exclusive event.",
     buttonText = "Register Now",
     roles = [
+      "CEO / Founder / Director",
       "Design Engineer",
       "CAD / Mechanical Engineer",
       "R&D Manager / Lead",
       "Engineering Director",
       "Manufacturing Specialist",
-      "Academic / Student",
+      "Professor / HOD ",
       "Other"
     ]
   } = registrationForm || {};
@@ -168,6 +169,22 @@ export default function RegistrationForm({ registrationForm, onRegistrationSucce
               <option key={idx} value={role}>{role}</option>
             ))}
           </select>
+        </div>
+
+        {/* City */}
+        <div>
+          <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+            City <span className="text-brand-red">*</span>
+          </label>
+          <input
+            type="text"
+            name="city"
+            value={formData.city}
+            onChange={handleChange}
+            placeholder="e.g. Bangalore"
+            required
+            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-red focus:ring-2 focus:ring-red-100 text-sm outline-none transition-all placeholder:text-slate-400 font-medium"
+          />
         </div>
 
         {/* Submit Button */}

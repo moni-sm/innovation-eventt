@@ -48,11 +48,9 @@ export default function RegistrationSuccessModal({ registration, eventInfo, onCl
         {/* Header */}
         <div className="text-center mb-6">
           <h3 className="text-2xl font-black text-slate-900 tracking-tight">
-            Registration Confirmed!
+            Registration Completed!
           </h3>
-          <p className="text-sm font-medium text-slate-500 mt-1.5">
-            Your spot has been reserved for SOLIDWORKS Innovation Day 2026.
-          </p>
+        
         </div>
 
         {/* Details Card */}
