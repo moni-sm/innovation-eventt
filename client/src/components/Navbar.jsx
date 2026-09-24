@@ -3,11 +3,11 @@ import { handleImageFallback } from '../utils/assetHelper';
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-50 bg-[#090d16] text-white backdrop-blur-md border-b border-slate-800 shadow-md transition-all">
+    <header className="sticky top-0 z-50 bg-[#004771] text-white backdrop-blur-md border-b border-[#003859] shadow-md transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
-          {/* Left Brand: Conceptia KONNECT White Logo for Black Navbar */}
+          {/* Left Brand: Conceptia KONNECT White Logo */}
           <a href="#overview" className="flex items-center gap-3 transition-opacity hover:opacity-90">
             <img
               src="/Logos/conceptia-konnect-white-logo.png"
@@ -28,7 +28,7 @@ export default function Navbar() {
 
           {/* Right Brand: Dassault Systèmes SOLIDWORKS White Logo */}
           <div className="flex items-center gap-2.5 sm:gap-3.5">
-            <div className="h-7 w-px bg-slate-800 hidden sm:block"></div>
+            <div className="h-7 w-px bg-white/20 hidden sm:block"></div>
             <img
               src="/Logos/solidworks-white-logo.png"
               alt="3DS SOLIDWORKS"

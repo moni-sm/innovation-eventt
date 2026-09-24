@@ -83,7 +83,7 @@ export default function RegistrationSuccessModal({ registration, eventInfo, onCl
         <div className="space-y-3">
           <button
             onClick={downloadCalendarFile}
-            className="w-full py-3.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow transition-all cursor-pointer"
+            className="w-full py-3.5 px-4 rounded-xl bg-[#004771] hover:bg-[#003859] text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow transition-all cursor-pointer"
           >
             <Download className="w-4 h-4" />
             <span>Add to Calendar (.ics)</span>
