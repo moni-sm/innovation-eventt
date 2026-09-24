@@ -73,9 +73,9 @@ const ECOSYSTEM_LOGOS = [
     name: 'DriveWorks',
     render: () => (
       <img
-        src="/Logos/DriveWorks Logo-02.png"
+        src="/Logos/DriveWorks Logo-01.png"
         alt="DriveWorks"
-        className="h-7 sm:h-8 md:h-9 w-auto object-contain flex-shrink-0"
+        className="h-9 sm:h-10 md:h-11 w-auto object-contain flex-shrink-0"
       />
     )
   },
