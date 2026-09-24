@@ -48,10 +48,10 @@ export default function RegistrationSuccessModal({ registration, eventInfo, onCl
         {/* Header */}
         <div className="text-center mb-6">
           <h3 className="text-2xl font-black text-slate-900 tracking-tight">
-            Registration Confirmed!
+            Thank you for registering for SOLIDWORKS Innovation Day 2026!
           </h3>
           <p className="text-sm font-medium text-slate-500 mt-1.5">
-            Your spot has been reserved for SOLIDWORKS Innovation Day 2026.
+            Your registration has been received. A confirmation email with the event details will be sent to you shortly.
           </p>
         </div>
 
@@ -77,17 +77,6 @@ export default function RegistrationSuccessModal({ registration, eventInfo, onCl
             <MapPin className="w-4 h-4 text-brand-red flex-shrink-0 mt-0.5" />
             <span>{eventInfo?.venueName || 'Hablis Hotel Chennai'}, {eventInfo?.venueAddress || ' 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032'}</span>
           </div>
-        </div>
-
-        {/* Buttons */}
-        <div className="space-y-3">
-          <button
-            onClick={downloadCalendarFile}
-            className="w-full py-3.5 px-4 rounded-xl bg-[#004771] hover:bg-[#003859] text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow transition-all cursor-pointer"
-          >
-            <Download className="w-4 h-4" />
-            <span>Add to Calendar (.ics)</span>
-          </button>
         </div>
 
       </div>
