@@ -23,6 +23,11 @@ const RegistrationSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
+    city: {
+      type: String,
+      default: '',
+      trim: true
+    },
     jobRole: {
       type: String,
       required: true,

@@ -6,12 +6,12 @@ const router = express.Router();
 // POST /api/registrations - Register / nominate
 router.post('/', async (req, res) => {
   try {
-    const { fullName, workEmail, phoneNumber, companyName, jobRole } = req.body;
+    const { fullName, workEmail, phoneNumber, companyName, jobRole, city } = req.body;
 
     if (!fullName || !workEmail || !phoneNumber || !companyName || !jobRole) {
       return res.status(400).json({
         success: false,
-        message: 'All fields are required: Full Name, Work Email, Phone Number, Company Name, and Job Role.'
+        message: 'All fields are required: Full Name, Work Email, Phone Number, Company Name, and Designation.'
       });
     }
 
@@ -28,6 +28,7 @@ router.post('/', async (req, res) => {
       workEmail: workEmail.trim().toLowerCase(),
       phoneNumber: phoneNumber.trim(),
       companyName: companyName.trim(),
+      city: (city || '').trim(),
       jobRole: jobRole.trim(),
       status: 'Confirmed'
     });
@@ -56,6 +57,7 @@ router.get('/', async (req, res) => {
           (r.fullName && r.fullName.toLowerCase().includes(q)) ||
           (r.workEmail && r.workEmail.toLowerCase().includes(q)) ||
           (r.companyName && r.companyName.toLowerCase().includes(q)) ||
+          (r.city && r.city.toLowerCase().includes(q)) ||
           (r.phoneNumber && r.phoneNumber.includes(q))
       );
     }
@@ -162,13 +164,14 @@ router.get('/export/csv', async (req, res) => {
   try {
     const registrations = await dataService.getAllRegistrations();
 
-    const headers = ['ID', 'Full Name', 'Work Email', 'Phone Number', 'Company Name', 'Job Role', 'Status', 'Registered Date'];
+    const headers = ['ID', 'Full Name', 'Work Email', 'Phone Number', 'Company Name', 'City', 'Designation', 'Status', 'Registered Date'];
     const rows = registrations.map(r => [
       `"${r._id || r.id || ''}"`,
       `"${(r.fullName || '').replace(/"/g, '""')}"`,
       `"${(r.workEmail || '').replace(/"/g, '""')}"`,
       `"${(r.phoneNumber || '').replace(/"/g, '""')}"`,
       `"${(r.companyName || '').replace(/"/g, '""')}"`,
+      `"${(r.city || '').replace(/"/g, '""')}"`,
       `"${(r.jobRole || '').replace(/"/g, '""')}"`,
       `"${r.status || 'Confirmed'}"`,
       `"${new Date(r.createdAt).toLocaleString()}"`

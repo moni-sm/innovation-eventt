@@ -52,21 +52,25 @@ export default function AttendeeModal({ attendee, onClose }) {
               <p className="font-bold text-slate-800 mt-0.5">{attendee.companyName}</p>
             </div>
             <div>
-              <label className="font-bold text-slate-400 uppercase tracking-wider">Job Role</label>
-              <p className="font-bold text-slate-800 mt-0.5">{attendee.jobRole}</p>
+              <label className="font-bold text-slate-400 uppercase tracking-wider">City</label>
+              <p className="font-bold text-slate-800 mt-0.5">{attendee.city || '—'}</p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="font-bold text-slate-400 uppercase tracking-wider">Designation</label>
+              <p className="font-bold text-slate-800 mt-0.5">{attendee.jobRole}</p>
+            </div>
             <div>
               <label className="font-bold text-slate-400 uppercase tracking-wider">Status</label>
               <p className={`font-bold mt-0.5 ${STATUS_COLOR[attendee.status] || 'text-slate-700'}`}>
                 {attendee.status}
               </p>
             </div>
-            <div>
-              <label className="font-bold text-slate-400 uppercase tracking-wider">Registered On</label>
-              <p className="text-slate-700 mt-0.5">{new Date(attendee.createdAt).toLocaleString()}</p>
-            </div>
+          </div>
+          <div>
+            <label className="font-bold text-slate-400 uppercase tracking-wider">Registered On</label>
+            <p className="text-slate-700 mt-0.5">{new Date(attendee.createdAt).toLocaleString()}</p>
           </div>
         </div>
 

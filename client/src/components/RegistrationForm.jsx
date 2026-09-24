@@ -8,7 +8,8 @@ export default function RegistrationForm({ registrationForm, onRegistrationSucce
     title = "Register Now",
     subtitle = "Secure your spot for this exclusive event.",
     buttonText = "Register Now",
-    roles = [
+    roles: defaultRoles = [
+      "CEO/Director/MD",
       "Design Engineer",
       "CAD / Mechanical Engineer",
       "R&D Manager / Lead",
@@ -19,11 +20,17 @@ export default function RegistrationForm({ registrationForm, onRegistrationSucce
     ]
   } = registrationForm || {};
 
+  // Ensure CEO/Director/MD is always available even if backend returned an older roles array
+  const roles = defaultRoles?.includes("CEO/Director/MD")
+    ? defaultRoles
+    : ["CEO/Director/MD", ...(defaultRoles || [])];
+
   const [formData, setFormData] = useState({
     fullName: '',
     workEmail: '',
     phoneNumber: '',
     companyName: '',
+    city: '',
     jobRole: ''
   });
 
@@ -37,7 +44,7 @@ export default function RegistrationForm({ registrationForm, onRegistrationSucce
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.fullName || !formData.workEmail || !formData.phoneNumber || !formData.companyName || !formData.jobRole) {
+    if (!formData.fullName || !formData.workEmail || !formData.phoneNumber || !formData.companyName || !formData.city || !formData.jobRole) {
       setError('Please fill in all required fields.');
       return;
     }
@@ -54,6 +61,7 @@ export default function RegistrationForm({ registrationForm, onRegistrationSucce
           workEmail: '',
           phoneNumber: '',
           companyName: '',
+          city: '',
           jobRole: ''
         });
         if (onRegistrationSuccess) {
@@ -135,26 +143,42 @@ export default function RegistrationForm({ registrationForm, onRegistrationSucce
           />
         </div>
 
-        {/* Company Name */}
-        <div>
-          <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-            Company Name <span className="text-brand-red">*</span>
-          </label>
-          <input
-            type="text"
-            name="companyName"
-            value={formData.companyName}
-            onChange={handleChange}
-            placeholder="e.g. TechCorp Innovations"
-            required
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-red focus:ring-2 focus:ring-red-100 text-sm outline-none transition-all placeholder:text-slate-400 font-medium"
-          />
+        {/* Company Name & City */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              Company Name <span className="text-brand-red">*</span>
+            </label>
+            <input
+              type="text"
+              name="companyName"
+              value={formData.companyName}
+              onChange={handleChange}
+              placeholder="e.g. TechCorp Innovations"
+              required
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-red focus:ring-2 focus:ring-red-100 text-sm outline-none transition-all placeholder:text-slate-400 font-medium"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              City <span className="text-brand-red">*</span>
+            </label>
+            <input
+              type="text"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              placeholder="e.g. Chennai"
+              required
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-red focus:ring-2 focus:ring-red-100 text-sm outline-none transition-all placeholder:text-slate-400 font-medium"
+            />
+          </div>
         </div>
 
-        {/* Job Role Dropdown */}
+        {/* Designation Dropdown */}
         <div>
           <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-            Job Role <span className="text-brand-red">*</span>
+            Designation <span className="text-brand-red">*</span>
           </label>
           <select
             name="jobRole"
@@ -163,7 +187,7 @@ export default function RegistrationForm({ registrationForm, onRegistrationSucce
             required
             className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-red focus:ring-2 focus:ring-red-100 text-sm outline-none transition-all bg-white font-medium text-slate-700 cursor-pointer"
           >
-            <option value="" disabled>Select your role</option>
+            <option value="" disabled>Select your designation</option>
             {roles.map((role, idx) => (
               <option key={idx} value={role}>{role}</option>
             ))}

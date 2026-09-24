@@ -44,7 +44,10 @@ export default function NominationsTable({ registrations, onStatusChange, onDele
                   <td className="py-4 px-6">
                     <div className="flex items-center gap-1.5 font-semibold text-slate-800">
                       <Building className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
-                      {reg.companyName}
+                      <span>{reg.companyName}</span>
+                      {reg.city && (
+                        <span className="text-slate-400 text-xs font-normal">({reg.city})</span>
+                      )}
                     </div>
                     <div className="flex items-center gap-1.5 text-slate-500 text-[11px] mt-0.5">
                       <Briefcase className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />

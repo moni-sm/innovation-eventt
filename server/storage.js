@@ -35,6 +35,7 @@ export const defaultEventData = {
     subtitle: "Secure your spot for this exclusive event.",
     buttonText: "Save Your Spot",
     roles: [
+      "CEO/Director/MD",
       "Design Engineer",
       "CAD / Mechanical Engineer",
       "R&D Manager / Lead",

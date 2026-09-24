@@ -66,9 +66,15 @@ export default function RegistrationSuccessModal({ registration, eventInfo, onCl
             <span className="font-bold text-slate-900">{registration.workEmail}</span>
           </div>
           <div className="flex justify-between items-center pb-2 border-b border-slate-200/60">
-            <span className="text-slate-500">Company & Role</span>
+            <span className="text-slate-500">Company & Designation</span>
             <span className="font-bold text-slate-900">{registration.companyName} • {registration.jobRole}</span>
           </div>
+          {registration.city && (
+            <div className="flex justify-between items-center pb-2 border-b border-slate-200/60">
+              <span className="text-slate-500">City</span>
+              <span className="font-bold text-slate-900">{registration.city}</span>
+            </div>
+          )}
           <div className="flex items-start gap-2 pt-1 text-slate-600">
             <Calendar className="w-4 h-4 text-brand-red flex-shrink-0 mt-0.5" />
             <span>{eventInfo?.dates || 'October 23, 2026'} | {eventInfo?.time || '09:00 AM – 02:00 PM'}</span>
