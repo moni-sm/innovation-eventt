@@ -32,16 +32,6 @@ export default function AdminNavbar({ loading, onRefresh, onOpenBulkEmail }) {
           </button>
 
           <a
-            href={api.getEmailInviteUrl()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-semibold tracking-wide border border-slate-700 transition-all"
-          >
-            <Mail className="w-3.5 h-3.5 text-red-400" />
-            <span>Email Invite</span>
-          </a>
-
-          <a
             href={api.getExportCsvUrl()}
             download
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-red hover:bg-brand-redHover text-white text-xs font-bold uppercase tracking-wider shadow transition-all"
