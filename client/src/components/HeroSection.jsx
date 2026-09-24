@@ -89,11 +89,11 @@ export default function HeroSection({ hero, onRegisterClick }) {
 
             {/* Main Headline: EXPLORE SOLIDWORKS 2027 in a single straight line */}
             <div className="space-y-2 animate-fade-in-up [animation-delay:100ms]">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[42px] xl:text-[50px] font-black tracking-tight text-slate-900 leading-tight whitespace-normal sm:whitespace-nowrap">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[42px] xl:text-[50px] font-black tracking-tight text-[#004771] leading-tight whitespace-normal sm:whitespace-nowrap">
                 EXPLORE <span className="text-[#ef2722]">SOLIDWORKS 2027</span>
               </h1>
-              <div className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-slate-700 leading-tight">
-                at <span className="text-slate-900">SOLIDWORKS</span> <span className="text-[#ef2722]">INNOVATION DAY 2026</span>
+              <div className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-[#004771] leading-tight">
+                at <span className="text-[#004771]">SOLIDWORKS</span> <span className="text-[#ef2722]">INNOVATION DAY 2026</span>
               </div>
               {/* Flyer Red Accent Underline Bar */}
               <div className="w-16 h-1.5 bg-[#ef2722] rounded-full mt-2"></div>
@@ -135,7 +135,7 @@ export default function HeroSection({ hero, onRegisterClick }) {
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ef2722] opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#ef2722]"></span>
                     </span>
-                    <span className="text-xs font-black tracking-widest text-slate-800 uppercase">
+                    <span className="text-xs font-black tracking-widest text-[#004771] uppercase">
                       Chennai Event Countdown
                     </span>
                   </div>
@@ -148,7 +148,7 @@ export default function HeroSection({ hero, onRegisterClick }) {
                 <div className="grid grid-cols-4 gap-2 sm:gap-3 text-center">
                   {/* Days */}
                   <div className="bg-slate-50 border border-slate-200/90 rounded-xl py-2.5 px-1 shadow-inner">
-                    <div className="text-2xl sm:text-3xl font-black text-slate-900 font-mono tracking-tight leading-none">
+                    <div className="text-2xl sm:text-3xl font-black text-[#004771] font-mono tracking-tight leading-none">
                       {String(timeLeft.days).padStart(2, '0')}
                     </div>
                     <div className="text-[10px] font-black uppercase tracking-wider text-slate-500 mt-1.5">
@@ -158,7 +158,7 @@ export default function HeroSection({ hero, onRegisterClick }) {
 
                   {/* Hours */}
                   <div className="bg-slate-50 border border-slate-200/90 rounded-xl py-2.5 px-1 shadow-inner">
-                    <div className="text-2xl sm:text-3xl font-black text-slate-900 font-mono tracking-tight leading-none">
+                    <div className="text-2xl sm:text-3xl font-black text-[#004771] font-mono tracking-tight leading-none">
                       {String(timeLeft.hours).padStart(2, '0')}
                     </div>
                     <div className="text-[10px] font-black uppercase tracking-wider text-slate-500 mt-1.5">
@@ -168,7 +168,7 @@ export default function HeroSection({ hero, onRegisterClick }) {
 
                   {/* Minutes */}
                   <div className="bg-slate-50 border border-slate-200/90 rounded-xl py-2.5 px-1 shadow-inner">
-                    <div className="text-2xl sm:text-3xl font-black text-slate-900 font-mono tracking-tight leading-none">
+                    <div className="text-2xl sm:text-3xl font-black text-[#004771] font-mono tracking-tight leading-none">
                       {String(timeLeft.minutes).padStart(2, '0')}
                     </div>
                     <div className="text-[10px] font-black uppercase tracking-wider text-slate-500 mt-1.5">
