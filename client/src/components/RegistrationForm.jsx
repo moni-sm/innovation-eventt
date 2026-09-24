@@ -215,9 +215,7 @@ export default function RegistrationForm({ registrationForm, onRegistrationSucce
           </button>
         </div>
 
-        <p className="text-[11px] text-center text-slate-400 pt-1">
-          🔒 By registering, you agree to receive event notifications & agenda updates.
-        </p>
+        
       </form>
     </div>
     </FadeIn>

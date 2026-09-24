@@ -14,7 +14,7 @@ export default function HighlightsSection({ highlights }) {
       case 'presentation':
       case 1:
         return (
-          <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#004771] to-[#005f96] text-white flex items-center justify-center shadow-lg shadow-blue-900/20 group-hover:scale-110 transition-transform">
+          <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#00589a] to-[#006cb8] text-white flex items-center justify-center shadow-lg shadow-blue-900/20 group-hover:scale-110 transition-transform">
             <MonitorPlay className="w-7 h-7" />
           </div>
         );
@@ -28,7 +28,7 @@ export default function HighlightsSection({ highlights }) {
       case 'users':
       case 3:
         return (
-          <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#004771] to-[#005f96] text-white flex items-center justify-center shadow-lg shadow-blue-900/20 group-hover:scale-110 transition-transform">
+          <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#00589a] to-[#006cb8] text-white flex items-center justify-center shadow-lg shadow-blue-900/20 group-hover:scale-110 transition-transform">
             <Users2 className="w-7 h-7" />
           </div>
         );
@@ -43,7 +43,7 @@ export default function HighlightsSection({ highlights }) {
       case 5:
       default:
         return (
-          <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#004771] to-[#005f96] text-white flex items-center justify-center shadow-lg shadow-blue-900/20 group-hover:scale-110 transition-transform">
+          <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#00589a] to-[#006cb8] text-white flex items-center justify-center shadow-lg shadow-blue-900/20 group-hover:scale-110 transition-transform">
             <Zap className="w-7 h-7" />
           </div>
         );

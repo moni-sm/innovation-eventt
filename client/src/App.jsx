@@ -26,9 +26,9 @@ export default function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#004771] flex flex-col items-center justify-center text-white space-y-4 font-sans">
+      <div className="min-h-screen bg-[#00589a] flex flex-col items-center justify-center text-white space-y-4 font-sans">
         <div className="relative">
-          <div className="w-16 h-16 rounded-full border-4 border-[#003859] border-t-red-500 animate-spin"></div>
+          <div className="w-16 h-16 rounded-full border-4 border-[#00487e] border-t-red-500 animate-spin"></div>
           <div className="absolute inset-0 flex items-center justify-center font-bold text-xs text-white">3DS</div>
         </div>
         <p className="text-blue-100 font-medium text-sm animate-pulse tracking-wide">

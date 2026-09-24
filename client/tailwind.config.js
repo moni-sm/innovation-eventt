@@ -11,6 +11,8 @@ export default {
           red: '#e60012',
           redHover: '#cc0010',
           darkRed: '#a8000b',
+          blue: '#00589a',
+          blueDark: '#00487e',
           navy: '#0b132b',
           card: '#ffffff',
           slate: '#1e293b'
