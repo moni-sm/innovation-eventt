@@ -18,12 +18,12 @@ export default function Navbar() {
           </a>
 
           {/* Navigation Links for Public View */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-300">
-            <a href="#overview" className="hover:text-[#ef2722] transition-colors">Overview</a>
-            <a href="#what-to-expect" className="hover:text-[#ef2722] transition-colors">What to Expect</a>
-            <a href="#agenda" className="hover:text-[#ef2722] transition-colors">Agenda</a>
-            <a href="#venue" className="hover:text-[#ef2722] transition-colors">Venue</a>
-            <a href="#speakers" className="hover:text-[#ef2722] transition-colors">Speakers</a>
+          <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-white">
+            <a href="#overview" className="hover:text-white/80 transition-colors">Overview</a>
+            <a href="#what-to-expect" className="hover:text-white/80 transition-colors">What to Expect</a>
+            <a href="#agenda" className="hover:text-white/80 transition-colors">Agenda</a>
+            <a href="#venue" className="hover:text-white/80 transition-colors">Venue</a>
+            <a href="#speakers" className="hover:text-white/80 transition-colors">Speakers</a>
           </nav>
 
           {/* Right Brand: Dassault Systèmes SOLIDWORKS White Logo */}
