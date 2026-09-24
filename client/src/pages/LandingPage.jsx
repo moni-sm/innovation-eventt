@@ -40,7 +40,7 @@ export default function LandingPage({ eventData, onRegistrationSuccess }) {
       <InfoBar info={eventData?.info} />
 
       {/* 3. Main Content Grid */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 flex-1 space-y-20">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-6 sm:pb-8 space-y-14">
         
         {/* Independent What to Expect Section with 6 Bulletpoints */}
         <WhatToExpectSection />
@@ -72,11 +72,6 @@ export default function LandingPage({ eventData, onRegistrationSuccess }) {
 
             {/* Speakers Showcase */}
             <SpeakersSection speakers={eventData?.speakers} />
-
-            {/* Separator */}
-            <div className="h-px bg-slate-200"></div>
-
-          
 
           </div>
 
