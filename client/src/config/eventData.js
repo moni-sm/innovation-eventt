@@ -24,12 +24,13 @@ export const defaultEventConfig = {
     subtitle: "Secure your spot for this exclusive event.",
     buttonText: "Register Now",
     roles: [
+      "CEO / Founder / Director",
       "Design Engineer",
       "CAD / Mechanical Engineer",
       "R&D Manager / Lead",
       "Engineering Director",
       "Manufacturing Specialist",
-      "Academic / Student",
+      "Professor / HOD ",
       "Other"
     ]
   },
