@@ -1,3 +1,4 @@
+# innovation-eventt
 # SOLIDWORKS Innovation Day 2026 - MERN Architecture
 
 This project is organized into **3 independent folders**:
