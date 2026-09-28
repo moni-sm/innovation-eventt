@@ -62,7 +62,14 @@ function ExpectationItem({ item, index = 0 }) {
               src={item.icon}
               alt={item.title}
               className="w-full h-full object-contain filter contrast-125 transition-transform duration-300 group-hover:scale-105"
-              onError={() => setImgError(true)}
+              onError={(e) => {
+                if (!e.currentTarget.dataset.triedBackend) {
+                  e.currentTarget.dataset.triedBackend = 'true';
+                  e.currentTarget.src = `https://innovation-event.onrender.com${item.icon}`;
+                } else {
+                  setImgError(true);
+                }
+              }}
               loading="lazy"
             />
           ) : (

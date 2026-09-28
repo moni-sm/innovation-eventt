@@ -23,6 +23,11 @@ const RegistrationSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
+    city: {
+      type: String,
+      default: '',
+      trim: true
+    },
     jobRole: {
       type: String,
       required: true,
@@ -32,6 +37,22 @@ const RegistrationSchema = new mongoose.Schema(
       type: String,
       enum: ['Confirmed', 'Pending', 'Attended', 'Cancelled'],
       default: 'Confirmed'
+    },
+    emailSent: {
+      type: Boolean,
+      default: false
+    },
+    emailSentAt: {
+      type: Date,
+      default: null
+    },
+    attendedAt: {
+      type: Date,
+      default: null
+    },
+    qrCodeToken: {
+      type: String,
+      default: ''
     },
     notes: {
       type: String,

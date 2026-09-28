@@ -8,12 +8,12 @@ export const defaultEventConfig = {
     titlePrefix: "SOLIDWORKS",
     titleHighlight: "Innovation Day 2026",
     tagline: "Smarter Design. Faster Innovation.",
-    description: "Discover the latest in SOLIDWORKS and 3DEXPERIENCE and how it can power your next big idea.",
+    description: "Discover the latest **AI-powered SOLIDWORKS innovations** across design, manufacturing, simulation, and data management.",
     ctaText: "REGISTER NOW",
-    heroImage: "/assets/turbine.png" // Replace with any image URL or path
+    heroImage: "/assets/robotic-arm.png"
   },
   info: {
-    dates: "November 13, 2026",
+    dates: "October 23, 2026",
     time: "09:00 AM – 02:00 PM",
     venueName: "Hablis Hotel Chennai",
     venueAddress: " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
@@ -24,6 +24,7 @@ export const defaultEventConfig = {
     subtitle: "Secure your spot for this exclusive event.",
     buttonText: "Register Now",
     roles: [
+      "CEO/Director/MD",
       "Design Engineer",
       "CAD / Mechanical Engineer",
       "R&D Manager / Lead",
@@ -42,26 +43,26 @@ export const defaultEventConfig = {
     },
     {
       id: "ag-2",
-      time: "10:00 AM – 10:45 AM",
-      title: "SOLIDWORKS 2026 – What's New",
+      time: "10:00 AM – 11:15 AM",
+      title: "SOLIDWORKS 2027 & AI Innovations – What's New",
       icon: "monitor"
     },
     {
       id: "ag-3",
-      time: "11:00 AM – 12:00 PM",
-      title: "Industry Applications & Customer Success Stories",
+      time: "11:15 AM – 12:15 PM",
+      title: "AI Virtual Companions & Simulation Applications",
       icon: "settings"
     },
     {
       id: "ag-4",
-      time: "12:00 PM – 01:00 PM",
-      title: "Expert Panel Discussion",
+      time: "12:15 PM – 01:00 PM",
+      title: "Interactive CAD, Q&A & Customer Success Stories",
       icon: "users"
     },
     {
       id: "ag-5",
       time: "01:00 PM – 02:00 PM",
-      title: "Lunch & Networking",
+      title: "Networking Lunch & Wrap-Up",
       icon: "utensils"
     }
   ],
@@ -70,31 +71,31 @@ export const defaultEventConfig = {
       id: "sp-1",
       name: "Vijay Karthik Dhanapal",
       designation: "Partner Sales Manager, Dassault Systemes",
-      photoUrl: "/people/Vijay Karthik Dhanapal.png"
+      photoUrl: "/people/vijay-karthik-dhanapal.png"
     },
     {
       id: "sp-2",
       name: "Ramesh Aravind",
       designation: "Customer Success Specialist",
-      photoUrl: "/people/Ramesh Aravind.jfif"
+      photoUrl: "/people/ramesh-aravind.jpg"
     },
     {
       id: "sp-3",
       name: "Mohamed Riswan M",
       designation: "Solution Associate",
-      photoUrl: "/people/Mohamed Riswan M.png"
+      photoUrl: "/people/mohamed-riswan-m.png"
     },
     {
       id: "sp-4",
       name: "Mahendra H",
       designation: "Product Manager, Simulation Solutions",
-      photoUrl: "/people/Mahendra H.jfif"
+      photoUrl: "/people/mahendra-h.jpg"
     },
     {
       id: "sp-5",
       name: "Satish Varadharaj",
       designation: "Team Lead - Enterprise Products",
-      photoUrl: "/people/Satish Photo 1.jpg"
+      photoUrl: "/people/satish-varadharaj.jpg"
     }
   ],
   venue: {

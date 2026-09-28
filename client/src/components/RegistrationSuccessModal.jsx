@@ -12,9 +12,9 @@ export default function RegistrationSuccessModal({ registration, eventInfo, onCl
       'BEGIN:VEVENT',
       `SUMMARY:SOLIDWORKS Innovation Day 2026`,
       `DESCRIPTION:Join Conceptia KONNECT and Dassault Systèmes for SOLIDWORKS Innovation Day 2026. Smarter Design. Faster Innovation.`,
-      `LOCATION:${eventInfo?.venueName || 'Hablis Hotel Chennai'}, ${eventInfo?.venueAddress || 'Kochi'}`,
-      'DTSTART:20261113T033000Z',
-      'DTEND:20261113T083000Z',
+      `LOCATION:${eventInfo?.venueName || 'Hablis Hotel Chennai'}, ${eventInfo?.venueAddress || ' 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032'}`,
+      'DTSTART:20261023T033000Z',
+      'DTEND:20261023T083000Z',
       'STATUS:CONFIRMED',
       'END:VEVENT',
       'END:VCALENDAR'
@@ -48,10 +48,10 @@ export default function RegistrationSuccessModal({ registration, eventInfo, onCl
         {/* Header */}
         <div className="text-center mb-6">
           <h3 className="text-2xl font-black text-slate-900 tracking-tight">
-            Registration Confirmed!
+            Thank you for registering for SOLIDWORKS Innovation Day 2026!
           </h3>
           <p className="text-sm font-medium text-slate-500 mt-1.5">
-            Your spot has been reserved for SOLIDWORKS Innovation Day 2026.
+            Your registration has been received. A confirmation email with the event details will be sent to you shortly.
           </p>
         </div>
 
@@ -66,28 +66,23 @@ export default function RegistrationSuccessModal({ registration, eventInfo, onCl
             <span className="font-bold text-slate-900">{registration.workEmail}</span>
           </div>
           <div className="flex justify-between items-center pb-2 border-b border-slate-200/60">
-            <span className="text-slate-500">Company & Role</span>
+            <span className="text-slate-500">Company & Designation</span>
             <span className="font-bold text-slate-900">{registration.companyName} • {registration.jobRole}</span>
           </div>
+          {registration.city && (
+            <div className="flex justify-between items-center pb-2 border-b border-slate-200/60">
+              <span className="text-slate-500">City</span>
+              <span className="font-bold text-slate-900">{registration.city}</span>
+            </div>
+          )}
           <div className="flex items-start gap-2 pt-1 text-slate-600">
             <Calendar className="w-4 h-4 text-brand-red flex-shrink-0 mt-0.5" />
-            <span>{eventInfo?.dates || 'November 13, 2026'} | {eventInfo?.time || '09:00 AM – 02:00 PM'}</span>
+            <span>{eventInfo?.dates || 'October 23, 2026'} | {eventInfo?.time || '09:00 AM – 02:00 PM'}</span>
           </div>
           <div className="flex items-start gap-2 text-slate-600">
             <MapPin className="w-4 h-4 text-brand-red flex-shrink-0 mt-0.5" />
             <span>{eventInfo?.venueName || 'Hablis Hotel Chennai'}, {eventInfo?.venueAddress || ' 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032'}</span>
           </div>
-        </div>
-
-        {/* Buttons */}
-        <div className="space-y-3">
-          <button
-            onClick={downloadCalendarFile}
-            className="w-full py-3.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow transition-all cursor-pointer"
-          >
-            <Download className="w-4 h-4" />
-            <span>Add to Calendar (.ics)</span>
-          </button>
         </div>
 
       </div>

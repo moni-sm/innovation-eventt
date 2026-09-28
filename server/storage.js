@@ -19,7 +19,7 @@ export const defaultEventData = {
     titlePrefix: "EXPLORE SOLIDWORKS 2027",
     titleHighlight: "at SOLIDWORKS Innovation Day 2026",
     tagline: "AI is transforming engineering. Are you ready?",
-    description: "Discover the latest AI-powered SOLIDWORKS innovations across design, manufacturing, data management, and simulation. Learn how SOLIDWORKS AI and Virtual Companions are transforming the way engineers design, validate, collaborate, and innovate.",
+    description: "Discover the latest **AI-powered SOLIDWORKS innovations** across design, manufacturing, simulation, and data management.",
     ctaText: "SAVE YOUR SPOT",
     heroImage: "/assets/robotic-arm.png"
   },
@@ -35,6 +35,7 @@ export const defaultEventData = {
     subtitle: "Secure your spot for this exclusive event.",
     buttonText: "Save Your Spot",
     roles: [
+      "CEO/Director/MD",
       "Design Engineer",
       "CAD / Mechanical Engineer",
       "R&D Manager / Lead",
@@ -54,29 +55,29 @@ export const defaultEventData = {
     },
     {
       id: "ag-2",
-      time: "10:00 AM – 10:45 AM",
+      time: "10:00 AM – 11:15 AM",
       title: "Test-Drive SOLIDWORKS 2027 & AI Features",
       icon: "monitor",
       badgeColor: "bg-red-500"
     },
     {
       id: "ag-3",
-      time: "11:00 AM – 12:00 PM",
+      time: "11:15 AM – 12:15 PM",
       title: "AI Virtual Companions & Industry Applications",
       icon: "settings",
       badgeColor: "bg-red-500"
     },
     {
       id: "ag-4",
-      time: "12:00 PM – 01:00 PM",
-      title: "Expert Panel Discussion & Best Practices",
+      time: "12:15 PM – 01:00 PM",
+      title: "Interactive CAD, Q&A & Customer Success Stories",
       icon: "users",
       badgeColor: "bg-red-500"
     },
     {
       id: "ag-5",
       time: "01:00 PM – 02:00 PM",
-      title: "Lunch & Peer Networking",
+      title: "Networking Lunch & Wrap-Up",
       icon: "utensils",
       badgeColor: "bg-red-500"
     }
@@ -86,31 +87,31 @@ export const defaultEventData = {
       id: "sp-1",
       name: "Vijay Karthik Dhanapal",
       designation: "Partner Sales Manager, Dassault Systemes",
-      photoUrl: "/people/Vijay Karthik Dhanapal.png"
+      photoUrl: "/people/vijay-karthik-dhanapal.png"
     },
     {
       id: "sp-2",
       name: "Ramesh Aravind",
       designation: "Customer Success Specialist",
-      photoUrl: "/people/Ramesh Aravind.jfif"
+      photoUrl: "/people/ramesh-aravind.jpg"
     },
     {
       id: "sp-3",
       name: "Mohamed Riswan M",
       designation: "Solution Associate",
-      photoUrl: "/people/Mohamed Riswan M.png"
+      photoUrl: "/people/mohamed-riswan-m.png"
     },
     {
       id: "sp-4",
       name: "Mahendra H",
       designation: "Product Manager, Simulation Solutions",
-      photoUrl: "/people/Mahendra H.jfif"
+      photoUrl: "/people/mahendra-h.jpg"
     },
     {
       id: "sp-5",
       name: "Satish Varadharaj",
       designation: "Team Lead - Enterprise Products",
-      photoUrl: "/people/Satish Photo 1.jpg"
+      photoUrl: "/people/satish-varadharaj.jpg"
     }
   ],
   venue: {
@@ -216,23 +217,45 @@ export const localStore = {
     const list = readJSON(REGISTRATIONS_FILE, []);
     return list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   },
+  getRegistrationById(id) {
+    const list = readJSON(REGISTRATIONS_FILE, []);
+    return list.find(r => r._id === id || r.id === id || r.qrCodeToken === id) || null;
+  },
   addRegistration(record) {
     const list = readJSON(REGISTRATIONS_FILE, []);
+    const id = 'reg_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
     const newRecord = {
-      _id: 'reg_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7),
+      _id: id,
       ...record,
       status: record.status || 'Confirmed',
+      emailSent: record.emailSent || false,
+      emailSentAt: record.emailSentAt || null,
+      attendedAt: record.attendedAt || null,
+      qrCodeToken: record.qrCodeToken || id,
       createdAt: new Date().toISOString()
     };
     list.unshift(newRecord);
     writeJSON(REGISTRATIONS_FILE, list);
     return newRecord;
   },
+  updateRegistration(id, updateData) {
+    const list = readJSON(REGISTRATIONS_FILE, []);
+    const index = list.findIndex(r => r._id === id || r.id === id || r.qrCodeToken === id);
+    if (index !== -1) {
+      list[index] = { ...list[index], ...updateData };
+      writeJSON(REGISTRATIONS_FILE, list);
+      return list[index];
+    }
+    return null;
+  },
   updateRegistrationStatus(id, status) {
     const list = readJSON(REGISTRATIONS_FILE, []);
-    const index = list.findIndex(r => r._id === id || r.id === id);
+    const index = list.findIndex(r => r._id === id || r.id === id || r.qrCodeToken === id);
     if (index !== -1) {
       list[index].status = status;
+      if (status === 'Attended' && !list[index].attendedAt) {
+        list[index].attendedAt = new Date().toISOString();
+      }
       writeJSON(REGISTRATIONS_FILE, list);
       return list[index];
     }
@@ -241,7 +264,7 @@ export const localStore = {
   deleteRegistration(id) {
     let list = readJSON(REGISTRATIONS_FILE, []);
     const initialLen = list.length;
-    list = list.filter(r => r._id !== id && r.id !== id);
+    list = list.filter(r => r._id !== id && r.id !== id && r.qrCodeToken !== id);
     writeJSON(REGISTRATIONS_FILE, list);
     return list.length < initialLen;
   }
