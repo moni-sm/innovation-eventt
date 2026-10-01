@@ -3,8 +3,8 @@ import { ArrowRight, Bot, Calendar, Clock } from 'lucide-react';
 import { getAssetUrl, handleImageFallback } from '../utils/assetHelper';
 
 function calculateTimeLeft() {
-  // Target: October 23, 2026, 09:00:00 IST (+05:30)
-  const targetDate = new Date('2026-10-23T09:00:00+05:30');
+  // Target: November 5, 2026, 09:00:00 IST (+05:30)
+  const targetDate = new Date('2026-11-05T09:00:00+05:30');
   const now = new Date();
   const diff = targetDate.getTime() - now.getTime();
 
@@ -141,7 +141,7 @@ export default function HeroSection({ hero, onRegisterClick }) {
               </button>
             </div>
 
-            {/* Event Countdown Timer (October 23 - Chennai) */}
+            {/* Event Countdown Timer (November 5 - Bengaluru) */}
             <div className="max-w-xl animate-fade-in-up [animation-delay:500ms]">
               <div className="p-3.5 sm:p-4 rounded-2xl bg-white border border-red-200/80 shadow-lg shadow-red-950/5">
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3 pb-2 border-b border-slate-100">
@@ -151,12 +151,12 @@ export default function HeroSection({ hero, onRegisterClick }) {
                       <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#ef2722]"></span>
                     </span>
                     <span className="text-xs font-black tracking-widest text-[#00589a] uppercase">
-                      Chennai Event Countdown
+                      Bengaluru Event Countdown
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5 text-xs font-bold text-[#ef2722]">
                     <Calendar className="w-3.5 h-3.5" />
-                    <span>October 23, 2026</span>
+                    <span>November 5, 2026</span>
                   </div>
                 </div>
 
@@ -212,7 +212,7 @@ export default function HeroSection({ hero, onRegisterClick }) {
               src={getAssetUrl(heroImage || '/assets/robotic-arm.png')}
               alt="SOLIDWORKS 2027 AI Robotic Workcell"
               className="w-full max-w-[650px] lg:max-w-none lg:w-[115%] xl:w-[122%] lg:translate-x-16 xl:translate-x-24 h-auto object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.13)] transition-transform duration-500 hover:scale-105"
-              onError={(e) => handleImageFallback(e, 'https://innovation-event.onrender.com/assets/robotic-arm.png')}
+              onError={(e) => handleImageFallback(e, 'http://localhost:5000/assets/robotic-arm.png')}
             />
           </div>
 

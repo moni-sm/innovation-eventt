@@ -13,10 +13,10 @@ export const defaultEventConfig = {
     heroImage: "/assets/robotic-arm.png"
   },
   info: {
-    dates: "October 23, 2026",
-    time: "09:00 AM – 02:00 PM",
-    venueName: "Hablis Hotel Chennai",
-    venueAddress: " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
+    dates: "November 5, 2026",
+    time: "10:00 AM – 05:30 PM",
+    venueName: "Taj Yeshwantpur, Bengaluru",
+    venueAddress: " 2275, Tumkur Main Road, Yeshwanthpur Industrial Area, Phase 1, Yeswanthpur, Bengaluru, Karnataka 560022",
     mode: "In-Person Event"
   },
   registrationForm: {
@@ -99,10 +99,10 @@ export const defaultEventConfig = {
     }
   ],
   venue: {
-    name: "Hablis Hotel Chennai",
-    address: " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
-    directionsUrl: "https://maps.app.goo.gl/mUu2i567Ca8FwLG78",
-    imageUrl: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkD101tjl_C92FsvKQf1xGDk3z-pEuVeaHyRDq3sSq8mj1Zcj3b0GNv8_ImN3gHut2Hu5h_0bUT0HaGaMjRcfY_poaG8blSWDtG1Teinh9c8Jdqm7NFD-8rSyNSt_U_-i4jAa4qSA=s1360-w1360-h1020-rw"
+    name: "Taj Yeshwantpur, Bengaluru",
+    address: " 2275, Tumkur Main Road, Yeshwanthpur Industrial Area, Phase 1, Yeswanthpur, Bengaluru, Karnataka 560022",
+    directionsUrl: "https://maps.app.goo.gl/PSs1MH9sjYp7pZjN6",
+    imageUrl: "https://pix8.agoda.net/hotelImages/178012/0/cb61a94db44b027d08f067b8d67997da.jpg?ce=2&s=1024x768"
   },
   highlights: [
     {

@@ -24,10 +24,10 @@ export const defaultEventData = {
     heroImage: "/assets/robotic-arm.png"
   },
   info: {
-    dates: "October 23, 2026",
-    time: "09:00 AM – 02:00 PM",
-    venueName: "Hablis Hotel Chennai",
-    venueAddress: " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
+    dates: "November 5, 2026",
+    time: "10:00 AM – 05:30 PM",
+    venueName: "Taj Yeshwantpur, Bengaluru",
+    venueAddress: " 2275, Tumkur Main Road, Yeshwanthpur Industrial Area, Phase 1, Yeswanthpur, Bengaluru, Karnataka 560022",
     mode: "In-Person Event"
   },
   registrationForm: {
@@ -48,77 +48,166 @@ export const defaultEventData = {
   agenda: [
     {
       id: "ag-1",
-      time: "09:00 AM – 10:00 AM",
-      title: "Registration & Networking",
+      time: "10:00 AM – 10:03 AM",
+      title: " Opening Video",
       icon: "user",
       badgeColor: "bg-red-500"
     },
     {
       id: "ag-2",
-      time: "10:00 AM – 11:15 AM",
-      title: "Test-Drive SOLIDWORKS 2027 & AI Features",
+      time: "10:03 AM – 11:10 AM",
+      title: "Introduction & Welcome Note",
       icon: "monitor",
       badgeColor: "bg-red-500"
     },
     {
       id: "ag-3",
-      time: "11:15 AM – 12:15 PM",
-      title: "AI Virtual Companions & Industry Applications",
-      icon: "settings",
+      time: "10:10 AM – 10:35 AM",
+      title: "Growth Mindset in the Age of AI",
+      icon: "ai",
       badgeColor: "bg-red-500"
     },
     {
       id: "ag-4",
-      time: "12:15 PM – 01:00 PM",
-      title: "Interactive CAD, Q&A & Customer Success Stories",
-      icon: "users",
+      time: "10:35 AM – 11:00 AM",
+      title: "AI in SOLIDWORKS: Powering Next era of Engineering",
+      icon: "ai",
       badgeColor: "bg-red-500"
     },
     {
       id: "ag-5",
-      time: "01:00 PM – 02:00 PM",
-      title: "Networking Lunch & Wrap-Up",
+      time: "11:00 AM – 11:30 AM",
+      title: "What's New in SOLIDWORKS 2027 – Part 1 (CAD, SIM, PDM)",
+      icon: "monitor",
+      badgeColor: "bg-red-500"
+    },
+    {
+      id: "ag-6",
+      time: "11:30 AM – 12:00 PM",
+      title: "Tea / Coffee Break",
       icon: "utensils",
+      badgeColor: "bg-red-500"
+    },
+    {
+      id: "ag-7",
+      time: "12:00 PM – 12:40 PM",
+      title: "What's New in SOLIDWORKS 2027 – Part 2 (Collaboration, Cloud Services)", 
+      icon: "monitor",
+      badgeColor: "bg-red-500"
+    },
+    {
+      id: "ag-8",
+      time: "12:40 PM – 01:00 PM",
+      title: "Sponsor Presentation/ Customer Case Study: 1",
+      icon: "settings",
+      badgeColor: "bg-red-500"
+    },
+    {
+      id: "ag-9",
+      time: "01:00 PM – 02:00 PM",
+      title: "Lunch Break",
+      icon: "utensils",
+      badgeColor: "bg-red-500"
+    },
+    {
+      id: "ag-10",
+      time: "02:00 PM – 02:45 PM",
+      title: "Panel Discussion",
+      icon: "monitor",
+      badgeColor: "bg-red-500"
+    },
+    {
+      id: "ag-11",
+      time: "02:45 PM – 03:45 PM",
+      title: "Mainstream Innovation with 3DEXPERIENCE (Design / SIM / Governance)",
+      icon: "monitor",
+      badgeColor: "bg-red-500"
+    },
+    {
+      id: "ag-12",
+      time: "03:45 PM – 04:15 PM",
+      title: "Tea / Coffee Break",
+      icon: "utensils",
+      badgeColor: "bg-red-500"
+    },
+    {
+      id: "ag-13",
+      time: "04:15 PM – 04:45 PM",
+      title: "Elevate to Next-Gen Technical Communication Solutions (Composer, Visualize, DraftSight)",
+      icon: "settings",
+      badgeColor: "bg-red-500"
+    },
+    {
+      id: "ag-14",
+      time: "04:45 PM – 05:05 PM",
+      title: "Customer Case Study: 2",
+      icon: "settings",
+      badgeColor: "bg-red-500"
+    },
+    {
+      id: "ag-15",
+      time: "05:05 PM – 05:15 PM",
+      title: "Conclusion & Wrap-Up",
+      icon: "users",
       badgeColor: "bg-red-500"
     }
   ],
   speakers: [
-    {
+     {
       id: "sp-1",
-      name: "Vijay Karthik Dhanapal",
-      designation: "Partner Sales Manager, Dassault Systemes",
-      photoUrl: "/people/vijay-karthik-dhanapal.png"
+      name: "Arun Stevenson ",
+      designation: "Sr. Partner Sales Manager,  Dassault Systemes",
+      photoUrl: "/people/Arun Stevenson.jpg"
     },
-    {
+     {
       id: "sp-2",
-      name: "Ramesh Aravind",
-      designation: "Customer Success Specialist",
-      photoUrl: "/people/ramesh-aravind.jpg"
+      name: "Divakar G M ",
+      designation: "Industry Consultant Manager, Dassault Systemes",
+      photoUrl: "/people/Divakar G M.jpg"
     },
     {
       id: "sp-3",
-      name: "Mohamed Riswan M",
-      designation: "Solution Associate",
-      photoUrl: "/people/mohamed-riswan-m.png"
+      name: "Sangeetram K R ",
+      designation: "Lead – Presales,  Conceptia Konnect",
+      photoUrl: "/people/Sangeetram K R.jpg"
     },
-    {
+     {
       id: "sp-4",
+      name: "Amit S Neeralagi ",
+      designation: "Solution Specialist,  Conceptia Konnect",
+      photoUrl: "/people/Amit S Neeralagi.jpg"
+    },
+     {
+      id: "sp-5",
       name: "Mahendra H",
-      designation: "Product Manager, Simulation Solutions",
+      designation: "PSr. Partner Sales Manager, Dassault Systemes",
       photoUrl: "/people/mahendra-h.jpg"
     },
     {
-      id: "sp-5",
+      id: "sp-6",
+      name: "Dr. Sushma Shankarappa ",
+      designation: "Solution Specialist - CST, Conceptia Konnect",
+      photoUrl: "/people/Dr. Sushma Shankarappa.jpg"
+    },
+    {
+      id: "sp-7",
       name: "Satish Varadharaj",
-      designation: "Team Lead - Enterprise Products",
+      designation: "Team Lead,  Conceptia Konnect",
       photoUrl: "/people/satish-varadharaj.jpg"
-    }
+    },
+    {
+      id: "sp-8",
+      name: "Ashok Kumar B ",
+      designation: "Country Technical Head,  SolidCAM",
+      photoUrl: "#"
+    },
+   
   ],
   venue: {
-    name: "Hablis Hotel Chennai",
-    address: " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
-    directionsUrl: "https://maps.app.goo.gl/mUu2i567Ca8FwLG78",
-    imageUrl: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkD101tjl_C92FsvKQf1xGDk3z-pEuVeaHyRDq3sSq8mj1Zcj3b0GNv8_ImN3gHut2Hu5h_0bUT0HaGaMjRcfY_poaG8blSWDtG1Teinh9c8Jdqm7NFD-8rSyNSt_U_-i4jAa4qSA=s1360-w1360-h1020-rw"
+    name: "Taj Yeshwantpur, Bengaluru",
+    address: " 2275, Tumkur Main Road, Yeshwanthpur Industrial Area, Phase 1, Yeswanthpur, Bengaluru, Karnataka 560022",
+    directionsUrl: "https://maps.app.goo.gl/Cz3v7Vz3eQxamHB16",
+    imageUrl: "https://pix8.agoda.net/hotelImages/178012/0/cb61a94db44b027d08f067b8d67997da.jpg?ce=2&s=1024x768"
   },
   highlights: [
     {

@@ -1,5 +1,20 @@
 [
   {
+    "_id": "reg_1790769734831_8iu9m",
+    "fullName": "suresh",
+    "workEmail": "qwefdsasdfds@gmail.com",
+    "phoneNumber": "1234567890",
+    "companyName": "qwert",
+    "city": "qwe",
+    "jobRole": "Manufacturing Specialist",
+    "status": "Confirmed",
+    "emailSent": true,
+    "emailSentAt": "2026-09-30T12:03:07.290Z",
+    "attendedAt": null,
+    "qrCodeToken": "reg_1790769734831_8iu9m",
+    "createdAt": "2026-09-30T12:02:14.831Z"
+  },
+  {
     "_id": "reg_1789620838247_wzy0g",
     "fullName": "Pooja Hegde",
     "workEmail": "pooja.hegde@aerotech.in",
@@ -9,8 +24,8 @@
     "status": "Confirmed",
     "createdAt": "2026-09-17T04:53:58.247Z",
     "attendedAt": null,
-    "emailSent": false,
-    "emailSentAt": null
+    "emailSent": true,
+    "emailSentAt": "2026-09-30T12:03:07.558Z"
   },
   {
     "_id": "reg_1789620069255_mcfen",
@@ -30,7 +45,9 @@
     "companyName": "Mahindra R&D",
     "jobRole": "R&D Manager / Lead",
     "status": "Confirmed",
-    "createdAt": "2026-09-17T04:41:09.246Z"
+    "createdAt": "2026-09-17T04:41:09.246Z",
+    "emailSent": true,
+    "emailSentAt": "2026-09-30T12:03:07.814Z"
   },
   {
     "_id": "reg_1789620069225_2xhz6",
@@ -40,6 +57,8 @@
     "companyName": "Tata Consultancy Services",
     "jobRole": "CAD / Mechanical Engineer",
     "status": "Confirmed",
-    "createdAt": "2026-09-17T04:41:09.225Z"
+    "createdAt": "2026-09-17T04:41:09.225Z",
+    "emailSent": true,
+    "emailSentAt": "2026-09-30T12:03:08.078Z"
   }
 ]

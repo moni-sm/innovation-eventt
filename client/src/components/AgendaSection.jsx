@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, Monitor, Settings, Users, Utensils, Clock, ChevronRight } from 'lucide-react';
+import { User, Monitor, Settings, Users, Utensils, Clock,Bot, ChevronRight } from 'lucide-react';
 import FadeIn from './FadeIn';
 
 export default function AgendaSection({ agenda }) {
@@ -18,6 +18,10 @@ export default function AgendaSection({ agenda }) {
       case 'utensils':
       case 'food':
         return <Utensils className="w-5 h-5 text-white" />;
+      case 'ai':
+      case 'artificial intelligence':
+      case 'bot':
+        return <Bot className="w-5 h-5 text-white" />;
       default:
         return <Clock className="w-5 h-5 text-white" />;
     }
@@ -69,7 +73,6 @@ export default function AgendaSection({ agenda }) {
                 </h4>
               </div>
 
-              <ChevronRight className="w-4 h-4 text-slate-300 self-center group-hover:text-brand-red group-hover:translate-x-0.5 transition-all" />
             </div>
           </FadeIn>
         ))}

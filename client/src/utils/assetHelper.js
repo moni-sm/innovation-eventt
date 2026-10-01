@@ -1,4 +1,4 @@
-const BACKEND_URL = 'https://innovation-event.onrender.com';
+const BACKEND_URL = 'http://localhost:5000';
 
 /**
  * Resolves an asset URL properly whether hosted on Vercel, Netlify, or Render.
