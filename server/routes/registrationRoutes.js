@@ -263,8 +263,8 @@ router.get('/preview-email/:id', async (req, res) => {
   }
 });
 
-// POST /api/registrations/send-email/:id - Send QR pass email to single candidate
-router.post('/send-email/:id', async (req, res) => {
+// GET or POST /api/registrations/send-email/:id - Send QR pass email to single candidate via link or API
+router.all('/send-email/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const attendee = await dataService.getRegistrationById(id);
@@ -285,6 +285,40 @@ router.post('/send-email/:id', async (req, res) => {
     });
   } catch (err) {
     console.error('Send email error:', err);
+    res.status(500).json({ success: false, message: err.message || 'Failed to send email' });
+  }
+});
+
+// GET /api/registrations/send-by-email?email=attendee@example.com - Send via simple browser link
+router.get('/send-by-email', async (req, res) => {
+  try {
+    const { email } = req.query;
+    if (!email) {
+      return res.status(400).json({ success: false, message: 'Please provide email parameter: ?email=user@example.com' });
+    }
+
+    const all = await dataService.getAllRegistrations();
+    const attendee = all.find(r => (r.workEmail || '').toLowerCase() === email.trim().toLowerCase());
+
+    if (!attendee) {
+      return res.status(404).json({ success: false, message: `No attendee found with email: ${email}` });
+    }
+
+    const baseUrl = getBaseUrl(req);
+    const result = await emailService.sendAttendanceEmail(attendee, baseUrl);
+
+    res.json({
+      success: true,
+      message: `QR Pass email successfully sent to ${attendee.workEmail}`,
+      attendee: {
+        id: attendee._id || attendee.id,
+        name: attendee.fullName,
+        email: attendee.workEmail
+      },
+      result
+    });
+  } catch (err) {
+    console.error('Send by email error:', err);
     res.status(500).json({ success: false, message: err.message || 'Failed to send email' });
   }
 });
