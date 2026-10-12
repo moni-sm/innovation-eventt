@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import nodemailer from 'nodemailer';
 import { qrService } from './qrService.js';
 import { dataService } from './dataService.js';
@@ -31,6 +34,9 @@ class EmailService {
   }
 
   isConfigured() {
+    if (!this.transporter) {
+      this.initTransporter();
+    }
     return !!(this.transporter && (process.env.SMTP_USER || process.env.EMAIL_USER));
   }
 
@@ -243,16 +249,22 @@ class EmailService {
       };
     }
 
+    const fullName = attendee.fullName || 'Valued Attendee';
+    const textFallback = `Hello ${fullName},\n\nYour seat for SOLIDWORKS Innovation Day 2026 has been confirmed!\n\nEvent Details:\nDate: October 23, 2026\nTime: 09:00 AM – 02:00 PM\nVenue: Hablis Hotel, Guindy, Chennai\n\nYour Check-In & Digital Badge URL:\n${checkinUrl}\n\nPlease present this pass or show your attached QR code upon arrival.\n\nBest regards,\nConceptia KONNECT`;
+
     // Real SMTP Send
     const mailOptions = {
       from: this.getFromAddress(),
       to: attendee.workEmail,
-      subject: `Your Entry Pass & QR Code: SOLIDWORKS Innovation Day 2026 - ${attendee.fullName}`,
+      subject: `Your Entry Pass & QR Code: SOLIDWORKS Innovation Day 2026 - ${fullName}`,
+      text: textFallback,
       html,
       attachments: [
         {
           filename: `pass-${attendee._id || attendee.id}.png`,
           content: buffer,
+          contentType: 'image/png',
+          contentDisposition: 'inline',
           cid: 'entry_pass_qr'
         }
       ]

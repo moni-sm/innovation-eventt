@@ -11,6 +11,7 @@
     "admin": "npm --prefix admin run dev",
     "registration": "npm --prefix registration run dev",
     "registration:build": "npm --prefix registration run build",
+    "send-qr": "node server/scripts/send-qr.js",
     "build:all": "npm --prefix client run build && npm --prefix admin run build && npm --prefix registration run build"
   },
   "keywords": ["mern", "react", "solidworks", "admin", "client"],
