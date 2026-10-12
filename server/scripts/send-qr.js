@@ -75,6 +75,26 @@ async function main() {
     process.exit(0);
   }
 
+  const emailIndex = args.indexOf('--email');
+  const targetEmail = emailIndex !== -1 ? args[emailIndex + 1]?.toLowerCase() : null;
+
+  if (targetEmail) {
+    const attendee = registrations.find(r => (r.workEmail || '').toLowerCase() === targetEmail);
+    if (!attendee) {
+      console.error(`❌ No registration found with email: ${targetEmail}`);
+      process.exit(1);
+    }
+
+    console.log(`👤 Sending individual QR pass to: ${attendee.fullName} (${attendee.workEmail})...`);
+    try {
+      const res = await emailService.sendAttendanceEmail(attendee, baseUrl);
+      console.log('✅ QR Pass sent successfully:', res);
+    } catch (err) {
+      console.error('❌ Failed to send QR pass:', err.message);
+    }
+    process.exit(0);
+  }
+
   // Filter confirmed attendees
   const confirmed = registrations.filter(r => r.status === 'Confirmed' || r.status === 'Attended');
   const targetList = isAll ? confirmed : confirmed.filter(r => !r.emailSent);
