@@ -5,13 +5,42 @@ import nodemailer from 'nodemailer';
 import { qrService } from './qrService.js';
 import { dataService } from './dataService.js';
 
+let ResendClass = null;
+async function getResendClient(apiKey) {
+  if (!apiKey) return null;
+  if (!ResendClass) {
+    try {
+      const mod = await import('resend');
+      ResendClass = mod.Resend || mod.default?.Resend;
+    } catch (err) {
+      console.warn('[Email Service] "resend" module not installed locally. On Render, it will be installed from package.json.');
+      return null;
+    }
+  }
+  return ResendClass ? new ResendClass(apiKey) : null;
+}
+
 class EmailService {
   constructor() {
     this.transporter = null;
-    this.initTransporter();
+    this.resend = null;
+    this.initClients();
   }
 
-  initTransporter() {
+  async initClients() {
+    if (process.env.RESEND_API_KEY) {
+      try {
+        this.resend = await getResendClient(process.env.RESEND_API_KEY);
+        if (this.resend) {
+          console.log('[Email Service] Resend HTTP API client configured (Port 443 HTTPS)');
+        }
+      } catch (e) {
+        console.error('[Email Service] Error initializing Resend:', e);
+      }
+    } else {
+      this.resend = null;
+    }
+
     const user = process.env.SMTP_USER || process.env.EMAIL_USER;
     const pass = process.env.SMTP_PASS || process.env.EMAIL_PASS;
     const host = process.env.SMTP_HOST || 'smtp.gmail.com';
@@ -34,15 +63,22 @@ class EmailService {
       console.log(`[Email Service] SMTP Transporter configured (${host}:${port}, secure: ${secure}, user: ${user}, IPv4 forced)`);
     } else {
       this.transporter = null;
-      console.log('[Email Service] No SMTP credentials provided. Running in Preview/Simulation mode.');
+    }
+
+    if (!this.resend && !this.transporter) {
+      console.log('[Email Service] Neither RESEND_API_KEY nor SMTP credentials provided. Running in Preview/Simulation mode.');
     }
   }
 
+  initTransporter() {
+    this.initClients();
+  }
+
   isConfigured() {
-    if (!this.transporter) {
-      this.initTransporter();
+    if (!this.resend && !this.transporter) {
+      this.initClients();
     }
-    return !!(this.transporter && (process.env.SMTP_USER || process.env.EMAIL_USER));
+    return !!(this.resend || (this.transporter && (process.env.SMTP_USER || process.env.EMAIL_USER)));
   }
 
   getFromAddress() {
@@ -233,7 +269,6 @@ class EmailService {
     }
 
     const { checkinUrl, buffer, dataUrl } = await qrService.generateAttendeeQr(attendee, baseUrl);
-    const html = this.generateEmailHtml(attendee, checkinUrl, 'cid:entry_pass_qr');
 
     if (!this.isConfigured()) {
       // Simulation / Preview Mode
@@ -257,7 +292,47 @@ class EmailService {
     const fullName = attendee.fullName || 'Valued Attendee';
     const textFallback = `Hello ${fullName},\n\nYour seat for SOLIDWORKS Innovation Day 2026 has been confirmed!\n\nEvent Details:\nDate: October 23, 2026\nTime: 09:00 AM – 02:00 PM\nVenue: Hablis Hotel, Guindy, Chennai\n\nYour Check-In & Digital Badge URL:\n${checkinUrl}\n\nPlease present this pass or show your attached QR code upon arrival.\n\nBest regards,\nConceptia KONNECT`;
 
-    // Real SMTP Send
+    // 1. Resend HTTP API Delivery (HTTPS Port 443 - Never blocked by Render firewall)
+    if (this.resend || process.env.RESEND_API_KEY) {
+      if (!this.resend) this.resend = await getResendClient(process.env.RESEND_API_KEY);
+
+      // In HTML for Resend, embed the QR image dataUrl directly so it displays everywhere
+      const resendHtml = this.generateEmailHtml(attendee, checkinUrl, dataUrl);
+      const resendFrom = process.env.RESEND_FROM || process.env.EMAIL_FROM || 'SOLIDWORKS Event <onboarding@resend.dev>';
+
+      const { data, error } = await this.resend.emails.send({
+        from: resendFrom,
+        to: [attendee.workEmail],
+        subject: `Your Entry Pass & QR Code: SOLIDWORKS Innovation Day 2026 - ${fullName}`,
+        html: resendHtml,
+        text: textFallback,
+        attachments: [
+          {
+            filename: `pass-${attendee._id || attendee.id}.png`,
+            content: buffer.toString('base64'),
+          }
+        ]
+      });
+
+      if (error) {
+        console.error('Resend API delivery error:', error);
+        throw new Error(error.message || 'Resend HTTP API failed to send email');
+      }
+
+      await dataService.markEmailSent(attendee._id || attendee.id);
+
+      return {
+        success: true,
+        provider: 'resend',
+        simulated: false,
+        messageId: data?.id,
+        recipient: attendee.workEmail,
+        checkinUrl
+      };
+    }
+
+    // 2. Standard Nodemailer SMTP Send
+    const html = this.generateEmailHtml(attendee, checkinUrl, 'cid:entry_pass_qr');
     const mailOptions = {
       from: this.getFromAddress(),
       to: attendee.workEmail,
