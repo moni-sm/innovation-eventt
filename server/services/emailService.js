@@ -19,14 +19,25 @@ class EmailService {
     const secure = process.env.SMTP_SECURE === 'true' || port === 465;
 
     if (user && pass) {
-      this.transporter = nodemailer.createTransport({
-        host,
-        port,
-        secure,
-        auth: { user, pass },
-        tls: { rejectUnauthorized: false }
-      });
-      console.log(`[Email Service] SMTP Transporter configured (${host}:${port}, user: ${user})`);
+      const isGmail = host === 'smtp.gmail.com' || (user && user.endsWith('@gmail.com'));
+      
+      const transportConfig = isGmail
+        ? {
+            service: 'gmail',
+            auth: { user, pass },
+            family: 4 // Force IPv4 to avoid ENETUNREACH on Render
+          }
+        : {
+            host,
+            port,
+            secure,
+            auth: { user, pass },
+            tls: { rejectUnauthorized: false },
+            family: 4 // Force IPv4 to avoid ENETUNREACH on Render
+          };
+
+      this.transporter = nodemailer.createTransport(transportConfig);
+      console.log(`[Email Service] SMTP Transporter configured (${isGmail ? 'Gmail Service' : `${host}:${port}`}, user: ${user}, IPv4 forced)`);
     } else {
       this.transporter = null;
       console.log('[Email Service] No SMTP credentials provided. Running in Preview/Simulation mode.');
