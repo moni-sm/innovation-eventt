@@ -15,29 +15,23 @@ class EmailService {
     const user = process.env.SMTP_USER || process.env.EMAIL_USER;
     const pass = process.env.SMTP_PASS || process.env.EMAIL_PASS;
     const host = process.env.SMTP_HOST || 'smtp.gmail.com';
-    const port = parseInt(process.env.SMTP_PORT || '587', 10);
-    const secure = process.env.SMTP_SECURE === 'true' || port === 465;
+    const port = parseInt(process.env.SMTP_PORT, 10) || 587;
+    const secure = process.env.SMTP_SECURE === 'true';
 
     if (user && pass) {
-      const isGmail = host === 'smtp.gmail.com' || (user && user.endsWith('@gmail.com'));
-      
-      const transportConfig = isGmail
-        ? {
-            service: 'gmail',
-            auth: { user, pass },
-            family: 4 // Force IPv4 to avoid ENETUNREACH on Render
-          }
-        : {
-            host,
-            port,
-            secure,
-            auth: { user, pass },
-            tls: { rejectUnauthorized: false },
-            family: 4 // Force IPv4 to avoid ENETUNREACH on Render
-          };
-
-      this.transporter = nodemailer.createTransport(transportConfig);
-      console.log(`[Email Service] SMTP Transporter configured (${isGmail ? 'Gmail Service' : `${host}:${port}`}, user: ${user}, IPv4 forced)`);
+      this.transporter = nodemailer.createTransport({
+        host,
+        port,
+        secure,
+        auth: {
+          user,
+          pass,
+        },
+        family: 4, // FIXES ENETUNREACH: Forces IPv4 instead of IPv6
+        connectionTimeout: 10000, // 10 seconds timeout
+        tls: { rejectUnauthorized: false }
+      });
+      console.log(`[Email Service] SMTP Transporter configured (${host}:${port}, secure: ${secure}, user: ${user}, IPv4 forced)`);
     } else {
       this.transporter = null;
       console.log('[Email Service] No SMTP credentials provided. Running in Preview/Simulation mode.');
