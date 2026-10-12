@@ -76,11 +76,12 @@ export const dataService = {
     if (isMongoActive()) {
       try {
         let record = null;
-        if (id.match(/^[0-9a-fA-F]{24}$/)) {
+        const idStr = String(id || '');
+        if (idStr.match(/^[0-9a-fA-F]{24}$/)) {
           record = await Registration.findById(id).lean();
         }
         if (!record) {
-          record = await Registration.findOne({ qrCodeToken: id }).lean();
+          record = await Registration.findOne({ qrCodeToken: idStr }).lean();
         }
         if (record) return record;
       } catch (err) {
@@ -94,10 +95,11 @@ export const dataService = {
     if (isMongoActive()) {
       try {
         let record = null;
-        if (id.match(/^[0-9a-fA-F]{24}$/)) {
+        const idStr = String(id || '');
+        if (idStr.match(/^[0-9a-fA-F]{24}$/)) {
           record = await Registration.findByIdAndUpdate(id, updateData, { new: true }).lean();
         } else {
-          record = await Registration.findOneAndUpdate({ qrCodeToken: id }, updateData, { new: true }).lean();
+          record = await Registration.findOneAndUpdate({ qrCodeToken: idStr }, updateData, { new: true }).lean();
         }
         if (record) return record;
       } catch (err) {
@@ -127,10 +129,11 @@ export const dataService = {
     if (isMongoActive()) {
       try {
         let res = null;
-        if (id.match(/^[0-9a-fA-F]{24}$/)) {
+        const idStr = String(id || '');
+        if (idStr.match(/^[0-9a-fA-F]{24}$/)) {
           res = await Registration.findByIdAndDelete(id);
         } else {
-          res = await Registration.findOneAndDelete({ qrCodeToken: id });
+          res = await Registration.findOneAndDelete({ qrCodeToken: idStr });
         }
         return !!res;
       } catch (err) {

@@ -323,20 +323,24 @@ class EmailService {
 
       const resendData = await resendRes.json();
       if (!resendRes.ok) {
-        console.error('Resend API delivery error:', resendData);
-        throw new Error(resendData.message || 'Resend HTTP API failed to send email');
+        console.warn(`[Email Service] Resend API notice: ${resendData.message || 'Sandbox restriction'}`);
+        if (this.transporter) {
+          console.log('[Email Service] Automatically falling back to Gmail SMTP...');
+        } else {
+          throw new Error(resendData.message || 'Resend HTTP API failed to send email');
+        }
+      } else {
+        await dataService.markEmailSent(attendee._id || attendee.id);
+
+        return {
+          success: true,
+          provider: 'resend',
+          simulated: false,
+          messageId: resendData.id,
+          recipient: attendee.workEmail,
+          checkinUrl
+        };
       }
-
-      await dataService.markEmailSent(attendee._id || attendee.id);
-
-      return {
-        success: true,
-        provider: 'resend',
-        simulated: false,
-        messageId: resendData.id,
-        recipient: attendee.workEmail,
-        checkinUrl
-      };
     }
 
     // 2. Standard Nodemailer SMTP Send
