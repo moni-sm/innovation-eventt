@@ -293,14 +293,12 @@ class EmailService {
     const textFallback = `Hello ${fullName},\n\nYour seat for SOLIDWORKS Innovation Day 2026 has been confirmed!\n\nEvent Details:\nDate: October 23, 2026\nTime: 09:00 AM – 02:00 PM\nVenue: Hablis Hotel, Guindy, Chennai\n\nYour Check-In & Digital Badge URL:\n${checkinUrl}\n\nPlease present this pass or show your attached QR code upon arrival.\n\nBest regards,\nConceptia KONNECT`;
 
     // 1. Resend HTTP API Delivery (HTTPS Port 443 - Never blocked by Render firewall)
-    if (this.resend || process.env.RESEND_API_KEY) {
-      if (!this.resend) this.resend = await getResendClient(process.env.RESEND_API_KEY);
-
+    if (process.env.RESEND_API_KEY) {
       // In HTML for Resend, embed the QR image dataUrl directly so it displays everywhere
       const resendHtml = this.generateEmailHtml(attendee, checkinUrl, dataUrl);
-      const resendFrom = process.env.RESEND_FROM || process.env.EMAIL_FROM || 'SOLIDWORKS Event <onboarding@resend.dev>';
+      const resendFrom = process.env.RESEND_FROM || 'SOLIDWORKS Event <onboarding@resend.dev>';
 
-      const { data, error } = await this.resend.emails.send({
+      const payload = {
         from: resendFrom,
         to: [attendee.workEmail],
         subject: `Your Entry Pass & QR Code: SOLIDWORKS Innovation Day 2026 - ${fullName}`,
@@ -312,11 +310,21 @@ class EmailService {
             content: buffer.toString('base64'),
           }
         ]
+      };
+
+      const resendRes = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
       });
 
-      if (error) {
-        console.error('Resend API delivery error:', error);
-        throw new Error(error.message || 'Resend HTTP API failed to send email');
+      const resendData = await resendRes.json();
+      if (!resendRes.ok) {
+        console.error('Resend API delivery error:', resendData);
+        throw new Error(resendData.message || 'Resend HTTP API failed to send email');
       }
 
       await dataService.markEmailSent(attendee._id || attendee.id);
@@ -325,7 +333,7 @@ class EmailService {
         success: true,
         provider: 'resend',
         simulated: false,
-        messageId: data?.id,
+        messageId: resendData.id,
         recipient: attendee.workEmail,
         checkinUrl
       };
