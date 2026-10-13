@@ -297,69 +297,10 @@ class EmailService {
     const fullName = attendee.fullName || 'Valued Attendee';
     const textFallback = `Hello ${fullName},\n\nYour seat for SOLIDWORKS Innovation Day 2026 has been confirmed!\n\nEvent Details:\nDate: October 23, 2026\nTime: 09:00 AM – 02:00 PM\nVenue: Hablis Hotel, Guindy, Chennai\n\nYour Check-In & Digital Badge URL:\n${checkinUrl}\n\nPlease present this pass or show your attached QR code upon arrival.\n\nBest regards,\nConceptia KONNECT`;
 
-    // 0. Brevo (Sendinblue) HTTP API Delivery (HTTPS Port 443 - Can send to ANY domain!)
-    if (process.env.BREVO_API_KEY) {
-      const brevoHtml = this.generateEmailHtml(attendee, checkinUrl, dataUrl);
-      const senderEmail = process.env.BREVO_SENDER_EMAIL || process.env.SMTP_USER || 'monikashivakumar2001@gmail.com';
-      const senderName = process.env.BREVO_SENDER_NAME || 'SOLIDWORKS Innovation Day 2026';
-
-      const brevoPayload = {
-        sender: {
-          name: senderName,
-          email: senderEmail
-        },
-        to: [
-          {
-            email: attendee.workEmail,
-            name: fullName
-          }
-        ],
-        subject: `Your Entry Pass & QR Code: SOLIDWORKS Innovation Day 2026 - ${fullName}`,
-        htmlContent: brevoHtml,
-        textContent: textFallback,
-        attachment: [
-          {
-            name: `pass-${attendee._id || attendee.id}.png`,
-            content: buffer.toString('base64')
-          }
-        ]
-      };
-
-      const brevoRes = await fetch('https://api.brevo.com/v3/smtp/email', {
-        method: 'POST',
-        headers: {
-          'accept': 'application/json',
-          'api-key': process.env.BREVO_API_KEY,
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(brevoPayload)
-      });
-
-      const brevoData = await brevoRes.json();
-      if (!brevoRes.ok) {
-        console.warn(`[Email Service] Brevo API notice:`, brevoData);
-        if (!this.transporter && !process.env.RESEND_API_KEY) {
-          throw new Error(brevoData.message || 'Brevo HTTP API failed to send email');
-        }
-      } else {
-        await dataService.markEmailSent(attendee._id || attendee.id);
-
-        return {
-          success: true,
-          provider: 'brevo',
-          simulated: false,
-          messageId: brevoData.messageId,
-          recipient: attendee.workEmail,
-          checkinUrl
-        };
-      }
-    }
-
-    // 1. Resend HTTP API Delivery (HTTPS Port 443 - Never blocked by Render firewall)
+    // Resend HTTP API Delivery (HTTPS Port 443)
     if (process.env.RESEND_API_KEY) {
-      // In HTML for Resend, embed the QR image dataUrl directly so it displays everywhere
       const resendHtml = this.generateEmailHtml(attendee, checkinUrl, dataUrl);
-      const resendFrom = process.env.RESEND_FROM || 'SOLIDWORKS Event <onboarding@resend.dev>';
+      const resendFrom = process.env.RESEND_FROM || 'SOLIDWORKS Innovation Day 2026 <onboarding@resend.dev>';
 
       const payload = {
         from: resendFrom,
@@ -386,27 +327,23 @@ class EmailService {
 
       const resendData = await resendRes.json();
       if (!resendRes.ok) {
-        console.warn(`[Email Service] Resend API notice: ${resendData.message || 'Sandbox restriction'}`);
-        if (this.transporter) {
-          console.log('[Email Service] Automatically falling back to Gmail SMTP...');
-        } else {
-          throw new Error(resendData.message || 'Resend HTTP API failed to send email');
-        }
-      } else {
-        await dataService.markEmailSent(attendee._id || attendee.id);
-
-        return {
-          success: true,
-          provider: 'resend',
-          simulated: false,
-          messageId: resendData.id,
-          recipient: attendee.workEmail,
-          checkinUrl
-        };
+        console.error('Resend API delivery error:', resendData);
+        throw new Error(resendData.message || 'Resend HTTP API failed to send email');
       }
+
+      await dataService.markEmailSent(attendee._id || attendee.id);
+
+      return {
+        success: true,
+        provider: 'resend',
+        simulated: false,
+        messageId: resendData.id,
+        recipient: attendee.workEmail,
+        checkinUrl
+      };
     }
 
-    // 2. Standard Nodemailer SMTP Send
+    // Standard Nodemailer SMTP Send (only if RESEND_API_KEY is not used)
     const html = this.generateEmailHtml(attendee, checkinUrl, 'cid:entry_pass_qr');
     const mailOptions = {
       from: this.getFromAddress(),
