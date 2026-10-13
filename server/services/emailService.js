@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+import dns from 'node:dns/promises';
 import nodemailer from 'nodemailer';
 import { qrService } from './qrService.js';
 import { dataService } from './dataService.js';
@@ -56,11 +57,11 @@ class EmailService {
           user,
           pass,
         },
-        family: 4, // FIXES ENETUNREACH: Forces IPv4 instead of IPv6
-        connectionTimeout: 10000, // 10 seconds timeout
-        tls: { rejectUnauthorized: false }
+        family: 4,
+        connectionTimeout: 10000,
+        tls: { servername: host, rejectUnauthorized: false }
       });
-      console.log(`[Email Service] SMTP Transporter configured (${host}:${port}, secure: ${secure}, user: ${user}, IPv4 forced)`);
+      console.log(`[Email Service] SMTP Transporter configured (${host}:${port}, secure: ${secure}, user: ${user})`);
     } else {
       this.transporter = null;
     }
@@ -68,6 +69,39 @@ class EmailService {
     if (!this.resend && !this.transporter && !process.env.BREVO_API_KEY) {
       console.log('[Email Service] Neither BREVO_API_KEY, RESEND_API_KEY, nor SMTP credentials provided. Running in Preview/Simulation mode.');
     }
+  }
+
+  async getIpv4Transporter() {
+    const user = process.env.SMTP_USER || process.env.EMAIL_USER;
+    const pass = process.env.SMTP_PASS || process.env.EMAIL_PASS;
+    const host = process.env.SMTP_HOST || 'smtp.gmail.com';
+    const port = parseInt(process.env.SMTP_PORT, 10) || 587;
+    const secure = process.env.SMTP_SECURE === 'true';
+
+    let targetHost = host;
+    try {
+      const ipv4List = await dns.resolve4(host);
+      if (ipv4List && ipv4List.length > 0) {
+        targetHost = ipv4List[0];
+        console.log(`[Email Service] Pre-resolved ${host} -> IPv4 literal ${targetHost}`);
+      }
+    } catch (dnsErr) {
+      console.warn(`[Email Service] DNS resolve4 fallback for ${host}:`, dnsErr.message);
+    }
+
+    return nodemailer.createTransport({
+      host: targetHost,
+      port,
+      secure,
+      auth: { user, pass },
+      connectionTimeout: 15000,
+      greetingTimeout: 15000,
+      socketTimeout: 20000,
+      tls: {
+        servername: host,
+        rejectUnauthorized: false
+      }
+    });
   }
 
   initTransporter() {
@@ -367,7 +401,8 @@ class EmailService {
       ]
     };
 
-    const info = await this.transporter.sendMail(mailOptions);
+    const ipv4Transporter = await this.getIpv4Transporter();
+    const info = await ipv4Transporter.sendMail(mailOptions);
     await dataService.markEmailSent(attendee._id || attendee.id);
 
     return {
