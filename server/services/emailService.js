@@ -65,8 +65,8 @@ class EmailService {
       this.transporter = null;
     }
 
-    if (!this.resend && !this.transporter) {
-      console.log('[Email Service] Neither RESEND_API_KEY nor SMTP credentials provided. Running in Preview/Simulation mode.');
+    if (!this.resend && !this.transporter && !process.env.BREVO_API_KEY) {
+      console.log('[Email Service] Neither BREVO_API_KEY, RESEND_API_KEY, nor SMTP credentials provided. Running in Preview/Simulation mode.');
     }
   }
 
@@ -78,7 +78,12 @@ class EmailService {
     if (!this.resend && !this.transporter) {
       this.initClients();
     }
-    return !!(this.resend || (this.transporter && (process.env.SMTP_USER || process.env.EMAIL_USER)));
+    return !!(
+      process.env.BREVO_API_KEY ||
+      process.env.RESEND_API_KEY ||
+      this.resend ||
+      (this.transporter && (process.env.SMTP_USER || process.env.EMAIL_USER))
+    );
   }
 
   getFromAddress() {
@@ -291,6 +296,64 @@ class EmailService {
 
     const fullName = attendee.fullName || 'Valued Attendee';
     const textFallback = `Hello ${fullName},\n\nYour seat for SOLIDWORKS Innovation Day 2026 has been confirmed!\n\nEvent Details:\nDate: October 23, 2026\nTime: 09:00 AM – 02:00 PM\nVenue: Hablis Hotel, Guindy, Chennai\n\nYour Check-In & Digital Badge URL:\n${checkinUrl}\n\nPlease present this pass or show your attached QR code upon arrival.\n\nBest regards,\nConceptia KONNECT`;
+
+    // 0. Brevo (Sendinblue) HTTP API Delivery (HTTPS Port 443 - Can send to ANY domain!)
+    if (process.env.BREVO_API_KEY) {
+      const brevoHtml = this.generateEmailHtml(attendee, checkinUrl, dataUrl);
+      const senderEmail = process.env.BREVO_SENDER_EMAIL || process.env.SMTP_USER || 'monikashivakumar2001@gmail.com';
+      const senderName = process.env.BREVO_SENDER_NAME || 'SOLIDWORKS Innovation Day 2026';
+
+      const brevoPayload = {
+        sender: {
+          name: senderName,
+          email: senderEmail
+        },
+        to: [
+          {
+            email: attendee.workEmail,
+            name: fullName
+          }
+        ],
+        subject: `Your Entry Pass & QR Code: SOLIDWORKS Innovation Day 2026 - ${fullName}`,
+        htmlContent: brevoHtml,
+        textContent: textFallback,
+        attachment: [
+          {
+            name: `pass-${attendee._id || attendee.id}.png`,
+            content: buffer.toString('base64')
+          }
+        ]
+      };
+
+      const brevoRes = await fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: {
+          'accept': 'application/json',
+          'api-key': process.env.BREVO_API_KEY,
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(brevoPayload)
+      });
+
+      const brevoData = await brevoRes.json();
+      if (!brevoRes.ok) {
+        console.warn(`[Email Service] Brevo API notice:`, brevoData);
+        if (!this.transporter && !process.env.RESEND_API_KEY) {
+          throw new Error(brevoData.message || 'Brevo HTTP API failed to send email');
+        }
+      } else {
+        await dataService.markEmailSent(attendee._id || attendee.id);
+
+        return {
+          success: true,
+          provider: 'brevo',
+          simulated: false,
+          messageId: brevoData.messageId,
+          recipient: attendee.workEmail,
+          checkinUrl
+        };
+      }
+    }
 
     // 1. Resend HTTP API Delivery (HTTPS Port 443 - Never blocked by Render firewall)
     if (process.env.RESEND_API_KEY) {
