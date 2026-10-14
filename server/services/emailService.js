@@ -385,7 +385,7 @@ class EmailService {
     const html = this.generateEmailHtml(attendee, checkinUrl, 'cid:entry_pass_qr');
     const mailOptions = {
       from: this.getFromAddress(),
-      replyTo: 'info@conceptia.in',
+      replyTo: this.getFromAddress(),
       to: attendee.workEmail,
       subject: `Your Entry Pass & QR Code: SOLIDWORKS Innovation Day 2026 - ${fullName}`,
       text: textFallback,
