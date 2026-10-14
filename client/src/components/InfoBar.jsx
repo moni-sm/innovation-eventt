@@ -52,6 +52,7 @@ export default function InfoBar({ info }) {
               </div>
               <div className="text-xs sm:text-sm font-extrabold text-white tracking-tight uppercase whitespace-nowrap">
                 {time}
+                <p>( Followed by Lunch )</p>
               </div>
             </div>
           </div>
