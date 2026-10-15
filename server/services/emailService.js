@@ -29,6 +29,10 @@ class EmailService {
   }
 
   async initClients() {
+    if (process.env.BREVO_API_KEY) {
+      console.log('[Email Service] Brevo (Sendinblue) HTTP API configured (Port 443 HTTPS)');
+    }
+
     if (process.env.RESEND_API_KEY) {
       try {
         this.resend = await getResendClient(process.env.RESEND_API_KEY);
@@ -40,6 +44,11 @@ class EmailService {
       }
     } else {
       this.resend = null;
+    }
+
+    const isRender = process.env.RENDER === 'true';
+    if (isRender) {
+      console.log('[Email Service] Running in Render cloud environment (Render blocks outbound SMTP ports 25, 465, 587; HTTPS API via Brevo or Resend is required)');
     }
 
     const user = process.env.SMTP_USER || process.env.EMAIL_USER;
@@ -122,6 +131,24 @@ class EmailService {
 
   getFromAddress() {
     return process.env.EMAIL_FROM || process.env.SMTP_FROM || '"SOLIDWORKS Innovation Day 2026" <events@conceptia.in>';
+  }
+
+  getSenderInfo() {
+    const raw = process.env.BREVO_FROM || process.env.EMAIL_FROM || process.env.SMTP_FROM || '';
+    if (raw) {
+      const match = raw.match(/^(?:"?([^"]*)"?\s)?<?([^>]+)>?$/);
+      if (match && match[2]) {
+        return {
+          name: match[1]?.trim() || 'SOLIDWORKS Innovation Day 2026',
+          email: match[2]?.trim()
+        };
+      }
+    }
+    const fallbackEmail = process.env.BREVO_USER || process.env.SMTP_USER || process.env.EMAIL_USER || 'events@conceptia.in';
+    return {
+      name: 'SOLIDWORKS Innovation Day 2026',
+      email: fallbackEmail
+    };
   }
 
   /**
@@ -299,6 +326,59 @@ class EmailService {
 </html>`;
   }
 
+  async sendViaBrevo(attendee, checkinUrl, buffer, dataUrl, fullName, textFallback) {
+    const html = this.generateEmailHtml(attendee, checkinUrl, dataUrl);
+    const sender = this.getSenderInfo();
+
+    const payload = {
+      sender: {
+        name: sender.name,
+        email: sender.email
+      },
+      to: [
+        {
+          email: attendee.workEmail,
+          name: fullName
+        }
+      ],
+      subject: `Your Entry Pass & QR Code: SOLIDWORKS Innovation Day 2026 - ${fullName}`,
+      htmlContent: html,
+      textContent: textFallback,
+      attachment: [
+        {
+          name: `pass-${attendee._id || attendee.id}.png`,
+          content: buffer.toString('base64')
+        }
+      ]
+    };
+
+    const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'api-key': process.env.BREVO_API_KEY,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(`Brevo HTTP API Error (${res.status}): ${data.message || JSON.stringify(data)}`);
+    }
+
+    await dataService.markEmailSent(attendee._id || attendee.id);
+
+    return {
+      success: true,
+      provider: 'brevo',
+      simulated: false,
+      messageId: data.messageId,
+      recipient: attendee.workEmail,
+      checkinUrl
+    };
+  }
+
   /**
    * Send single personalized attendance QR pass email
    */
@@ -331,15 +411,29 @@ class EmailService {
     const fullName = attendee.fullName || 'Valued Attendee';
     const textFallback = `Hello ${fullName},\n\nYour seat for SOLIDWORKS Innovation Day 2026 has been confirmed!\n\nEvent Details:\nDate: October 23, 2026\nTime: 09:00 AM – 02:00 PM\nVenue: Hablis Hotel, Guindy, Chennai\n\nYour Check-In & Digital Badge URL:\n${checkinUrl}\n\nPlease present this pass or show your attached QR code upon arrival.\n\nBest regards,\nConceptia KONNECT`;
 
-    // Resend HTTP API Delivery (HTTPS Port 443)
+    // 1. Brevo HTTP API Delivery (Port 443 HTTPS - Recommended for Render without custom domain)
+    if (process.env.BREVO_API_KEY) {
+      return await this.sendViaBrevo(attendee, checkinUrl, buffer, dataUrl, fullName, textFallback);
+    }
+
+    // 2. Resend HTTP API Delivery (Port 443 HTTPS)
     if (process.env.RESEND_API_KEY) {
       const resendHtml = this.generateEmailHtml(attendee, checkinUrl, dataUrl);
       const resendFrom = process.env.RESEND_FROM || 'SOLIDWORKS Innovation Day 2026 <onboarding@resend.dev>';
 
+      // Check if test email override is specified or if testing with personal Gmail
+      const testRecipient = process.env.RESEND_TEST_EMAIL || (process.env.TEST_MODE === 'true' ? 'monikasm2019@gmail.com' : null);
+      let recipientEmail = testRecipient || attendee.workEmail;
+      let isRedirected = !!testRecipient && testRecipient.toLowerCase() !== (attendee.workEmail || '').toLowerCase();
+
+      let subject = isRedirected
+        ? `[TEST PASS: ${fullName}] Your Entry Pass & QR Code: SOLIDWORKS Innovation Day 2026`
+        : `Your Entry Pass & QR Code: SOLIDWORKS Innovation Day 2026 - ${fullName}`;
+
       const payload = {
         from: resendFrom,
-        to: [attendee.workEmail],
-        subject: `Your Entry Pass & QR Code: SOLIDWORKS Innovation Day 2026 - ${fullName}`,
+        to: [recipientEmail],
+        subject,
         html: resendHtml,
         text: textFallback,
         attachments: [
@@ -350,7 +444,7 @@ class EmailService {
         ]
       };
 
-      const resendRes = await fetch('https://api.resend.com/emails', {
+      let resendRes = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
@@ -359,13 +453,59 @@ class EmailService {
         body: JSON.stringify(payload)
       });
 
-      const resendData = await resendRes.json();
+      let resendData = await resendRes.json();
+
+      // If Resend rejected because of sandbox mode (unverified domain):
       if (!resendRes.ok) {
         console.warn(`[Email Service] Resend notice: ${resendData.message || 'Sandbox restriction'}`);
-        if (this.transporter) {
-          console.log('[Email Service] Automatically falling back to SMTP...');
+
+        // Extract the allowed test Gmail from Resend error message (e.g. monikasm2019@gmail.com)
+        const match = (resendData.message || '').match(/own email address \(([^)]+)\)/);
+        const autoTestEmail = match ? match[1] : (process.env.RESEND_TEST_EMAIL || 'monikasm2019@gmail.com');
+
+        if (autoTestEmail && recipientEmail.toLowerCase() !== autoTestEmail.toLowerCase()) {
+          console.log(`[Email Service] Resend testing sandbox active. Redirecting email for ${attendee.fullName} (${attendee.workEmail}) -> ${autoTestEmail}`);
+
+          payload.to = [autoTestEmail];
+          payload.subject = `[TEST PASS: ${fullName}] Your Entry Pass & QR Code: SOLIDWORKS Innovation Day 2026`;
+
+          const retryRes = await fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          const retryData = await retryRes.json();
+          if (retryRes.ok) {
+            await dataService.markEmailSent(attendee._id || attendee.id);
+            return {
+              success: true,
+              provider: 'resend',
+              testMode: true,
+              simulated: false,
+              messageId: retryData.id,
+              recipient: autoTestEmail,
+              originalRecipient: attendee.workEmail,
+              checkinUrl,
+              message: `Delivered to test email ${autoTestEmail} (Resend Sandbox Mode)`
+            };
+          } else {
+            console.error('[Email Service] Resend retry failed:', retryData);
+            throw new Error(`Resend Delivery Failed: ${retryData.message || JSON.stringify(retryData)}`);
+          }
+        }
+
+        const isRender = process.env.RENDER === 'true';
+        if (this.transporter && !isRender) {
+          console.log('[Email Service] Automatically falling back to local SMTP...');
         } else {
-          throw new Error(resendData.message || 'Resend HTTP API failed to send email');
+          throw new Error(
+            `Resend Error: ${resendData.message}. ` +
+            `Render blocks outbound SMTP. To test with Resend, set RESEND_TEST_EMAIL=monikasm2019@gmail.com in Render environment variables.`
+          );
         }
       } else {
         await dataService.markEmailSent(attendee._id || attendee.id);
@@ -373,15 +513,26 @@ class EmailService {
         return {
           success: true,
           provider: 'resend',
+          testMode: isRedirected,
+          testRecipient: isRedirected ? recipientEmail : null,
           simulated: false,
           messageId: resendData.id,
-          recipient: attendee.workEmail,
+          recipient: recipientEmail,
+          originalRecipient: attendee.workEmail,
           checkinUrl
         };
       }
     }
 
-    // Standard Nodemailer SMTP Send
+    // 3. Standard Nodemailer SMTP Send (local development or non-Render hosts)
+    const isRender = process.env.RENDER === 'true';
+    if (isRender) {
+      throw new Error(
+        'Render blocks outbound SMTP ports (25, 465, 587), causing connection timeouts to smtp.gmail.com. ' +
+        'To send emails from Render, please configure BREVO_API_KEY (free 300 emails/day to any recipient) or RESEND_API_KEY with a verified domain.'
+      );
+    }
+
     const html = this.generateEmailHtml(attendee, checkinUrl, 'cid:entry_pass_qr');
     const mailOptions = {
       from: this.getFromAddress(),
@@ -401,17 +552,29 @@ class EmailService {
       ]
     };
 
-    const ipv4Transporter = await this.getIpv4Transporter();
-    const info = await ipv4Transporter.sendMail(mailOptions);
-    await dataService.markEmailSent(attendee._id || attendee.id);
+    try {
+      const ipv4Transporter = await this.getIpv4Transporter();
+      const info = await ipv4Transporter.sendMail(mailOptions);
+      await dataService.markEmailSent(attendee._id || attendee.id);
 
-    return {
-      success: true,
-      simulated: false,
-      messageId: info.messageId,
-      recipient: attendee.workEmail,
-      checkinUrl
-    };
+      return {
+        success: true,
+        provider: 'smtp',
+        simulated: false,
+        messageId: info.messageId,
+        recipient: attendee.workEmail,
+        checkinUrl
+      };
+    } catch (smtpErr) {
+      if (smtpErr.code === 'ETIMEDOUT' || smtpErr.message?.includes('timeout')) {
+        throw new Error(
+          `SMTP Connection Timeout (${smtpErr.code || 'ETIMEDOUT'}): ` +
+          `Connection to ${process.env.SMTP_HOST || 'smtp.gmail.com'} timed out. ` +
+          `Outbound SMTP ports are blocked on Render. Please configure BREVO_API_KEY or verify domain on RESEND.`
+        );
+      }
+      throw smtpErr;
+    }
   }
 
   /**

@@ -276,11 +276,15 @@ router.all('/send-email/:id', async (req, res) => {
     const baseUrl = getBaseUrl(req);
     const result = await emailService.sendAttendanceEmail(attendee, baseUrl);
 
+    const message = result.simulated
+      ? `Pass generated in simulation mode for ${attendee.fullName} (${attendee.workEmail})`
+      : result.testMode
+        ? `[Test Mode] QR Pass sent to verified test email ${result.recipient} for attendee ${attendee.fullName} (${attendee.workEmail})`
+        : `QR Pass email successfully sent to ${attendee.workEmail}`;
+
     res.json({
       success: true,
-      message: result.simulated
-        ? `Pass generated in simulation mode for ${attendee.fullName} (${attendee.workEmail})`
-        : `QR Pass email successfully sent to ${attendee.workEmail}`,
+      message,
       result
     });
   } catch (err) {
@@ -307,9 +311,15 @@ router.get('/send-by-email', async (req, res) => {
     const baseUrl = getBaseUrl(req);
     const result = await emailService.sendAttendanceEmail(attendee, baseUrl);
 
+    const message = result.simulated
+      ? `Pass generated in simulation mode for ${attendee.fullName} (${attendee.workEmail})`
+      : result.testMode
+        ? `[Test Mode] QR Pass sent to verified test email ${result.recipient} for attendee ${attendee.fullName} (${attendee.workEmail})`
+        : `QR Pass email successfully sent to ${attendee.workEmail}`;
+
     res.json({
       success: true,
-      message: `QR Pass email successfully sent to ${attendee.workEmail}`,
+      message,
       attendee: {
         id: attendee._id || attendee.id,
         name: attendee.fullName,
