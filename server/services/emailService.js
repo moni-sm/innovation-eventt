@@ -421,19 +421,13 @@ class EmailService {
       const resendHtml = this.generateEmailHtml(attendee, checkinUrl, dataUrl);
       const resendFrom = process.env.RESEND_FROM || 'SOLIDWORKS Innovation Day 2026 <onboarding@resend.dev>';
 
-      // Check if test email override is specified or if testing with personal Gmail
-      const testRecipient = process.env.RESEND_TEST_EMAIL || (process.env.TEST_MODE === 'true' ? 'monikasm2019@gmail.com' : null);
-      let recipientEmail = testRecipient || attendee.workEmail;
-      let isRedirected = !!testRecipient && testRecipient.toLowerCase() !== (attendee.workEmail || '').toLowerCase();
-
-      let subject = isRedirected
-        ? `[TEST PASS: ${fullName}] Your Entry Pass & QR Code: SOLIDWORKS Innovation Day 2026`
-        : `Your Entry Pass & QR Code: SOLIDWORKS Innovation Day 2026 - ${fullName}`;
+      // Always deliver directly to the attendee's registered email
+      const recipientEmail = attendee.workEmail;
 
       const payload = {
         from: resendFrom,
         to: [recipientEmail],
-        subject,
+        subject: `Your Entry Pass & QR Code: SOLIDWORKS Innovation Day 2026 - ${fullName}`,
         html: resendHtml,
         text: textFallback,
         attachments: [
@@ -444,7 +438,7 @@ class EmailService {
         ]
       };
 
-      let resendRes = await fetch('https://api.resend.com/emails', {
+      const resendRes = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
@@ -453,58 +447,20 @@ class EmailService {
         body: JSON.stringify(payload)
       });
 
-      let resendData = await resendRes.json();
+      const resendData = await resendRes.json();
 
-      // If Resend rejected because of sandbox mode (unverified domain):
       if (!resendRes.ok) {
-        console.warn(`[Email Service] Resend notice: ${resendData.message || 'Sandbox restriction'}`);
-
-        // Extract the allowed test Gmail from Resend error message (e.g. monikasm2019@gmail.com)
-        const match = (resendData.message || '').match(/own email address \(([^)]+)\)/);
-        const autoTestEmail = match ? match[1] : (process.env.RESEND_TEST_EMAIL || 'monikasm2019@gmail.com');
-
-        if (autoTestEmail && recipientEmail.toLowerCase() !== autoTestEmail.toLowerCase()) {
-          console.log(`[Email Service] Resend testing sandbox active. Redirecting email for ${attendee.fullName} (${attendee.workEmail}) -> ${autoTestEmail}`);
-
-          payload.to = [autoTestEmail];
-          payload.subject = `[TEST PASS: ${fullName}] Your Entry Pass & QR Code: SOLIDWORKS Innovation Day 2026`;
-
-          const retryRes = await fetch('https://api.resend.com/emails', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-          });
-
-          const retryData = await retryRes.json();
-          if (retryRes.ok) {
-            await dataService.markEmailSent(attendee._id || attendee.id);
-            return {
-              success: true,
-              provider: 'resend',
-              testMode: true,
-              simulated: false,
-              messageId: retryData.id,
-              recipient: autoTestEmail,
-              originalRecipient: attendee.workEmail,
-              checkinUrl,
-              message: `Delivered to test email ${autoTestEmail} (Resend Sandbox Mode)`
-            };
-          } else {
-            console.error('[Email Service] Resend retry failed:', retryData);
-            throw new Error(`Resend Delivery Failed: ${retryData.message || JSON.stringify(retryData)}`);
-          }
-        }
+        console.warn(`[Email Service] Resend API notice: ${resendData.message || 'Sandbox restriction'}`);
 
         const isRender = process.env.RENDER === 'true';
+        // If running locally, fall back to Gmail SMTP which can deliver to any registered email!
         if (this.transporter && !isRender) {
-          console.log('[Email Service] Automatically falling back to local SMTP...');
+          console.log(`[Email Service] Resend refused ${recipientEmail} (unverified domain). Falling back to local SMTP...`);
         } else {
+          // On Render, SMTP is blocked, so explain domain requirement or Brevo
           throw new Error(
             `Resend Error: ${resendData.message}. ` +
-            `Render blocks outbound SMTP. To test with Resend, set RESEND_TEST_EMAIL=monikasm2019@gmail.com in Render environment variables.`
+            `To send to attendees' registered emails from Render, you must verify your domain at resend.com/domains OR use BREVO_API_KEY.`
           );
         }
       } else {
@@ -513,12 +469,9 @@ class EmailService {
         return {
           success: true,
           provider: 'resend',
-          testMode: isRedirected,
-          testRecipient: isRedirected ? recipientEmail : null,
           simulated: false,
           messageId: resendData.id,
           recipient: recipientEmail,
-          originalRecipient: attendee.workEmail,
           checkinUrl
         };
       }
