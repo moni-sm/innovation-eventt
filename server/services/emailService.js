@@ -411,12 +411,7 @@ class EmailService {
     const fullName = attendee.fullName || 'Valued Attendee';
     const textFallback = `Hello ${fullName},\n\nYour seat for SOLIDWORKS Innovation Day 2026 has been confirmed!\n\nEvent Details:\nDate: October 23, 2026\nTime: 09:00 AM – 02:00 PM\nVenue: Hablis Hotel, Guindy, Chennai\n\nYour Check-In & Digital Badge URL:\n${checkinUrl}\n\nPlease present this pass or show your attached QR code upon arrival.\n\nBest regards,\nConceptia KONNECT`;
 
-    // 1. Brevo HTTP API Delivery (Port 443 HTTPS - Recommended for Render without custom domain)
-    if (process.env.BREVO_API_KEY) {
-      return await this.sendViaBrevo(attendee, checkinUrl, buffer, dataUrl, fullName, textFallback);
-    }
-
-    // 2. Resend HTTP API Delivery (Port 443 HTTPS)
+    // 1. Resend HTTP API Delivery (Port 443 HTTPS - Primary Provider)
     if (process.env.RESEND_API_KEY) {
       const resendHtml = this.generateEmailHtml(attendee, checkinUrl, dataUrl);
       const resendFrom = process.env.RESEND_FROM || 'SOLIDWORKS Innovation Day 2026 <onboarding@resend.dev>';
@@ -453,14 +448,12 @@ class EmailService {
         console.warn(`[Email Service] Resend API notice: ${resendData.message || 'Sandbox restriction'}`);
 
         const isRender = process.env.RENDER === 'true';
-        // If running locally, fall back to Gmail SMTP which can deliver to any registered email!
         if (this.transporter && !isRender) {
-          console.log(`[Email Service] Resend refused ${recipientEmail} (unverified domain). Falling back to local SMTP...`);
+          console.log(`[Email Service] Resend rejected ${recipientEmail} (unverified domain). Falling back to local SMTP...`);
         } else {
-          // On Render, SMTP is blocked, so explain domain requirement or Brevo
           throw new Error(
             `Resend Error: ${resendData.message}. ` +
-            `To send to attendees' registered emails from Render, you must verify your domain at resend.com/domains OR use BREVO_API_KEY.`
+            `To send to registered attendees via Resend, please verify your domain at https://resend.com/domains and set RESEND_FROM to an address using that domain.`
           );
         }
       } else {
