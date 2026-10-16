@@ -1,7 +1,8 @@
 /**
- * Generates mobile-friendly responsive HTML for the check-in confirmation page
+ * Generates mobile-friendly responsive HTML for the read-only Digital Entry Pass page
+ * (Attendance is ONLY marked when scanned via the Admin Portal QR Scanner)
  */
-export function renderCheckinPage({ attendee, alreadyAttended = false, error = null }) {
+export function renderCheckinPage({ attendee, alreadyAttended = false, qrDataUrl = null, error = null }) {
   if (error || !attendee) {
     return `<!DOCTYPE html>
 <html lang="en">
@@ -29,31 +30,23 @@ export function renderCheckinPage({ attendee, alreadyAttended = false, error = n
 </html>`;
   }
 
+  const isAttended = attendee.status === 'Attended' || alreadyAttended;
+
   const checkinTime = attendee.attendedAt
-    ? new Date(attendee.attendedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
-    : new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    ? new Date(attendee.attendedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    : null;
 
   const checkinDate = attendee.attendedAt
     ? new Date(attendee.attendedAt).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' })
-    : new Date().toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
+    : null;
 
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${alreadyAttended ? 'Already Checked-in' : 'Attendance Confirmed'} - SOLIDWORKS Innovation Day 2026</title>
+  <title>Digital Entry Pass - ${attendee.fullName} | SOLIDWORKS Innovation Day 2026</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    @keyframes checkmark {
-      0% { transform: scale(0); opacity: 0; }
-      50% { transform: scale(1.2); }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    .animate-check {
-      animation: checkmark 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    }
-  </style>
 </head>
 <body class="bg-gradient-to-br from-slate-900 via-slate-800 to-[#002b49] min-h-screen flex items-center justify-center p-4 font-sans text-slate-800">
   <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden border border-slate-200">
@@ -64,40 +57,57 @@ export function renderCheckinPage({ attendee, alreadyAttended = false, error = n
         <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
         SOLIDWORKS Innovation Day 2026
       </div>
-      <h2 class="text-xs uppercase tracking-widest text-slate-300 font-semibold">Attendee Verification</h2>
+      <h2 class="text-xs uppercase tracking-widest text-slate-300 font-semibold">Official Digital Entry Pass</h2>
     </div>
 
-    <!-- Status Badge & Icon -->
+    <!-- Status Badge & Pass Content -->
     <div class="p-8 text-center">
       ${
-        alreadyAttended
+        isAttended
           ? `
-          <div class="w-20 h-20 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-black shadow-inner">
+          <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl font-black shadow-inner">
             ✓
           </div>
-          <span class="inline-block px-4 py-1.5 bg-amber-50 text-amber-700 border border-amber-200 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
-            Already Checked In
+          <span class="inline-block px-4 py-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
+            Checked In by Admin
           </span>
-          <h1 class="text-2xl font-black text-slate-900 tracking-tight">Pass Already Verified</h1>
-          <p class="text-slate-500 text-xs mt-1">This badge was verified at ${checkinTime} on ${checkinDate}.</p>
+          <h1 class="text-2xl font-black text-slate-900 tracking-tight">Attendance Verified</h1>
+          ${
+            checkinTime
+              ? `<p class="text-slate-500 text-xs mt-1">Checked in at ${checkinTime} on ${checkinDate}.</p>`
+              : `<p class="text-slate-500 text-xs mt-1">Your attendance has been verified at the registration desk.</p>`
+          }
           `
           : `
-          <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-black shadow-inner animate-check">
-            ✓
-          </div>
-          <span class="inline-block px-4 py-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
-            Attendance Marked
+          <span class="inline-block px-4 py-1.5 bg-sky-50 text-sky-700 border border-sky-200 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
+            Confirmed Delegate Pass
           </span>
-          <h1 class="text-2xl font-black text-slate-900 tracking-tight">Welcome to the Event!</h1>
-          <p class="text-slate-500 text-xs mt-1">Your attendance has been recorded successfully.</p>
+          <h1 class="text-2xl font-black text-slate-900 tracking-tight">${attendee.fullName}</h1>
+          <p class="text-xs font-bold text-red-600 mt-1">${attendee.jobRole}</p>
           `
       }
 
+      ${
+        qrDataUrl
+          ? `
+          <div class="my-5 inline-block p-3 bg-white rounded-2xl border-2 border-dashed border-slate-300 shadow-sm">
+            <img src="${qrDataUrl}" alt="Attendee QR Pass" class="w-44 h-44 mx-auto block" />
+          </div>
+          `
+          : ''
+      }
+
       <!-- Attendee Pass Info Card -->
-      <div class="mt-6 bg-slate-50 rounded-2xl p-5 border border-slate-200/80 text-left space-y-3">
+      <div class="mt-4 bg-slate-50 rounded-2xl p-5 border border-slate-200/80 text-left space-y-3">
         <div class="flex items-center justify-between border-b border-slate-200/60 pb-3">
-          <span class="text-slate-400 font-bold uppercase text-[10px] tracking-wider">Candidate</span>
-          <span class="text-emerald-700 font-bold text-[11px] bg-emerald-100 px-2 py-0.5 rounded">Checked In</span>
+          <span class="text-slate-400 font-bold uppercase text-[10px] tracking-wider">Pass Status</span>
+          <span class="${
+            isAttended
+              ? 'text-emerald-700 bg-emerald-100'
+              : 'text-sky-700 bg-sky-100'
+          } font-bold text-[11px] px-2.5 py-0.5 rounded-full">
+            ${isAttended ? 'Attended (Checked In)' : 'Confirmed — Present at Desk'}
+          </span>
         </div>
 
         <div>
@@ -118,20 +128,28 @@ export function renderCheckinPage({ attendee, alreadyAttended = false, error = n
 
         <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-200/60 text-xs">
           <div>
-            <span class="text-slate-400 font-bold block text-[10px] uppercase">Check-in Time</span>
-            <span class="font-mono text-slate-800 font-semibold">${checkinTime}</span>
+            <span class="text-slate-400 font-bold block text-[10px] uppercase">Date &amp; Time</span>
+            <span class="font-semibold text-slate-800">Oct 23, 2026 • 09:00 AM</span>
           </div>
           <div>
-            <span class="text-slate-400 font-bold block text-[10px] uppercase">Location</span>
-            <span class="text-slate-700">Hablis Hotel, Guindy</span>
+            <span class="text-slate-400 font-bold block text-[10px] uppercase">Venue</span>
+            <span class="text-slate-700 font-semibold">Hablis Hotel, Guindy</span>
           </div>
         </div>
       </div>
 
       <!-- Instructions -->
-      <div class="mt-6 text-xs text-slate-600 bg-blue-50/60 p-4 rounded-xl border border-blue-100">
-        <p class="font-bold text-blue-900 mb-1">🎉 You are all set!</p>
-        <p class="text-[11px] text-blue-800">Please collect your delegate kit at the reception counter and head to the main auditorium.</p>
+      <div class="mt-6 text-xs text-slate-600 bg-amber-50/80 p-4 rounded-xl border border-amber-200/80">
+        <p class="font-bold text-amber-900 mb-1">
+          ${isAttended ? '🎉 Check-in Complete!' : '📲 Reception Check-In Required'}
+        </p>
+        <p class="text-[11px] text-amber-800">
+          ${
+            isAttended
+              ? 'Please collect your delegate kit at the reception counter and head to the main auditorium.'
+              : 'Please show this QR code to the event registration staff at Hablis Hotel. Only scanning via the official Admin Portal marks your attendance.'
+          }
+        </p>
       </div>
 
       <div class="mt-6 text-center">

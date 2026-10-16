@@ -222,15 +222,15 @@ class EmailService {
 
                     <!-- Scan Instructions -->
                     <p style="margin:0 0 14px 0; font-size:13px; font-weight:600; color:#0f172a;">
-                      📲 Scan this QR code upon arrival to instantly mark your attendance!
+                      📲 Present this QR code at the registration desk upon arrival!
                     </p>
                     <p style="margin:0 0 18px 0; font-size:12px; color:#64748b; line-height:1.5; max-width:440px;">
-                      Present this badge at the reception desk at Hablis Hotel, or scan it with your smartphone camera to self-verify your check-in.
+                      Please show this QR badge at the reception counter at Hablis Hotel so our event team can scan and verify your check-in.
                     </p>
 
-                    <!-- Direct Check-in / View Pass CTA -->
+                    <!-- Direct View Pass CTA -->
                     <a href="${checkinUrl}" target="_blank" style="display:inline-block; background-color:#ef2722; color:#ffffff; font-size:13px; font-weight:700; text-decoration:none; padding:11px 26px; border-radius:10px; box-shadow:0 4px 10px rgba(239,39,34,0.3);">
-                      Open Digital Pass & Check-In
+                      View Digital Entry Pass
                     </a>
 
                   </td>

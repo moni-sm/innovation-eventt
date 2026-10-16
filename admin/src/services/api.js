@@ -67,7 +67,11 @@ export const api = {
   async checkinAttendee(id) {
     const res = await fetch(`${BASE}/registrations/checkin/${id}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
+      headers: {
+        'Content-Type': 'application/json',
+        'x-admin-scanner': 'true'
+      },
+      body: JSON.stringify({ adminScanner: true })
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || 'Failed to mark check-in');

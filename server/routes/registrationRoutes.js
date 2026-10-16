@@ -175,7 +175,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// GET /api/registrations/checkin/:id - QR code scan check-in
+// GET /api/registrations/checkin/:id - Read-only Digital Pass view (does NOT mark attendance)
 router.get('/checkin/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -191,31 +191,42 @@ router.get('/checkin/:id', async (req, res) => {
     }
 
     const alreadyAttended = attendee.status === 'Attended';
-
-    let updatedAttendee = attendee;
-    if (!alreadyAttended) {
-      updatedAttendee = await dataService.markAttended(id);
-    }
+    const baseUrl = getBaseUrl(req);
+    const { dataUrl: qrDataUrl } = await qrService.generateAttendeeQr(attendee, baseUrl);
 
     if (wantsJson) {
       return res.json({
         success: true,
         alreadyAttended,
-        message: alreadyAttended ? 'Attendee was already checked in.' : 'Attendance confirmed successfully!',
-        data: updatedAttendee
+        readOnly: true,
+        message: alreadyAttended
+          ? 'Attendee is checked in.'
+          : 'Pass verified (Confirmed). Please scan at the Admin Portal to mark attendance.',
+        data: attendee
       });
     }
 
-    res.send(renderCheckinPage({ attendee: updatedAttendee, alreadyAttended }));
+    res.send(renderCheckinPage({ attendee, alreadyAttended, qrDataUrl }));
   } catch (err) {
-    console.error('Check-in error:', err);
-    res.status(500).send(renderCheckinPage({ error: 'Server error processing check-in.' }));
+    console.error('Digital pass view error:', err);
+    res.status(500).send(renderCheckinPage({ error: 'Server error loading digital pass.' }));
   }
 });
 
-// POST /api/registrations/checkin/:id - Explicit API check-in
+// POST /api/registrations/checkin/:id - Admin Portal QR Scanner check-in ONLY
 router.post('/checkin/:id', async (req, res) => {
   try {
+    const isAdminScanner =
+      req.headers['x-admin-scanner'] === 'true' ||
+      req.body?.adminScanner === true;
+
+    if (!isAdminScanner) {
+      return res.status(403).json({
+        success: false,
+        message: 'Unauthorized: Attendance can only be marked by scanning from the Admin Portal.'
+      });
+    }
+
     const { id } = req.params;
     const attendee = await dataService.getRegistrationById(id);
 
