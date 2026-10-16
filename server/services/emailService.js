@@ -85,8 +85,12 @@ class EmailService {
 
     if (host === 'smtp.gmail.com' || user.toLowerCase().endsWith('@gmail.com')) {
       return nodemailer.createTransport({
-        service: 'gmail',
-        auth: { user, pass }
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
+        auth: { user, pass },
+        family: 4,
+        tls: { servername: 'smtp.gmail.com', rejectUnauthorized: false }
       });
     }
 
@@ -95,6 +99,7 @@ class EmailService {
       port,
       secure,
       auth: { user, pass },
+      family: 4,
       tls: { rejectUnauthorized: false }
     });
   }
@@ -487,18 +492,7 @@ class EmailService {
 
     const errors = [];
 
-    // 1. If Brevo HTTP API is configured, use Brevo (works on Render & local, sends to ANY registered recipient)
-    if (this.hasBrevoConfigured()) {
-      try {
-        return await this.sendViaBrevo(attendee, checkinUrl, buffer, dataUrl, fullName, textFallback);
-      } catch (err) {
-        console.warn(`[Email Service] Brevo delivery failed for ${attendee.workEmail}:`, err.message);
-        errors.push(`Brevo: ${err.message}`);
-      }
-    }
-
-    // 2. If SMTP is configured and we are running locally (or non-Render host), use Gmail SMTP
-    // Gmail SMTP can deliver to ANY registered attendee address!
+    // 1. When running locally (non-Render), try Gmail SMTP first (works directly for all recipients without IP whitelist)
     if (this.hasSmtpConfigured() && !isRender) {
       try {
         return await this.sendViaSmtp(attendee, checkinUrl, buffer, fullName, textFallback);
@@ -508,9 +502,18 @@ class EmailService {
       }
     }
 
+    // 2. Try Brevo HTTP API (Port 443 HTTPS - Primary for Render Cloud & fallback for local)
+    if (this.hasBrevoConfigured()) {
+      try {
+        return await this.sendViaBrevo(attendee, checkinUrl, buffer, dataUrl, fullName, textFallback);
+      } catch (err) {
+        console.warn(`[Email Service] Brevo delivery failed for ${attendee.workEmail}:`, err.message);
+        errors.push(`Brevo: ${err.message}`);
+      }
+    }
+
     // 3. If Resend is configured:
     // Only attempt Resend if it has a verified custom domain, OR if recipient is the registered account owner.
-    // If it's the test domain (resend.dev), Resend strictly refuses other recipients with a 403 error.
     if (this.hasResendConfigured() && (!isSandboxResend || isSendingToAccountOwner)) {
       try {
         return await this.sendViaResend(attendee, checkinUrl, buffer, dataUrl, fullName, textFallback);
@@ -520,27 +523,15 @@ class EmailService {
       }
     }
 
-    // 4. If running on Render and SMTP is configured, attempt SMTP as fallback in case ports are open
-    if (this.hasSmtpConfigured() && isRender) {
-      try {
-        return await this.sendViaSmtp(attendee, checkinUrl, buffer, fullName, textFallback);
-      } catch (err) {
-        errors.push(`SMTP: ${err.message}`);
-      }
-    }
-
     // If all providers were exhausted:
     let finalError = 'Failed to deliver email.';
-    if (isRender && !this.hasBrevoConfigured() && isSandboxResend) {
+    if (errors.length > 0) {
+      finalError = `Error sending email: ${errors.join(' | ')}`;
+    } else if (isRender && !this.hasBrevoConfigured() && isSandboxResend) {
       finalError = (
         'Cannot send to registered attendees from Render because Resend is in test sandbox mode (resend.dev) ' +
-        'and Render blocks outbound SMTP ports. To send to all registered attendees, please either: ' +
-        '1) Add BREVO_API_KEY to your Render environment (Brevo is free and sends to any recipient without a domain), or ' +
-        '2) Verify your domain at resend.com/domains and set RESEND_FROM with your verified domain, or ' +
-        '3) Send the emails from your local admin machine using your configured Gmail SMTP.'
+        'and Render blocks outbound SMTP ports. Please add BREVO_API_KEY in Render Environment and deactivate IP blocking at https://app.brevo.com/security/authorised_ips'
       );
-    } else if (errors.length > 0) {
-      finalError = `Error sending email: ${errors.join(' | ')}`;
     } else if (isSandboxResend && !isSendingToAccountOwner) {
       finalError = (
         `Resend is currently in test sandbox mode (resend.dev), which only allows sending to ${accountEmail}. ` +
