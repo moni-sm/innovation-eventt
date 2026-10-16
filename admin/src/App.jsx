@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import AdminNavbar      from './components/AdminNavbar';
-import StatsCards       from './components/StatsCards';
-import FiltersBar       from './components/FiltersBar';
-import NominationsTable from './components/NominationsTable';
-import AttendeeModal    from './components/AttendeeModal';
-import BulkEmailModal   from './components/BulkEmailModal';
+import AdminNavbar       from './components/AdminNavbar';
+import StatsCards        from './components/StatsCards';
+import FiltersBar        from './components/FiltersBar';
+import NominationsTable  from './components/NominationsTable';
+import QrScannerSection  from './components/QrScannerSection';
+import AttendeeModal     from './components/AttendeeModal';
+import BulkEmailModal    from './components/BulkEmailModal';
 import EmailPreviewModal from './components/EmailPreviewModal';
 import { api } from './services/api';
 
 export default function App() {
+  const [activeTab,        setActiveTab]        = useState('nominations'); // 'nominations' | 'scanner'
   const [registrations,    setRegistrations]    = useState([]);
   const [stats,            setStats]            = useState(null);
   const [loading,          setLoading]          = useState(true);
@@ -101,26 +103,38 @@ export default function App() {
         loading={loading}
         onRefresh={loadData}
         onOpenBulkEmail={() => setIsBulkEmailOpen(true)}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
       />
 
       <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex-1 space-y-6">
 
         <StatsCards stats={stats} fallbackTotal={registrations.length} />
 
-        <FiltersBar
-          search={search}           onSearch={setSearch}
-          statusFilter={statusFilter} onStatus={setStatusFilter}
-          roleFilter={roleFilter}     onRole={setRoleFilter}
-        />
+        {activeTab === 'scanner' ? (
+          <QrScannerSection
+            registrations={registrations}
+            onCheckinSuccess={() => loadData()}
+            onViewAttendee={setSelectedAttendee}
+          />
+        ) : (
+          <>
+            <FiltersBar
+              search={search}             onSearch={setSearch}
+              statusFilter={statusFilter} onStatus={setStatusFilter}
+              roleFilter={roleFilter}     onRole={setRoleFilter}
+            />
 
-        <NominationsTable
-          registrations={registrations}
-          onStatusChange={handleStatusChange}
-          onDelete={handleDelete}
-          onView={setSelectedAttendee}
-          onSendEmail={handleSendSingleEmail}
-          onPreviewEmail={setPreviewAttendee}
-        />
+            <NominationsTable
+              registrations={registrations}
+              onStatusChange={handleStatusChange}
+              onDelete={handleDelete}
+              onView={setSelectedAttendee}
+              onSendEmail={handleSendSingleEmail}
+              onPreviewEmail={setPreviewAttendee}
+            />
+          </>
+        )}
 
       </main>
 
@@ -148,7 +162,7 @@ export default function App() {
         <EmailPreviewModal
           attendee={previewAttendee}
           onClose={() => setPreviewAttendee(null)}
-          onSend={(id) => {
+          onSend={() => {
             handleSendSingleEmail(previewAttendee);
             setPreviewAttendee(null);
           }}
